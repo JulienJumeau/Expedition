@@ -7,6 +7,8 @@ public enum InputAction
 	Flashlight,
 	Stand,
 	Crouch,
+	Walk,
+	Run
 }
 
 public sealed class InputManager : MonoBehaviour
@@ -15,9 +17,9 @@ public sealed class InputManager : MonoBehaviour
 
 	[Range(1, 10)] [SerializeField] private float _cameraSensitivity;
 	public static InputManager _current;
-	
+
 	private float _verticalRot, _horizontalRot;
-	private bool _isPreviousFrameCrouching;
+	private bool _isCrouching;
 
 	#endregion
 
@@ -44,7 +46,19 @@ public sealed class InputManager : MonoBehaviour
 		if (strafeInput != 0 || forwardInput != 0)
 		{
 			DirectionInputPressed(new DirectionInputPressedEventArgs() { directionVector = new Vector3(strafeInput, 0, forwardInput) });
+
+			if (Input.GetButton("Running") && !_isCrouching)
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Run });
+			}
+
+			else
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Walk });
+			}
 		}
+
+
 
 		if (_horizontalRot != 0 || _verticalRot != 0)
 		{
@@ -68,13 +82,13 @@ public sealed class InputManager : MonoBehaviour
 
 		if (Input.GetButton("Crouching"))
 		{
-			_isPreviousFrameCrouching = true;
+			_isCrouching = true;
 			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Crouch });
 		}
 
-		else if (_isPreviousFrameCrouching)
+		if (Input.GetButtonUp("Crouching"))
 		{
-			_isPreviousFrameCrouching = false;
+			_isCrouching = false;
 			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Stand });
 		}
 

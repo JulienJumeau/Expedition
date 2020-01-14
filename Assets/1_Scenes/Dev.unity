@@ -666,10 +666,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 778217090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40652b3082862e442914f463cb9b6662, type: 3}
+  m_Script: {fileID: 11500000, guid: e29a89e85301a3a48b9144e508b2fbba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraSensitivity: 3
 --- !u!114 &778217093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,9 +678,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 778217090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e29a89e85301a3a48b9144e508b2fbba, type: 3}
+  m_Script: {fileID: 11500000, guid: 40652b3082862e442914f463cb9b6662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraSensitivity: 3
 --- !u!1 &1003793689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,6 +1286,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1213406187133769053, guid: 85fad3a67a0340349a5005343f3c6858,
         type: 3}

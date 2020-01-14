@@ -5,8 +5,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 {
 	#region Variables declaration
 
-	[Range(5, 10)] [SerializeField] private float _speed;
-	[Range(10, 15)] [SerializeField] private float _sprintSpeed;
+	[Range(1, 10)] [SerializeField] private float _speed;
+	[Range(5, 15)] [SerializeField] private float _sprintSpeed;
 	[SerializeField] private LayerMask _layerMask;
 
 	private Camera _camera;

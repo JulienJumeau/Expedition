@@ -145,7 +145,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (_characterController.isGrounded)
 				{
-					CrouchAndStand(_characterInitialHeight / 3);
+					CrouchAndStand(_characterInitialHeight / 6);
 				}
 
 				break;

@@ -6,6 +6,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	#region Variables declaration
 
 	[Range(5, 10)] [SerializeField] private float _speed;
+	[Range(10, 15)] [SerializeField] private float _sprintSpeed;
 	[SerializeField] private LayerMask _layerMask;
 
 	private Camera _camera;
@@ -14,6 +15,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Vector3 _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitTopFront, _hitTopBack;
 	private float _characterInitialHeight;
+	private bool _isRunning;
 
 	#endregion
 
@@ -27,6 +29,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_characterInitialHeight = _characterController.height;
 		_flashlight = GameObject.FindWithTag("FlashLight").GetComponent<Light>();
+		_isRunning = false;
 
 		#endregion
 
@@ -70,7 +73,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		// Reset the motion and increment it beside moves initialized in direcetion event
 		Vector3 motion = Vector3.zero;
-		motion += (_motionForward + _motionStrafe).normalized * _speed;
+		float currentSpeed = _isRunning ? _sprintSpeed : _speed;
+		motion += (_motionForward + _motionStrafe).normalized * currentSpeed;
 
 		// Check if the character is grounded, if not add the gravity
 		if (_characterController.isGrounded)
@@ -122,6 +126,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 				}
 
 				break;
+
+			case InputAction.Walk:
+				Debug.Log(e.actionPressed);
+				_isRunning = false;
+
+				break;
+
+			case InputAction.Run:
+				Debug.Log(e.actionPressed);
+				_isRunning = true;
+
+				break;
+
 
 			case InputAction.Crouch:
 				Debug.Log(e.actionPressed);

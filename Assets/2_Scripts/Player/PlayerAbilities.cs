@@ -15,7 +15,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Vector3 _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitTopFront, _hitTopBack;
 	private float _characterInitialHeight;
-	private bool _isRunning;
+	private bool _isRunning, _isClimbing;
 
 	#endregion
 
@@ -43,7 +43,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void Update()
 	{
 		// Call movement method each frame
-		Movement();
+		if (!_isClimbing)
+		{
+			Movement();
+		}
 
 		// Check if the player is aiming a GameObject with a specific layermask ( raycast beside camera forward ) 
 		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask))
@@ -155,11 +158,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.Use:
-				Debug.Log(e.actionPressed);
 
 				if (_hitForward.transform != null)
 				{
-					_hitForward.transform.GetComponent<MeshRenderer>().material.color = Color.green;
+					ActionToExecute(_hitForward.transform.gameObject.layer);
 				}
 
 				break;
@@ -187,6 +189,48 @@ public sealed class PlayerAbilities : MonoBehaviour
 		}
 
 		CrouchAndStand(height);
+	}
+
+	#endregion
+
+	#region Action Button
+
+	private void ActionToExecute(int layer)
+	{
+		switch (layer)
+		{
+			case 10:
+				Debug.Log("Swicth");
+
+				_hitForward.transform.GetComponent<MeshRenderer>().material.color = Color.green;
+
+				break;
+
+			case 13:
+				Debug.Log("Climb");
+
+				if (!_isClimbing)
+				{
+					StartCoroutine(Climbing());
+				}
+
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	private IEnumerator Climbing()
+	{
+		_isClimbing = true;
+
+		//while ()
+		//{
+		//	yield return null;
+		//}
+
+		yield return null;
 	}
 
 	#endregion

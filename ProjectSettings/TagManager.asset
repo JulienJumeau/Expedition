@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - FlashLight
+  - Lightbulb
+  - Oil
   layers:
   - Default
   - TransparentFX

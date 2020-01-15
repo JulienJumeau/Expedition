@@ -118,7 +118,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		switch (e.actionPressed)
 		{
 			case InputAction.Stand:
-				Debug.Log(e.actionPressed);
+				//Debug.Log(e.actionPressed);
 
 				if (_hitTopFront.transform == null && _hitTopBack.transform == null)
 				{
@@ -128,20 +128,20 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.Walk:
-				Debug.Log(e.actionPressed);
+				//Debug.Log(e.actionPressed);
 				_isRunning = false;
 
 				break;
 
 			case InputAction.Run:
-				Debug.Log(e.actionPressed);
+				//Debug.Log(e.actionPressed);
 				_isRunning = true;
 
 				break;
 
 
 			case InputAction.Crouch:
-				Debug.Log(e.actionPressed);
+				//Debug.Log(e.actionPressed);
 
 				if (_characterController.isGrounded)
 				{
@@ -155,7 +155,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.Use:
-				Debug.Log(e.actionPressed);
+				//Debug.Log(e.actionPressed);
 
 				if (_hitForward.transform != null)
 				{

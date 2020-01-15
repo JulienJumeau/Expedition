@@ -37,62 +37,63 @@ public sealed class InputManager : MonoBehaviour
 
 	private void Update()
 	{
-		#region MovementInput
-
-		float strafeInput = Input.GetAxisRaw("Strafing"), forwardInput = Input.GetAxisRaw("MoveForward");
-		_horizontalRot += Input.GetAxisRaw("Rotation Camera X") * _cameraSensitivity;
-		_verticalRot += Input.GetAxisRaw("Rotation Camera Y") * _cameraSensitivity;
-
-		if (strafeInput != 0 || forwardInput != 0)
+		if (!PlayerAbilities._isActionPlaying)
 		{
-			DirectionInputPressed(new DirectionInputPressedEventArgs() { directionVector = new Vector3(strafeInput, 0, forwardInput) });
+			#region MovementInput
 
-			if (Input.GetButton("Running") && !_isCrouching)
+			float strafeInput = Input.GetAxisRaw("Strafing"), forwardInput = Input.GetAxisRaw("MoveForward");
+			_horizontalRot += Input.GetAxisRaw("Rotation Camera X") * _cameraSensitivity;
+			_verticalRot += Input.GetAxisRaw("Rotation Camera Y") * _cameraSensitivity;
+
+			if (strafeInput != 0 || forwardInput != 0)
 			{
-				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Run });
+				DirectionInputPressed(new DirectionInputPressedEventArgs() { directionVector = new Vector3(strafeInput, 0, forwardInput) });
+
+				if (Input.GetButton("Running") && !_isCrouching)
+				{
+					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Run });
+				}
+
+				else
+				{
+					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Walk });
+				}
 			}
 
-			else
+			if (_horizontalRot != 0 || _verticalRot != 0)
 			{
-				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Walk });
+				_verticalRot = Mathf.Clamp(_verticalRot, -90, 90);
+				CameraMove(new CameraMoveEventArgs() { rotationVector = new Vector3(_verticalRot, _horizontalRot, 0) });
 			}
+
+			#endregion
+
+			#region ActionInput
+
+			if (Input.GetButtonDown("ActionButton"))
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
+			}
+
+			if (Input.GetButtonDown("Flashlight"))
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Flashlight });
+			}
+
+			if (Input.GetButton("Crouching"))
+			{
+				_isCrouching = true;
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Crouch });
+			}
+
+			if (Input.GetButtonUp("Crouching"))
+			{
+				_isCrouching = false;
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Stand });
+			}
+
+			#endregion
 		}
-
-
-
-		if (_horizontalRot != 0 || _verticalRot != 0)
-		{
-			_verticalRot = Mathf.Clamp(_verticalRot, -90, 90);
-			CameraMove(new CameraMoveEventArgs() { rotationVector = new Vector3(_verticalRot, _horizontalRot, 0) });
-		}
-
-		#endregion
-
-		#region ActionInput
-
-		if (Input.GetButtonDown("ActionButton"))
-		{
-			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
-		}
-
-		if (Input.GetButtonDown("Flashlight"))
-		{
-			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Flashlight });
-		}
-
-		if (Input.GetButton("Crouching"))
-		{
-			_isCrouching = true;
-			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Crouch });
-		}
-
-		if (Input.GetButtonUp("Crouching"))
-		{
-			_isCrouching = false;
-			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Stand });
-		}
-
-		#endregion
 	}
 
 	#endregion

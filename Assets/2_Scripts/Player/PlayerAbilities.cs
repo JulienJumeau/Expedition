@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public sealed class PlayerAbilities : MonoBehaviour
 {
 	#region Variables declaration
+
+	public static PlayerAbilities _current;
+	public static bool _isActionPlaying;
 
 	[Range(1, 10)] [SerializeField] private float _speed;
 	[Range(5, 15)] [SerializeField] private float _sprintSpeed;
@@ -15,7 +19,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Vector3 _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitTopFront, _hitTopBack;
 	private float _characterInitialHeight;
-	private bool _isRunning, _isClimbing;
+	private bool _isRunning;
 
 	#endregion
 
@@ -35,15 +39,20 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		#region Event Subcription
 
-		EventSubscription();
+		
 
 		#endregion
+	}
+
+	private void Start()
+	{
+		EventSubscription();
 	}
 
 	private void Update()
 	{
 		// Call movement method each frame
-		if (!_isClimbing)
+		if (!_isActionPlaying)
 		{
 			Movement();
 		}
@@ -207,10 +216,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case 13:
-				Debug.Log("Climb");
 
-				if (!_isClimbing)
+				if (!_isActionPlaying)
 				{
+					Debug.Log("Climb");
 					StartCoroutine(Climbing());
 				}
 
@@ -223,14 +232,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private IEnumerator Climbing()
 	{
-		_isClimbing = true;
-
-		//while ()
-		//{
-		//	yield return null;
-		//}
-
-		yield return null;
+		_isActionPlaying = true;
+		yield return new WaitForSeconds(2);
+		_isActionPlaying = false;
 	}
 
 	#endregion

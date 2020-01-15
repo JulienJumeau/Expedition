@@ -36,12 +36,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isRunning = false;
 
 		#endregion
-
-		#region Event Subcription
-
-		
-
-		#endregion
 	}
 
 	private void Start()
@@ -58,7 +52,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		}
 
 		// Check if the player is aiming a GameObject with a specific layermask ( raycast beside camera forward ) 
-		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask))
+		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 2f, _layerMask))
 		{
 
 		}
@@ -233,6 +227,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private IEnumerator Climbing()
 	{
 		_isActionPlaying = true;
+		this.transform.position = new Vector3(_hitForward.transform.position.x, _hitForward.transform.localScale.y + 0.73f, this.transform.localPosition.z - _characterController.radius);
 		yield return new WaitForSeconds(2);
 		_isActionPlaying = false;
 	}

@@ -21,7 +21,7 @@ TagManager:
   - Ground
   - Switch
   - TriggerArea
-  - PickupItem
+  - Items
   - WallClimb
   - PullObject
   - PitJump

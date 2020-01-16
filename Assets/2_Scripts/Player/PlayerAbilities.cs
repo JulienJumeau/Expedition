@@ -21,6 +21,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private float _characterInitialHeight;
 	private bool _isRunning;
 
+	public static int _lightbulbNbr;
+	[Range(1f, 5f)] [SerializeField] private int _lightbulbNbrMax = 2;
+	private int _OilLevel; //Between 0 and 1
+
 
 	#endregion
 
@@ -35,6 +39,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterInitialHeight = _characterController.height;
 		_flashlight = GameObject.FindWithTag("FlashLight").GetComponent<Light>();
 		_isRunning = false;
+
+		_lightbulbNbr = 0;
+		_lightbulbNbrMax = 2;
+		_OilLevel = 0;
 
 		#endregion
 	}
@@ -166,6 +174,23 @@ public sealed class PlayerAbilities : MonoBehaviour
 				if (_hitForward.transform != null)
 				{
 					TriggerActionToExecute(_hitForward.transform.gameObject.layer);
+					// Pick up Objects
+					if (_hitForward.transform.gameObject.tag == "Lightbulb")
+					{
+						if (_lightbulbNbr < _lightbulbNbrMax)
+						{
+							_lightbulbNbr++;
+							print("New Lightbulb picked up! You now have [" + _lightbulbNbr + "] Lightbulbs in your inventory.");
+							Destroy(_hitForward.transform.gameObject);
+						}
+						else print("You reach the maximum number of Lightbulbs that you can carry in your inventory.");
+					}
+					if (_hitForward.transform.gameObject.tag == "Oil")
+					{
+						_OilLevel = 1;
+						print("Your oil level is now full!");
+						Destroy(_hitForward.transform.gameObject);
+					}
 				}
 
 				break;

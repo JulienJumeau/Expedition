@@ -8,7 +8,8 @@ public enum InputAction
 	Stand,
 	Crouch,
 	Walk,
-	Run
+	Run,
+	Jump
 }
 
 public sealed class InputManager : MonoBehaviour
@@ -90,6 +91,11 @@ public sealed class InputManager : MonoBehaviour
 			{
 				_isCrouching = false;
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Stand });
+			}
+
+			if (Input.GetButtonDown("JumpClimb"))
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Jump });
 			}
 
 			#endregion

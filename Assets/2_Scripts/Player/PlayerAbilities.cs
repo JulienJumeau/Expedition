@@ -164,7 +164,16 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (_hitForward.transform != null)
 				{
-					ActionToExecute(_hitForward.transform.gameObject.layer);
+					TriggerActionToExecute(_hitForward.transform.gameObject.layer);
+				}
+
+				break;
+
+			case InputAction.Jump:
+
+				if (_hitForward.transform != null)
+				{
+					TriggerMoveToExecute(_hitForward.transform.gameObject.layer);
 				}
 
 				break;
@@ -198,17 +207,25 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	#region Action Button
 
-	private void ActionToExecute(int layer)
+	private void TriggerActionToExecute(int layer)
 	{
 		switch (layer)
 		{
 			case 10:
 				Debug.Log("Swicth");
-
 				_hitForward.transform.GetComponent<MeshRenderer>().material.color = Color.green;
 
 				break;
 
+			default:
+				break;
+		}
+	}
+
+	private void TriggerMoveToExecute(int layer)
+	{
+		switch (layer)
+		{
 			case 13:
 
 				if (!_isActionPlaying)
@@ -227,7 +244,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private IEnumerator Climbing()
 	{
 		_isActionPlaying = true;
-		this.transform.position = new Vector3(_hitForward.transform.position.x, _hitForward.transform.localScale.y + 0.73f, this.transform.localPosition.z - _characterController.radius);
+		this.transform.position = new Vector3(_hitForward.transform.position.x, _hitForward.transform.localScale.y + 0.73f, _hitForward.transform.position.z);
 		yield return new WaitForSeconds(2);
 		_isActionPlaying = false;
 	}

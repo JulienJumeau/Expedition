@@ -224,6 +224,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void TriggerMoveToExecute(int layer)
 	{
+		Debug.Log("Jump");
 		switch (layer)
 		{
 			case 13:
@@ -236,6 +237,16 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				break;
 
+			case 15:
+
+				if (!_isActionPlaying)
+				{
+					Debug.Log("Jump");
+					StartCoroutine(Jumping());
+				}
+
+				break;
+
 			default:
 				break;
 		}
@@ -244,7 +255,28 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private IEnumerator Climbing()
 	{
 		_isActionPlaying = true;
-		this.transform.position = new Vector3(_hitForward.transform.position.x, _hitForward.transform.localScale.y + 0.73f, _hitForward.transform.position.z);
+
+		Vector3 heading = (_hitForward.point - this.transform.position) * 1.1f;
+		heading.y = 0;
+		this.transform.position = new Vector3(this.transform.position.x + heading.x, _hitForward.transform.localScale.y + 0.73f, this.transform.position.z + heading.z);
+
+		yield return null;
+
+		//yield return new WaitForSeconds(2);
+		_isActionPlaying = false;
+	}
+
+	private IEnumerator Jumping()
+	{
+		_isActionPlaying = true;
+
+		Vector3 heading = _hitForward.point - this.transform.position;
+		heading.y = 0;
+		Debug.Log(heading);
+
+		this.transform.position = new Vector3(this.transform.position.x + heading.x * _hitForward.transform.localScale.x * 1.5f, this.transform.position.y, this.transform.position.z + heading.z);
+		//this.transform.position = this.transform.position + heading + _hitForward.transform.localScale;
+
 		yield return new WaitForSeconds(2);
 		_isActionPlaying = false;
 	}

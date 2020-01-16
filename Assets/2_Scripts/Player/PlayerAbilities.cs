@@ -16,10 +16,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Camera _camera;
 	private CharacterController _characterController;
 	private Light _flashlight;
-	private Vector3 _motionForward, _motionStrafe, _direction;
+	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitTopFront, _hitTopBack;
 	private float _characterInitialHeight;
 	private bool _isRunning;
+
 
 	#endregion
 
@@ -54,7 +55,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		// Check if the player is aiming a GameObject with a specific layermask ( raycast beside camera forward ) 
 		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 2f, _layerMask))
 		{
-
+			PullObject();
 		}
 	}
 
@@ -78,23 +79,23 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void Movement()
 	{
 		// Reset the motion and increment it beside moves initialized in direcetion event
-		Vector3 motion = Vector3.zero;
+		_motion = Vector3.zero;
 		float currentSpeed = _isRunning ? _sprintSpeed : _speed;
-		motion += (_motionForward + _motionStrafe).normalized * currentSpeed;
+		_motion += (_motionForward + _motionStrafe).normalized * currentSpeed;
 
 		// Check if the character is grounded, if not add the gravity
 		if (_characterController.isGrounded)
 		{
-			motion.y = 0;
+			_motion.y = 0;
 		}
 
 		else
 		{
-			motion += this.transform.up * Physics.gravity.y;
+			_motion += this.transform.up * Physics.gravity.y;
 		}
 
 		// Call the native method Move from character controller and send all moves to it
-		_characterController.Move(motion * Time.deltaTime);
+		_characterController.Move(_motion * Time.deltaTime);
 		_motionForward = Vector3.zero;
 		_motionStrafe = Vector3.zero;
 	}
@@ -279,6 +280,23 @@ public sealed class PlayerAbilities : MonoBehaviour
 		yield return null;
 		//yield return new WaitForSeconds(2);
 		_isActionPlaying = false;
+	}
+
+	private void PullObject ()
+	{
+		if (_hitForward.transform.gameObject.tag == "Pullable") //&& (_hitForward.transform != null))
+		{
+			if (Input.GetKey(KeyCode.Mouse0))
+			{
+				//Debug.Log("Motion = ( " + motion.x + " , " + motion.y + " , " + motion.z + " )");
+				_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
+			}
+
+			if (Input.GetKeyUp(KeyCode.Mouse0))
+			{
+				_hitForward.transform.Translate(Vector3.zero);
+			}
+		}
 	}
 
 	#endregion

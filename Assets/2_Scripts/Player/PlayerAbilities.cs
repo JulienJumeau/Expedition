@@ -261,7 +261,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		this.transform.position = new Vector3(this.transform.position.x + heading.x, _hitForward.transform.localScale.y + 0.73f, this.transform.position.z + heading.z);
 
 		yield return null;
-
 		//yield return new WaitForSeconds(2);
 		_isActionPlaying = false;
 	}
@@ -274,10 +273,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 		heading.y = 0;
 		Debug.Log(heading);
 
-		this.transform.position = new Vector3(this.transform.position.x + heading.x * _hitForward.transform.localScale.x * 1.5f, this.transform.position.y, this.transform.position.z + heading.z);
-		//this.transform.position = this.transform.position + heading + _hitForward.transform.localScale;
+		//this.transform.position += this.transform.forward * 8f;
+		this.transform.position += _hitForward.transform.right * Mathf.Sign(heading.x) * 8f;
 
-		yield return new WaitForSeconds(2);
+		yield return null;
+		//yield return new WaitForSeconds(2);
 		_isActionPlaying = false;
 	}
 

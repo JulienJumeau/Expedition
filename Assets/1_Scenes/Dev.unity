@@ -188,7 +188,7 @@ Transform:
   m_Children:
   - {fileID: 406199325}
   m_Father: {fileID: 1504267218}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &59842612
 BoxCollider:
@@ -449,6 +449,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1157047958}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &251196282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251196283}
+  - component: {fileID: 251196284}
+  m_Layer: 15
+  m_Name: Pit_Jump
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &251196283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251196282}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 32.35, y: 4.3, z: -4}
+  m_LocalScale: {x: 5, y: 5, z: 10}
+  m_Children: []
+  m_Father: {fileID: 1504267218}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &251196284
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251196282}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0.5999999, z: 1}
+  m_Center: {x: -0.5, y: 0.28000006, z: 0}
 --- !u!1 &259262865
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +653,7 @@ GameObject:
   - component: {fileID: 373592970}
   - component: {fileID: 373592969}
   m_Layer: 9
-  m_Name: Wall (1)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -627,7 +671,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 10}
   m_Children: []
   m_Father: {fileID: 1504267218}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &373592969
 BoxCollider:
@@ -1186,7 +1230,7 @@ GameObject:
   - component: {fileID: 828714602}
   - component: {fileID: 828714601}
   m_Layer: 13
-  m_Name: Wall_Climb (1)
+  m_Name: Wall_Climb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1205,7 +1249,7 @@ Transform:
   m_Children:
   - {fileID: 1615541623}
   m_Father: {fileID: 1504267218}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &828714601
 BoxCollider:
@@ -1295,7 +1339,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 10}
   m_Children: []
   m_Father: {fileID: 1504267218}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &887757445
 BoxCollider:
@@ -1308,8 +1352,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.4199999, z: 1}
-  m_Center: {x: 0, y: 0.19000006, z: 0}
+  m_Size: {x: 0, y: 0.5999999, z: 1}
+  m_Center: {x: -0.5, y: 0.28000006, z: 0}
 --- !u!1 &938709228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,7 +1510,7 @@ Transform:
   m_Children:
   - {fileID: 65575126}
   m_Father: {fileID: 1504267218}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &963928929
 BoxCollider:
@@ -2066,7 +2110,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 6b0a366f926b2204a8c503ca21ab0ad5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 6b0a366f926b2204a8c503ca21ab0ad5,
         type: 3}
@@ -2108,7 +2152,7 @@ GameObject:
   - component: {fileID: 1467193903}
   - component: {fileID: 1467193902}
   m_Layer: 9
-  m_Name: Wall (3)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2126,7 +2170,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 10}
   m_Children: []
   m_Father: {fileID: 1504267218}
-  m_RootOrder: 9
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1467193902
 BoxCollider:
@@ -2314,14 +2358,15 @@ Transform:
   m_Children:
   - {fileID: 1003793690}
   - {fileID: 93644124}
+  - {fileID: 1467193901}
+  - {fileID: 373592968}
   - {fileID: 1360465378}
   - {fileID: 466423041}
   - {fileID: 963928928}
   - {fileID: 828714600}
   - {fileID: 59842611}
-  - {fileID: 373592968}
   - {fileID: 887757444}
-  - {fileID: 1467193901}
+  - {fileID: 251196283}
   m_Father: {fileID: 39096823}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2787,7 +2832,7 @@ PrefabInstance:
     - target: {fileID: 6190651736346938676, guid: ab3947dcbb928ba4da975df8528d8ec7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6190651736346938676, guid: ab3947dcbb928ba4da975df8528d8ec7,
         type: 3}

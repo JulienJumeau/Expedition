@@ -9,7 +9,8 @@ public enum InputAction
 	Crouch,
 	Walk,
 	Run,
-	Jump
+	Jump,
+	Pull
 }
 
 public sealed class InputManager : MonoBehaviour
@@ -20,7 +21,7 @@ public sealed class InputManager : MonoBehaviour
 	public static InputManager _current;
 
 	private float _verticalRot, _horizontalRot;
-	private bool _isCrouching;
+	private bool _isCrouching, _isPulling;
 
 	#endregion
 
@@ -53,6 +54,11 @@ public sealed class InputManager : MonoBehaviour
 				if (Input.GetButton("Running") && !_isCrouching)
 				{
 					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Run });
+				}
+
+				else if (Input.GetButton("Pulling"))
+				{
+					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Pull });
 				}
 
 				else
@@ -97,6 +103,11 @@ public sealed class InputManager : MonoBehaviour
 			{
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Jump });
 			}
+
+			//if (Input.GetButton("Pulling"))
+			//{
+			//	ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Pull });
+			//}
 
 			#endregion
 		}

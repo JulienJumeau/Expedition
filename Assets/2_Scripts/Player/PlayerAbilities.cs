@@ -21,7 +21,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitTopFront, _hitTopBack;
 	private float _characterInitialHeight, _currentSpeed;
-	private bool _isRunning;
 
 	public static int _lightbulbNbr;
 	[Range(1f, 5f)] [SerializeField] private int _lightbulbNbrMax = 2;
@@ -40,7 +39,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_characterInitialHeight = _characterController.height;
 		_flashlight = GameObject.FindWithTag("FlashLight").GetComponent<Light>();
-		_isRunning = false;
 		_currentSpeed = _walkSpeed;
 
 		_lightbulbNbr = 0;
@@ -66,7 +64,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		// Check if the player is aiming a GameObject with a specific layermask ( raycast beside camera forward ) 
 		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 2f, _layerMask))
 		{
-			PullObject();
+
 		}
 	}
 
@@ -145,14 +143,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Walk:
 				_currentSpeed = _walkSpeed;
-				_isRunning = false;
-
 				break;
 
 			case InputAction.Run:
 				_currentSpeed = _sprintSpeed;
-				_isRunning = true;
-
 				break;
 
 
@@ -175,23 +169,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				if (_hitForward.transform != null)
 				{
 					TriggerActionToExecute(_hitForward.transform.gameObject.layer);
-					// Pick up Objects
-					if (_hitForward.transform.gameObject.tag == "Lightbulb")
-					{
-						if (_lightbulbNbr < _lightbulbNbrMax)
-						{
-							_lightbulbNbr++;
-							print("New Lightbulb picked up! You now have [" + _lightbulbNbr + "] Lightbulbs in your inventory.");
-							Destroy(_hitForward.transform.gameObject);
-						}
-						else print("You reach the maximum number of Lightbulbs that you can carry in your inventory.");
-					}
-					if (_hitForward.transform.gameObject.tag == "Oil")
-					{
-						_OilLevel = 1;
-						print("Your oil level is now full!");
-						Destroy(_hitForward.transform.gameObject);
-					}
+					CollectItems();
 				}
 
 				break;
@@ -201,6 +179,18 @@ public sealed class PlayerAbilities : MonoBehaviour
 				if (_hitForward.transform != null)
 				{
 					TriggerMoveToExecute(_hitForward.transform.gameObject.layer);
+				}
+
+				break;
+
+			case InputAction.Pull:
+
+				if (_hitForward.transform != null)
+				{
+					Debug.Log(e.actionPressed);
+					_currentSpeed = _pullObjectSpeed;
+					//TriggerActionToExecute(_hitForward.transform.gameObject.layer);
+					PullObject();
 				}
 
 				break;
@@ -243,6 +233,16 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				break;
 
+			//case 14:
+
+			//	if (!_isActionPlaying)
+			//	{
+			//		Debug.Log("Pull");
+			//		PullObject2();
+			//	}
+
+			//	break;
+
 			default:
 				break;
 		}
@@ -250,7 +250,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void TriggerMoveToExecute(int layer)
 	{
-		Debug.Log("Jump");
 		switch (layer)
 		{
 			case 13:
@@ -304,21 +303,34 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isActionPlaying = false;
 	}
 
-	private void PullObject ()
+	private void PullObject()
 	{
-		if (_hitForward.transform.gameObject.tag == "Pullable") //&& (_hitForward.transform != null))
+		if (_hitForward.transform.gameObject.CompareTag("Pullable"))
 		{
-			if (Input.GetKey(KeyCode.Mouse0))
-			{
-				//Debug.Log("Motion = ( " + motion.x + " , " + motion.y + " , " + motion.z + " )");
-				_currentSpeed = _pullObjectSpeed;
-				_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
-			}
+			_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
+		}
+	}
 
-			if (Input.GetKeyUp(KeyCode.Mouse0))
+	//private void PullObject2()
+	//{
+	//	_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
+	//}
+
+	private void CollectItems()
+	{
+		if (_hitForward.transform.gameObject.CompareTag("Lightbulb"))
+		{
+			if (_lightbulbNbr < _lightbulbNbrMax)
 			{
-				_hitForward.transform.Translate(Vector3.zero);
+				_lightbulbNbr++;
+				Destroy(_hitForward.transform.gameObject);
 			}
+		}
+
+		if (_hitForward.transform.gameObject.CompareTag("Oil"))
+		{
+			_OilLevel = 1;
+			Destroy(_hitForward.transform.gameObject);
 		}
 	}
 

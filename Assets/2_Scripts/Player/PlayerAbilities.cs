@@ -193,6 +193,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 					PullObject();
 				}
 
+				else
+				{
+					_currentSpeed = _walkSpeed;
+				}
+
 				break;
 
 			default:

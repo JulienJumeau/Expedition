@@ -9,7 +9,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public static PlayerAbilities _current;
 	public static bool _isActionPlaying;
 
-	[Range(1, 10)] [SerializeField] private float _speed;
+	[Range(1, 10)] [SerializeField] private float _walkSpeed;
+	[Range(1, 5)] [SerializeField] private float _crouchSpeed;
+	[Range(1, 5)] [SerializeField] private float _pullObjectSpeed;
 	[Range(5, 15)] [SerializeField] private float _sprintSpeed;
 	[SerializeField] private LayerMask _layerMask;
 
@@ -18,7 +20,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitTopFront, _hitTopBack;
-	private float _characterInitialHeight;
+	private float _characterInitialHeight, _currentSpeed;
 	private bool _isRunning;
 
 	public static int _lightbulbNbr;
@@ -39,6 +41,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterInitialHeight = _characterController.height;
 		_flashlight = GameObject.FindWithTag("FlashLight").GetComponent<Light>();
 		_isRunning = false;
+		_currentSpeed = _walkSpeed;
 
 		_lightbulbNbr = 0;
 		_lightbulbNbrMax = 2;
@@ -88,8 +91,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		// Reset the motion and increment it beside moves initialized in direcetion event
 		_motion = Vector3.zero;
-		float currentSpeed = _isRunning ? _sprintSpeed : _speed;
-		_motion += (_motionForward + _motionStrafe).normalized * currentSpeed;
+		_motion += (_motionForward + _motionStrafe).normalized * _currentSpeed;
 
 		// Check if the character is grounded, if not add the gravity
 		if (_characterController.isGrounded)
@@ -133,7 +135,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		switch (e.actionPressed)
 		{
 			case InputAction.Stand:
-				Debug.Log(e.actionPressed);
 
 				if (_hitTopFront.transform == null && _hitTopBack.transform == null)
 				{
@@ -143,20 +144,20 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.Walk:
-				Debug.Log(e.actionPressed);
+				_currentSpeed = _walkSpeed;
 				_isRunning = false;
 
 				break;
 
 			case InputAction.Run:
-				Debug.Log(e.actionPressed);
+				_currentSpeed = _sprintSpeed;
 				_isRunning = true;
 
 				break;
 
 
 			case InputAction.Crouch:
-				Debug.Log(e.actionPressed);
+				_currentSpeed = _crouchSpeed;
 
 				if (_characterController.isGrounded)
 				{
@@ -238,7 +239,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		switch (layer)
 		{
 			case 10:
-				Debug.Log("Swicth");
 				_hitForward.transform.GetComponent<MeshRenderer>().material.color = Color.green;
 
 				break;
@@ -257,7 +257,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isActionPlaying)
 				{
-					Debug.Log("Climb");
 					StartCoroutine(Climbing());
 				}
 
@@ -267,7 +266,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isActionPlaying)
 				{
-					Debug.Log("Jump");
 					StartCoroutine(Jumping());
 				}
 
@@ -297,7 +295,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		Vector3 heading = _hitForward.point - this.transform.position;
 		heading.y = 0;
-		Debug.Log(heading);
 
 		//this.transform.position += this.transform.forward * 8f;
 		this.transform.position += _hitForward.transform.right * Mathf.Sign(heading.x) * 8f;
@@ -314,6 +311,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			if (Input.GetKey(KeyCode.Mouse0))
 			{
 				//Debug.Log("Motion = ( " + motion.x + " , " + motion.y + " , " + motion.z + " )");
+				_currentSpeed = _pullObjectSpeed;
 				_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
 			}
 

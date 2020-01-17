@@ -63,11 +63,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3002b1e62caacf14b8332ab8f60b6195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5.5
+  _walkSpeed: 5
+  _crouchSpeed: 3
+  _pullObjectSpeed: 2
   _sprintSpeed: 10
   _layerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 46080
+  _lightbulbNbrMax: 2
 --- !u!1 &1213406187385127705
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +182,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213406187385127705}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7b299496695455d49ac68959e1fea3f1, type: 2}
   m_CullingMode: 0

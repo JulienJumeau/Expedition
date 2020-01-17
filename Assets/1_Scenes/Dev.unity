@@ -2738,10 +2738,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 576038430, guid: 85fad3a67a0340349a5005343f3c6858, type: 3}
-      propertyPath: _layerMask.m_Bits
-      value: 62464
-      objectReference: {fileID: 0}
     - target: {fileID: 1213406187133769049, guid: 85fad3a67a0340349a5005343f3c6858,
         type: 3}
       propertyPath: m_Name

@@ -4,13 +4,14 @@ using UnityEngine;
 public enum InputAction
 {
 	Use,
-	Flashlight,
+	Lantern,
 	Stand,
 	Crouch,
 	Walk,
 	Run,
 	Jump,
-	Pull
+	Pull,
+	PhotoCamera
 }
 
 public sealed class InputManager : MonoBehaviour
@@ -82,9 +83,9 @@ public sealed class InputManager : MonoBehaviour
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
 			}
 
-			if (Input.GetButtonDown("Flashlight"))
+			if (Input.GetButtonDown("Lantern"))
 			{
-				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Flashlight });
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Lantern });
 			}
 
 			if (Input.GetButton("Crouching"))
@@ -104,10 +105,10 @@ public sealed class InputManager : MonoBehaviour
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Jump });
 			}
 
-			//if (Input.GetButton("Pulling"))
-			//{
-			//	ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Pull });
-			//}
+			if (Input.GetButtonDown("PhotoCamera"))
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.PhotoCamera });
+			}
 
 			#endregion
 		}

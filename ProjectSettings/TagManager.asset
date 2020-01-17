@@ -8,6 +8,8 @@ TagManager:
   - Lightbulb
   - Oil
   - Pullable
+  - Lantern
+  - PhotoCamera
   layers:
   - Default
   - TransparentFX

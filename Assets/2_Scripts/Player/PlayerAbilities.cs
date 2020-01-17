@@ -8,12 +8,16 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	public static PlayerAbilities _current;
 	public static bool _isActionPlaying;
+	public static bool _isLanternActive;
+	public static bool _isPhotoCameraActive;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed;
 	[Range(1, 5)] [SerializeField] private float _crouchSpeed;
 	[Range(1, 5)] [SerializeField] private float _pullObjectSpeed;
 	[Range(5, 15)] [SerializeField] private float _sprintSpeed;
 	[SerializeField] private LayerMask _layerMask;
+	[SerializeField] private GameObject _lantern;
+	[SerializeField] private GameObject _photoCamera;
 
 	private Camera _camera;
 	private CharacterController _characterController;
@@ -160,8 +164,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				break;
 
-			case InputAction.Flashlight:
-				_flashlight.enabled = !_flashlight.enabled;
+			case InputAction.Lantern:
+
+				if (!_isPhotoCameraActive)
+				{
+					_isLanternActive = !_isLanternActive;
+					_flashlight.enabled = !_flashlight.enabled;
+					if (!_lantern.activeSelf)
+					{
+						_lantern.SetActive(true);
+					}
+					else _lantern.SetActive(false);
+				}
+				
 				break;
 
 			case InputAction.Use:
@@ -196,6 +211,20 @@ public sealed class PlayerAbilities : MonoBehaviour
 				else
 				{
 					_currentSpeed = _walkSpeed;
+				}
+
+				break;
+
+			case InputAction.PhotoCamera:
+
+				if (!_isLanternActive)
+				{
+					_isPhotoCameraActive = !_isPhotoCameraActive;
+					if (!_photoCamera.activeSelf)
+					{
+						_photoCamera.SetActive(true);
+					}
+					else _photoCamera.SetActive(false);
 				}
 
 				break;

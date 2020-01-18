@@ -6,7 +6,7 @@ public sealed class SfxTrigger : MonoBehaviour
 {
 	#region Variables declaration
 
-	[SerializeField] private AudioClip _sfx;
+	[SerializeField] private AudioClip _sfx = null;
 	private AudioSource _audioSource;
 	private BoxCollider _collider;
 

@@ -6,7 +6,7 @@ public sealed class MusicTrigger : MonoBehaviour
 {
 	#region Variables declaration
 
-	[SerializeField] private AudioClip _music;
+	[SerializeField] private AudioClip _music = null;
 	private BoxCollider _collider;
 
 	#endregion

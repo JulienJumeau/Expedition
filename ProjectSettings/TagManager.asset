@@ -22,11 +22,11 @@ TagManager:
   - Player
   - Ground
   - Switch
+  - Collectable
+  - Climbable
+  - Jumpable
+  - Pullable
   - TriggerArea
-  - Items
-  - WallClimb
-  - PullObject
-  - PitJump
   - 
   - 
   - 

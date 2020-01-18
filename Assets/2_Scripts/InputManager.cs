@@ -18,11 +18,11 @@ public sealed class InputManager : MonoBehaviour
 {
 	#region Variables declaration
 
-	[Range(1, 10)] [SerializeField] private float _cameraSensitivity;
+	[Range(1, 10)] [SerializeField] private float _cameraSensitivity = 3;
 	public static InputManager _current;
 
 	private float _verticalRot, _horizontalRot;
-	private bool _isCrouching, _isPulling;
+	private bool _isCrouching;
 
 	#endregion
 

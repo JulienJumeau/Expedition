@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public sealed class PlayerAbilities : MonoBehaviour
@@ -8,48 +7,39 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	public static PlayerAbilities _current;
 	public static bool _isActionPlaying;
-	public static bool _isLanternActive;
-	public static bool _isPhotoCameraActive;
 
-	[Range(1, 10)] [SerializeField] private float _walkSpeed;
-	[Range(1, 5)] [SerializeField] private float _crouchSpeed;
-	[Range(1, 5)] [SerializeField] private float _pullObjectSpeed;
-	[Range(5, 15)] [SerializeField] private float _sprintSpeed;
-	[SerializeField] private LayerMask _layerMask;
-	[SerializeField] private GameObject _lantern;
-	[SerializeField] private GameObject _photoCamera;
+	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
+	[Range(5, 15)] [SerializeField] private float _sprintSpeed = 10;
+	[Range(1, 5)] [SerializeField] private float _crouchSpeed = 3;
+	[Range(1, 5)] [SerializeField] private float _pullObjectSpeed = 2;
+	[Range(1, 5)] [SerializeField] private int _lightbulbNbrMax = 2;
+	[SerializeField] private LayerMask _layerMask = 0;
+	[SerializeField] private GameObject _lanternGO = null, _photoCameraGO = null, _flashlightGO = null;
 
 	private Camera _camera;
 	private CharacterController _characterController;
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
-	private RaycastHit _hitForward, _hitTopFront, _hitTopBack;
+	private RaycastHit _hitForward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
 	private float _characterInitialHeight, _currentSpeed;
-
-	public static int _lightbulbNbr;
-	[Range(1f, 5f)] [SerializeField] private int _lightbulbNbrMax = 2;
-	private int _OilLevel; //Between 0 and 1
-
+	private int _lightbulbNbr;
+	private int _oilLevel, _oilLevelMax;
 
 	#endregion
 
-	#region Unity Methods
+	#region Unity Methods - Awake/Start/Update
 
 	private void Awake()
 	{
-		#region Variables initialization
-
 		_camera = Camera.main;
 		_characterController = GetComponent<CharacterController>();
+		_flashlight = _flashlightGO.GetComponent<Light>();
 		_characterInitialHeight = _characterController.height;
-		_flashlight = GameObject.FindWithTag("FlashLight").GetComponent<Light>();
 		_currentSpeed = _walkSpeed;
-
 		_lightbulbNbr = 0;
 		_lightbulbNbrMax = 2;
-		_OilLevel = 0;
-
-		#endregion
+		_oilLevel = 0;
+		_oilLevelMax = 3;
 	}
 
 	private void Start()
@@ -59,43 +49,36 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Update()
 	{
-		// Call movement method each frame
 		if (!_isActionPlaying)
 		{
 			Movement();
 		}
 
-		// Check if the player is aiming a GameObject with a specific layermask ( raycast beside camera forward ) 
-		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 2f, _layerMask))
-		{
-
-		}
+		Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 2f, _layerMask);
 	}
 
 	#endregion
 
-	#region Custom Methods
+	#region Player Movements - InputMoves/Camera EventsArgs + Move Method
 
-	#region Events Subscription
-
-	private void EventSubscription()
+	private void PlayerAbilities_OnCameraInputPressed(object sender, InputManager.CameraMoveEventArgs e)
 	{
-		InputManager._current.OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
-		InputManager._current.OnCameraMove += PlayerAbilities_OnCameraInputPressed;
-		InputManager._current.OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
+		this.transform.rotation = Quaternion.identity;
+		this.transform.Rotate(new Vector3(0, e.rotationVector.y, 0));
 	}
 
-	#endregion
-
-	#region Player Movements
+	private void PlayerAbilities_OnDirectionInputPressed(object sender, InputManager.DirectionInputPressedEventArgs e)
+	{
+		_motionForward = this.transform.forward * e.directionVector.z;
+		_motionStrafe = this.transform.right * e.directionVector.x;
+		_direction = (_motionForward + _motionStrafe).normalized;
+	}
 
 	private void Movement()
 	{
-		// Reset the motion and increment it beside moves initialized in direcetion event
 		_motion = Vector3.zero;
 		_motion += (_motionForward + _motionStrafe).normalized * _currentSpeed;
 
-		// Check if the character is grounded, if not add the gravity
 		if (_characterController.isGrounded)
 		{
 			_motion.y = 0;
@@ -106,32 +89,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 			_motion += this.transform.up * Physics.gravity.y;
 		}
 
-		// Call the native method Move from character controller and send all moves to it
 		_characterController.Move(_motion * Time.deltaTime);
 		_motionForward = Vector3.zero;
 		_motionStrafe = Vector3.zero;
 	}
 
-	// Method called when an input direction event is triggered, receive args for direction variable used in movement
-	private void PlayerAbilities_OnDirectionInputPressed(object sender, InputManager.DirectionInputPressedEventArgs e)
-	{
-		_motionForward = this.transform.forward * e.directionVector.z;
-		_motionStrafe = this.transform.right * e.directionVector.x;
-		_direction = (_motionForward + _motionStrafe).normalized;
-	}
-
-	// Method called when a camera rotation event is triggered, directly rotate the character beside rotation args
-	private void PlayerAbilities_OnCameraInputPressed(object sender, InputManager.CameraMoveEventArgs e)
-	{
-		this.transform.rotation = Quaternion.identity;
-		this.transform.Rotate(new Vector3(0, e.rotationVector.y, 0));
-	}
-
 	#endregion
 
-	#region Player Actions
+	#region Player Actions - InputActions EventsArgs + Crouch/Climb/Jump/HoldItem/CollectItems/PullObject Methods + Event Subs
 
-	// Method called when an action event is triggered, received the desired action as args (enum)
 	private void PlayerAbilities_OnActionButtonPressed(object sender, InputManager.ActionInputPressedEventArgs e)
 	{
 		switch (e.actionPressed)
@@ -153,7 +119,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_currentSpeed = _sprintSpeed;
 				break;
 
-
 			case InputAction.Crouch:
 				_currentSpeed = _crouchSpeed;
 
@@ -165,46 +130,53 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.Lantern:
+				_flashlight.enabled = !_flashlight.enabled;
+				HoldItem(_lanternGO, _photoCameraGO);
+				break;
 
-				if (!_isPhotoCameraActive)
-				{
-					_isLanternActive = !_isLanternActive;
-					_flashlight.enabled = !_flashlight.enabled;
-					if (!_lantern.activeSelf)
-					{
-						_lantern.SetActive(true);
-					}
-					else _lantern.SetActive(false);
-				}
-				
+			case InputAction.PhotoCamera:
+				HoldItem(_photoCameraGO, _lanternGO);
 				break;
 
 			case InputAction.Use:
 
 				if (_hitForward.transform != null)
 				{
-					TriggerActionToExecute(_hitForward.transform.gameObject.layer);
-					CollectItems();
+					if (_hitForward.transform.gameObject.layer == 10)
+					{
+						_hitForward.transform.GetComponent<MeshRenderer>().material.color = Color.green;
+					}
+
+					if (_hitForward.transform.gameObject.layer == 11)
+					{
+						CollectItems();
+					}
 				}
 
 				break;
 
 			case InputAction.Jump:
 
-				if (_hitForward.transform != null)
+				if (_hitForward.transform != null && !_isActionPlaying)
 				{
-					TriggerMoveToExecute(_hitForward.transform.gameObject.layer);
+					if (_hitForward.transform.gameObject.layer == 12)
+					{
+						StartCoroutine(Climb());
+					}
+
+					if (_hitForward.transform.gameObject.layer == 13)
+					{
+						StartCoroutine(Jump());
+					}
 				}
 
 				break;
 
 			case InputAction.Pull:
 
-				if (_hitForward.transform != null)
+				if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckGroundCollisionBeforePull(_characterInitialHeight))
 				{
-					Debug.Log(e.actionPressed);
 					_currentSpeed = _pullObjectSpeed;
-					//TriggerActionToExecute(_hitForward.transform.gameObject.layer);
 					PullObject();
 				}
 
@@ -215,26 +187,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				break;
 
-			case InputAction.PhotoCamera:
-
-				if (!_isLanternActive)
-				{
-					_isPhotoCameraActive = !_isPhotoCameraActive;
-					if (!_photoCamera.activeSelf)
-					{
-						_photoCamera.SetActive(true);
-					}
-					else _photoCamera.SetActive(false);
-				}
-
-				break;
-
 			default:
 				break;
 		}
 	}
-
-	#region Crouch and Stand Action
 
 	private void CrouchAndStand(float height)
 	{
@@ -254,62 +210,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		CrouchAndStand(height);
 	}
 
-	#endregion
-
-	#region Action Button
-
-	private void TriggerActionToExecute(int layer)
-	{
-		switch (layer)
-		{
-			case 10:
-				_hitForward.transform.GetComponent<MeshRenderer>().material.color = Color.green;
-
-				break;
-
-			//case 14:
-
-			//	if (!_isActionPlaying)
-			//	{
-			//		Debug.Log("Pull");
-			//		PullObject2();
-			//	}
-
-			//	break;
-
-			default:
-				break;
-		}
-	}
-
-	private void TriggerMoveToExecute(int layer)
-	{
-		switch (layer)
-		{
-			case 13:
-
-				if (!_isActionPlaying)
-				{
-					StartCoroutine(Climbing());
-				}
-
-				break;
-
-			case 15:
-
-				if (!_isActionPlaying)
-				{
-					StartCoroutine(Jumping());
-				}
-
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	private IEnumerator Climbing()
+	private IEnumerator Climb()
 	{
 		_isActionPlaying = true;
 
@@ -322,14 +223,13 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isActionPlaying = false;
 	}
 
-	private IEnumerator Jumping()
+	private IEnumerator Jump()
 	{
 		_isActionPlaying = true;
 
 		Vector3 heading = _hitForward.point - this.transform.position;
 		heading.y = 0;
 
-		//this.transform.position += this.transform.forward * 8f;
 		this.transform.position += _hitForward.transform.right * Mathf.Sign(heading.x) * 8f;
 
 		yield return null;
@@ -337,18 +237,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isActionPlaying = false;
 	}
 
-	private void PullObject()
+	private void HoldItem(GameObject goToHandle, GameObject goToHide)
 	{
-		if (_hitForward.transform.gameObject.CompareTag("Pullable"))
-		{
-			_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
-		}
+		goToHandle.SetActive(!goToHandle.activeSelf);
+		goToHide.SetActive(false);
 	}
-
-	//private void PullObject2()
-	//{
-	//	_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
-	//}
 
 	private void CollectItems()
 	{
@@ -363,14 +256,33 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		if (_hitForward.transform.gameObject.CompareTag("Oil"))
 		{
-			_OilLevel = 1;
-			Destroy(_hitForward.transform.gameObject);
+			if (_oilLevel < _oilLevelMax)
+			{
+				_oilLevel++;
+				Destroy(_hitForward.transform.gameObject);
+			}
 		}
 	}
 
-	#endregion
+	private void PullObject()
+	{
+		_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
+	}
 
-	#endregion
+	private bool CheckGroundCollisionBeforePull(float height)
+	{
+		Physics.Raycast(_direction * _characterController.radius + _characterController.transform.position, -_characterController.transform.up, out _hitDownFront, height);
+		Physics.Raycast(-_direction * _characterController.radius + _characterController.transform.position, -_characterController.transform.up, out _hitDownBack, height);
+
+		return _hitDownFront.transform != null && _hitDownBack.transform != null && _hitDownFront.transform.gameObject.layer == 9 && _hitDownBack.transform.gameObject.layer == 9;
+	}
+
+	private void EventSubscription()
+	{
+		InputManager._current.OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
+		InputManager._current.OnCameraMove += PlayerAbilities_OnCameraInputPressed;
+		InputManager._current.OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
+	}
 
 	#endregion
 }

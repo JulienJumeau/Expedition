@@ -1474,6 +1474,11 @@ PrefabInstance:
       propertyPath: _sprintSpeed
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 726106399211285147, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1213406187133769049, guid: 85fad3a67a0340349a5005343f3c6858,
         type: 3}
       propertyPath: m_Name
@@ -1528,6 +1533,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187385127708, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1213406187385127708, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2037606717853726951, guid: 85fad3a67a0340349a5005343f3c6858,
         type: 3}

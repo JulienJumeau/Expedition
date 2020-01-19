@@ -21,8 +21,8 @@ public sealed class InputManager : MonoBehaviour
 
 	public static InputManager _current;
 
-	[Range(1, 10)] [SerializeField] private float _cameraSensitivity = 3;
-
+	[Range(1, 10)] [SerializeField] private float _initialCameraSensitivity = 3;
+	private float _cameraSensitivity;
 	private float _verticalRot, _horizontalRot;
 
 	#endregion
@@ -34,6 +34,7 @@ public sealed class InputManager : MonoBehaviour
 		#region Variables initialization
 
 		_current = this;
+		_cameraSensitivity = _initialCameraSensitivity;
 		_verticalRot = _horizontalRot = 0f;
 
 		#endregion
@@ -60,11 +61,13 @@ public sealed class InputManager : MonoBehaviour
 
 				else if (Input.GetButton("Pulling"))
 				{
+					_cameraSensitivity = 0;
 					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Pull });
 				}
 
 				else
 				{
+					_cameraSensitivity = _initialCameraSensitivity;
 					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Walk });
 				}
 			}

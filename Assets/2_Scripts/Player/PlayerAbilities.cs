@@ -21,7 +21,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Animator _animator;
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
-	private RaycastHit _hitForward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
+	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
 	private bool _isCrouching;
 	private string[] _triggerAnimationNames;
 	private int _lightbulbNbr;
@@ -187,7 +187,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Pull:
 
-				if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckGroundCollisionBeforePull(_characterInitialHeight))
+				if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight))
 				{
 					_currentSpeed = _pullObjectSpeed;
 					PullObject();
@@ -287,12 +287,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
 	}
 
-	private bool CheckGroundCollisionBeforePull(float height)
+	private bool CheckCollisionBeforePull(float height)
 	{
-		Physics.Raycast(_direction * _characterController.radius + _characterController.transform.position, -_characterController.transform.up, out _hitDownFront, height);
-		Physics.Raycast(-_direction * _characterController.radius + _characterController.transform.position, -_characterController.transform.up, out _hitDownBack, height);
+		Physics.Raycast((_direction * _characterController.radius) + _characterController.transform.position, -_characterController.transform.up, out _hitDownFront, height);
+		Physics.Raycast((-_direction * _characterController.radius) + _characterController.transform.position, -_characterController.transform.up, out _hitDownBack, height);
+		Physics.Raycast((_direction * _characterController.radius) + _characterController.transform.position, -_characterController.transform.forward, out _hitBackward, _characterController.radius);
 
-		return _hitDownFront.transform != null && _hitDownBack.transform != null && _hitDownFront.transform.gameObject.layer == 9 && _hitDownBack.transform.gameObject.layer == 9;
+		return _hitDownFront.transform != null && _hitDownBack.transform != null &&
+			_hitDownFront.transform.gameObject.layer == 9 && _hitDownBack.transform.gameObject.layer == 9 &&
+			(_hitBackward.transform == null || _hitBackward.transform == this.transform);
 	}
 
 	private void ResetAllTriggerAnimation()

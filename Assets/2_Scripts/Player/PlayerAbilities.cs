@@ -18,12 +18,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private Camera _camera;
 	private CharacterController _characterController;
+	private Animator _animator;
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
-	private float _characterInitialHeight, _currentSpeed;
+	private bool _isCrouching;
+	private string[] _triggerAnimationNames;
 	private int _lightbulbNbr;
 	private int _oilLevel, _oilLevelMax;
+	private float _characterInitialHeight, _currentSpeed;
 
 	#endregion
 
@@ -34,6 +37,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_camera = Camera.main;
 		_characterController = GetComponent<CharacterController>();
 		_flashlight = _flashlightGO.GetComponent<Light>();
+		_animator = _camera.GetComponent<Animator>();
+		_triggerAnimationNames = new string[4] { "IsWalk", "IsRun", "IsJumping", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
 		_currentSpeed = _walkSpeed;
 		_lightbulbNbr = 0;
@@ -113,10 +118,17 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Walk:
 				_currentSpeed = _walkSpeed;
+				ResetAllTriggerAnimation();
+				_animator.SetBool(_triggerAnimationNames[0], true);
 				break;
 
 			case InputAction.Run:
-				_currentSpeed = _sprintSpeed;
+				if (!_isCrouching)
+				{
+					_currentSpeed = _sprintSpeed;
+					ResetAllTriggerAnimation();
+					_animator.SetBool(_triggerAnimationNames[1], true);
+				}
 				break;
 
 			case InputAction.Crouch:
@@ -124,6 +136,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (_characterController.isGrounded)
 				{
+					_isCrouching = true;
 					CrouchAndStand(_characterInitialHeight / 6);
 				}
 
@@ -188,6 +201,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			default:
+				ResetAllTriggerAnimation();
 				break;
 		}
 	}
@@ -208,6 +222,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		}
 
 		CrouchAndStand(height);
+		_isCrouching = false;
 	}
 
 	private IEnumerator Climb()
@@ -233,7 +248,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 		this.transform.position += _hitForward.transform.right * Mathf.Sign(heading.x) * 8f;
 
 		yield return null;
-		//yield return new WaitForSeconds(2);
+		//_animator.SetTrigger("IsJump");
+		//Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).length);
+		//yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
+		//_animator.ResetTrigger("IsJump");
 		_isActionPlaying = false;
 	}
 
@@ -275,6 +293,14 @@ public sealed class PlayerAbilities : MonoBehaviour
 		Physics.Raycast(-_direction * _characterController.radius + _characterController.transform.position, -_characterController.transform.up, out _hitDownBack, height);
 
 		return _hitDownFront.transform != null && _hitDownBack.transform != null && _hitDownFront.transform.gameObject.layer == 9 && _hitDownBack.transform.gameObject.layer == 9;
+	}
+
+	private void ResetAllTriggerAnimation()
+	{
+		for (int i = 0; i < _triggerAnimationNames.Length; i++)
+		{
+			_animator.ResetTrigger(_triggerAnimationNames[i]);
+		}
 	}
 
 	private void EventSubscription()

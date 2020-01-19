@@ -3,6 +3,7 @@ using UnityEngine;
 
 public enum InputAction
 {
+	Idle,
 	Use,
 	Lantern,
 	Stand,
@@ -18,14 +19,14 @@ public sealed class InputManager : MonoBehaviour
 {
 	#region Variables declaration
 
-	[Range(1, 10)] [SerializeField] private float _cameraSensitivity = 3;
 	public static InputManager _current;
 
+	[Range(1, 10)] [SerializeField] private float _cameraSensitivity = 3;
+
 	private float _verticalRot, _horizontalRot;
-	private bool _isCrouching;
 
 	#endregion
-
+	
 	#region Unity Methods
 
 	private void Awake()
@@ -52,7 +53,7 @@ public sealed class InputManager : MonoBehaviour
 			{
 				DirectionInputPressed(new DirectionInputPressedEventArgs() { directionVector = new Vector3(strafeInput, 0, forwardInput) });
 
-				if (Input.GetButton("Running") && !_isCrouching)
+				if (Input.GetButton("Running") && !Input.GetButton("Crouching"))
 				{
 					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Run });
 				}
@@ -66,6 +67,11 @@ public sealed class InputManager : MonoBehaviour
 				{
 					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Walk });
 				}
+			}
+
+			else
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Idle });
 			}
 
 			if (_horizontalRot != 0 || _verticalRot != 0)
@@ -90,13 +96,11 @@ public sealed class InputManager : MonoBehaviour
 
 			if (Input.GetButton("Crouching"))
 			{
-				_isCrouching = true;
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Crouch });
 			}
 
 			if (Input.GetButtonUp("Crouching"))
 			{
-				_isCrouching = false;
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Stand });
 			}
 
@@ -108,6 +112,11 @@ public sealed class InputManager : MonoBehaviour
 			if (Input.GetButtonDown("PhotoCamera"))
 			{
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.PhotoCamera });
+			}
+
+			if (!Input.anyKey)
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Idle });
 			}
 
 			#endregion

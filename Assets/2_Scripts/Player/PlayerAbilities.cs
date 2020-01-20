@@ -20,7 +20,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private CharacterController _characterController;
 	private Animator _animator;
 	private Light _flashlight;
-	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
+	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
 	private bool _isCrouching, _isHiding;
 	private string[] _triggerAnimationNames;
@@ -221,12 +221,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.Pull:
-
+				
 				if (!_isHiding)
 				{
-
 					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight))
 					{
+						Debug.Log(_hitForward.transform.name);
 						_currentSpeed = _pullObjectSpeed;
 						PullObject();
 					}
@@ -268,9 +268,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		_isActionPlaying = true;
 
-		Vector3 heading = (_hitForward.point - this.transform.position) * 1.1f;
-		heading.y = 0;
-		this.transform.position = new Vector3(this.transform.position.x + heading.x, _hitForward.transform.localScale.y + 0.73f, this.transform.position.z + heading.z);
+		//Vector3 heading = (_hitForward.point - this.transform.position) * 1.1f;
+		//heading.y = 0;
+		this.transform.position = _hitForward.transform.GetChild(0).position;
+		//this.transform.position = new Vector3(this.transform.position.x + heading.x, _hitForward.transform.localScale.y + 0.73f, this.transform.position.z + heading.z);
 
 		yield return null;
 		//yield return new WaitForSeconds(2);
@@ -351,7 +352,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isActionPlaying = true;
 		_isHiding = true;
 
-		this.transform.position = _hitForward.transform.position;
+		Debug.Log(_hitForward.transform.name);
+		_positionBeforeHide = this.transform.position;
+		this.transform.position = _hitForward.transform.parent.GetChild(0).transform.position;
 		Quaternion rotation = Quaternion.LookRotation(_hitForward.transform.forward, Vector3.up);
 		this.transform.rotation = rotation;
 		_isActionPlaying = false;
@@ -360,7 +363,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void GetOut()
 	{
 		_isHiding = false;
-		this.transform.position = this.transform.position + this.transform.forward;
+		//this.transform.position = this.transform.position + this.transform.forward;
+		this.transform.position = _positionBeforeHide;
 		_characterController.enabled = true;
 	}
 

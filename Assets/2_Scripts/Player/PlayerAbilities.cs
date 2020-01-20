@@ -22,7 +22,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction;
 	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
-	private bool _isCrouching;
+	private bool _isCrouching, _isHiding;
 	private string[] _triggerAnimationNames;
 	private int _lightbulbNbr;
 	private int _oilLevel, _oilLevelMax;
@@ -54,7 +54,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Update()
 	{
-		if (!_isActionPlaying)
+		if (!_isActionPlaying && !_isHiding)
 		{
 			Movement();
 		}
@@ -68,8 +68,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void PlayerAbilities_OnCameraInputPressed(object sender, InputManager.CameraMoveEventArgs e)
 	{
-		this.transform.rotation = Quaternion.identity;
-		this.transform.Rotate(new Vector3(0, e.rotationVector.y, 0));
+		Vector3 rotation = this.transform.rotation.eulerAngles;
+		rotation.y += e.rotationVector.y;
+		this.transform.rotation = Quaternion.Euler(rotation);
 	}
 
 	private void PlayerAbilities_OnDirectionInputPressed(object sender, InputManager.DirectionInputPressedEventArgs e)
@@ -109,7 +110,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		{
 			case InputAction.Stand:
 
-				if (_hitTopFront.transform == null && _hitTopBack.transform == null)
+				if (_hitTopFront.transform == null && _hitTopBack.transform == null && !_isHiding)
 				{
 					StartCoroutine(CheckTopCollisionBeforeStand(_characterInitialHeight));
 				}
@@ -117,52 +118,86 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.Walk:
-				_currentSpeed = _walkSpeed;
-				ResetAllTriggerAnimation();
-				_animator.SetBool(_triggerAnimationNames[0], true);
+
+				if (!_isHiding)
+				{
+					_currentSpeed = _walkSpeed;
+					ResetAllTriggerAnimation();
+					_animator.SetBool(_triggerAnimationNames[0], true);
+				}
+
 				break;
 
 			case InputAction.Run:
-				if (!_isCrouching)
+
+				if (!_isCrouching && !_isHiding)
 				{
 					_currentSpeed = _sprintSpeed;
 					ResetAllTriggerAnimation();
 					_animator.SetBool(_triggerAnimationNames[1], true);
 				}
+
 				break;
 
 			case InputAction.Crouch:
-				_currentSpeed = _crouchSpeed;
 
-				if (_characterController.isGrounded)
+				if (!_isHiding)
 				{
-					_isCrouching = true;
-					CrouchAndStand(_characterInitialHeight / 6);
+					_currentSpeed = _crouchSpeed;
+
+					if (_characterController.isGrounded)
+					{
+						_isCrouching = true;
+						CrouchAndStand(_characterInitialHeight / 6);
+					}
 				}
 
 				break;
 
 			case InputAction.Lantern:
-				_flashlight.enabled = !_flashlight.enabled;
-				HoldItem(_lanternGO, _photoCameraGO);
+
+				if (!_isHiding)
+				{
+					_flashlight.enabled = !_flashlight.enabled;
+					HoldItem(_lanternGO, _photoCameraGO);
+				}
+
 				break;
 
 			case InputAction.PhotoCamera:
-				HoldItem(_photoCameraGO, _lanternGO);
+
+				if (!_isHiding)
+				{
+					HoldItem(_photoCameraGO, _lanternGO);
+				}
+
 				break;
 
 			case InputAction.Use:
 
 				if (_hitForward.transform != null)
 				{
-					if (_hitForward.transform.gameObject.layer == 10)
+					if (_hitForward.transform.gameObject.layer == 10 && !_isHiding)
 					{
 						_hitForward.transform.GetComponent<MeshRenderer>().material.color = Color.green;
 					}
 
-					if (_hitForward.transform.gameObject.layer == 11)
+					if (_hitForward.transform.gameObject.layer == 11 && !_isHiding)
 					{
 						CollectItems();
+					}
+
+					if (_hitForward.transform.gameObject.layer == 16)
+					{
+						if (!_isHiding)
+						{
+							Hide();
+						}
+
+						else
+						{
+							GetOut();
+						}
 					}
 				}
 
@@ -170,7 +205,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Jump:
 
-				if (_hitForward.transform != null && !_isActionPlaying)
+				if (_hitForward.transform != null && !_isActionPlaying && !_isHiding)
 				{
 					if (_hitForward.transform.gameObject.layer == 12)
 					{
@@ -187,15 +222,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Pull:
 
-				if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight))
+				if (!_isHiding)
 				{
-					_currentSpeed = _pullObjectSpeed;
-					PullObject();
-				}
 
-				else
-				{
-					_currentSpeed = _walkSpeed;
+					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight))
+					{
+						_currentSpeed = _pullObjectSpeed;
+						PullObject();
+					}
+
+					else
+					{
+						_currentSpeed = _walkSpeed;
+					}
 				}
 
 				break;
@@ -304,6 +343,25 @@ public sealed class PlayerAbilities : MonoBehaviour
 		{
 			_animator.ResetTrigger(_triggerAnimationNames[i]);
 		}
+	}
+
+	private void Hide()
+	{
+		_characterController.enabled = false;
+		_isActionPlaying = true;
+		_isHiding = true;
+
+		this.transform.position = _hitForward.transform.position;
+		Quaternion rotation = Quaternion.LookRotation(_hitForward.transform.forward, Vector3.up);
+		this.transform.rotation = rotation;
+		_isActionPlaying = false;
+	}
+
+	private void GetOut()
+	{
+		_isHiding = false;
+		this.transform.position = this.transform.position + this.transform.forward;
+		_characterController.enabled = true;
 	}
 
 	private void EventSubscription()

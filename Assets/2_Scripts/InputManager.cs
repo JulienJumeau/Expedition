@@ -26,7 +26,7 @@ public sealed class InputManager : MonoBehaviour
 	private float _verticalRot, _horizontalRot;
 
 	#endregion
-	
+
 	#region Unity Methods
 
 	private void Awake()
@@ -42,13 +42,13 @@ public sealed class InputManager : MonoBehaviour
 
 	private void Update()
 	{
+		#region MovementInput
+
 		if (!PlayerAbilities._isActionPlaying)
 		{
-			#region MovementInput
-
 			float strafeInput = Input.GetAxisRaw("Strafing"), forwardInput = Input.GetAxisRaw("MoveForward");
-			_horizontalRot += Input.GetAxisRaw("Rotation Camera X") * _cameraSensitivity;
-			_verticalRot += Input.GetAxisRaw("Rotation Camera Y") * _cameraSensitivity;
+			_horizontalRot = Input.GetAxisRaw("Rotation Camera X") * _cameraSensitivity;
+			_verticalRot = Input.GetAxisRaw("Rotation Camera Y") * _cameraSensitivity;
 
 			if (strafeInput != 0 || forwardInput != 0)
 			{
@@ -79,7 +79,7 @@ public sealed class InputManager : MonoBehaviour
 
 			if (_horizontalRot != 0 || _verticalRot != 0)
 			{
-				_verticalRot = Mathf.Clamp(_verticalRot, -90, 90);
+				//_verticalRot = Mathf.Clamp(_verticalRot, -90, 90);
 				CameraMove(new CameraMoveEventArgs() { rotationVector = new Vector3(_verticalRot, _horizontalRot, 0) });
 			}
 
@@ -121,9 +121,9 @@ public sealed class InputManager : MonoBehaviour
 			{
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Idle });
 			}
-
-			#endregion
 		}
+
+		#endregion
 	}
 
 	#endregion

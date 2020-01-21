@@ -2453,7 +2453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4111894157592348244}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tunnel X
   m_TagString: Untagged
   m_Icon: {fileID: 0}

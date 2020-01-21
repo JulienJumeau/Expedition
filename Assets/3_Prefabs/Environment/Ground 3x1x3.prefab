@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1624741359835241091}
   - component: {fileID: 3605947450643930988}
   - component: {fileID: 2147476992473831050}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5113465723039699543}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ground 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

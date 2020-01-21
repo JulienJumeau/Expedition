@@ -23,12 +23,12 @@ TagManager:
   - Ground
   - Switch
   - Collectable
-  - Climbable
+  - ClimbableWall
   - Jumpable
   - Pullable
   - TriggerArea
   - HidingArea
-  - 
+  - ClimbableBox
   - 
   - 
   - 

@@ -15,6 +15,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[Range(1, 5)] [SerializeField] private int _lightbulbNbrMax = 2;
 	[SerializeField] private LayerMask _layerMask = 0;
 	[SerializeField] private GameObject _lanternGO = null, _photoCameraGO = null, _flashlightGO = null;
+	[SerializeField] private AnimationCurve _climbWallAnimationCurve = null, _climbBoxAnimationCurve = null, _jumpAnimationCurve = null;
 
 	private Camera _camera;
 	private CharacterController _characterController;
@@ -209,19 +210,24 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					if (_hitForward.transform.gameObject.layer == 12)
 					{
-						StartCoroutine(Climb());
+						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 2, _climbWallAnimationCurve));
+					}
+
+					if (_hitForward.transform.gameObject.layer == 17)
+					{
+						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 0.5f, _climbBoxAnimationCurve));
 					}
 
 					if (_hitForward.transform.gameObject.layer == 13)
 					{
-						StartCoroutine(Jump());
+						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 2, _jumpAnimationCurve));
 					}
 				}
 
 				break;
 
 			case InputAction.Pull:
-				
+
 				if (!_isHiding)
 				{
 					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight))
@@ -264,35 +270,31 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isCrouching = false;
 	}
 
-	private IEnumerator Climb()
+	private IEnumerator AnimateMove(Vector3 origin, Vector3 targetPosition, float duration, AnimationCurve animationCurve)
 	{
 		_isActionPlaying = true;
+		_characterController.enabled = false;
+		ResetAllTriggerAnimation();
 
-		//Vector3 heading = (_hitForward.point - this.transform.position) * 1.1f;
-		//heading.y = 0;
-		this.transform.position = _hitForward.transform.GetChild(0).position;
-		//this.transform.position = new Vector3(this.transform.position.x + heading.x, _hitForward.transform.localScale.y + 0.73f, this.transform.position.z + heading.z);
+		//Vector3 direction = targetPosition - transform.position;
+		//Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+		//transform.rotation = rotation;
+
+		float elapsedTime = 0, percent, curvePercent;
+
+		while (elapsedTime <= duration)
+		{
+
+			elapsedTime += Time.deltaTime;
+			percent = Mathf.Clamp01(elapsedTime / duration);
+			curvePercent = animationCurve.Evaluate(percent);
+			this.transform.position = Vector3.Lerp(origin, targetPosition, curvePercent);
+			yield return null;
+		}
 
 		yield return null;
-		//yield return new WaitForSeconds(2);
 		_isActionPlaying = false;
-	}
-
-	private IEnumerator Jump()
-	{
-		_isActionPlaying = true;
-
-		Vector3 heading = _hitForward.point - this.transform.position;
-		heading.y = 0;
-
-		this.transform.position += _hitForward.transform.right * Mathf.Sign(heading.x) * 8f;
-
-		yield return null;
-		//_animator.SetTrigger("IsJump");
-		//Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).length);
-		//yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
-		//_animator.ResetTrigger("IsJump");
-		_isActionPlaying = false;
+		_characterController.enabled = true;
 	}
 
 	private void HoldItem(GameObject goToHandle, GameObject goToHide)

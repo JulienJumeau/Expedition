@@ -60,7 +60,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			Movement();
 		}
 
-		Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 2f, _layerMask);
+		Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask);
 	}
 
 	#endregion
@@ -208,7 +208,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (_hitForward.transform != null && !_isActionPlaying && !_isHiding)
 				{
-					if (_hitForward.transform.gameObject.layer == 12)
+					if (_hitForward.transform.gameObject.layer == 12 && _hitForward.distance < 1.1f)
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 1, _climbWallAnimationCurve));
 					}
@@ -230,9 +230,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isHiding)
 				{
-					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight))
+					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 2.7f)
 					{
-						Debug.Log(_hitForward.transform.name);
 						_currentSpeed = _pullObjectSpeed;
 						PullObject();
 					}
@@ -345,7 +344,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	}
 
 	private void Hide()
-	{	
+	{
 		_isActionPlaying = true;
 		_isHiding = true;
 		ResetAllTriggerAnimation();

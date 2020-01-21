@@ -210,7 +210,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					if (_hitForward.transform.gameObject.layer == 12)
 					{
-						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 2, _climbWallAnimationCurve));
+						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 1, _climbWallAnimationCurve));
 					}
 
 					if (_hitForward.transform.gameObject.layer == 17)
@@ -275,10 +275,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isActionPlaying = true;
 		_characterController.enabled = false;
 		ResetAllTriggerAnimation();
-
-		//Vector3 direction = targetPosition - transform.position;
-		//Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-		//transform.rotation = rotation;
 
 		float elapsedTime = 0, percent, curvePercent;
 
@@ -349,12 +345,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 	}
 
 	private void Hide()
-	{
-		_characterController.enabled = false;
+	{	
 		_isActionPlaying = true;
 		_isHiding = true;
+		ResetAllTriggerAnimation();
 
-		Debug.Log(_hitForward.transform.name);
 		_positionBeforeHide = this.transform.position;
 		this.transform.position = _hitForward.transform.parent.GetChild(0).transform.position;
 		Quaternion rotation = Quaternion.LookRotation(_hitForward.transform.forward, Vector3.up);
@@ -365,9 +360,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void GetOut()
 	{
 		_isHiding = false;
-		//this.transform.position = this.transform.position + this.transform.forward;
 		this.transform.position = _positionBeforeHide;
-		_characterController.enabled = true;
 	}
 
 	private void EventSubscription()

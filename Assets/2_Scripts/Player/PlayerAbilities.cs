@@ -23,7 +23,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isHiding, _isPulling;
+	private bool _isCrouching, _isHiding;
 	private string[] _triggerAnimationNames;
 	private int _lightbulbNbr;
 	private int _oilLevel, _oilLevelMax;
@@ -230,19 +230,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isHiding)
 				{
-					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && (_hitForward.distance < 2.5f || _isPulling))
+					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 2.7f)
 					{
-						Debug.Log(_isPulling);
 						_currentSpeed = _pullObjectSpeed;
-						_isPulling = true;
 						PullObject();
 					}
 
 					else
 					{
-						Debug.Log(_isPulling);
 						_currentSpeed = _walkSpeed;
-						_isPulling = false;
 					}
 				}
 

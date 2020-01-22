@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3233597759979161929}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Tunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 328162028273453979}
   - component: {fileID: 2940453186757926462}
   - component: {fileID: 8166609593558492042}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,37 +217,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1144610352330240617
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4165139162094810261}
-  m_Layer: 9
-  m_Name: Ground 3x1x3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4165139162094810261
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144610352330240617}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1290905496070351974}
-  m_Father: {fileID: 3166182701878528847}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2317621658467651119
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,10 +244,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2317621658467651119}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0, y: -1.75, z: 0}
   m_LocalScale: {x: 3, y: 0.5, z: 3}
   m_Children: []
-  m_Father: {fileID: 4165139162094810261}
+  m_Father: {fileID: 3166182701878528847}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6735677689170186234
@@ -352,7 +321,7 @@ GameObject:
   - component: {fileID: 579260582088637833}
   - component: {fileID: 2603021741448151036}
   - component: {fileID: 9104836592293096116}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +414,7 @@ GameObject:
   - component: {fileID: 4315181888768014388}
   - component: {fileID: 5667759311123310375}
   - component: {fileID: 7807727525446608593}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +506,7 @@ GameObject:
   - component: {fileID: 4025869433591157452}
   - component: {fileID: 5782563470157185881}
   - component: {fileID: 7052136926321825460}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,7 +595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4644027198777565882}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Tunnel (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +631,7 @@ GameObject:
   - component: {fileID: 6916148794008825073}
   - component: {fileID: 4479841540890555911}
   - component: {fileID: 4783924703270634434}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8699081617112218259}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Tunnel (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -876,7 +845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 258213530536379403}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -907,7 +876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140718294182669334}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -938,7 +907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2079431648723188102}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Tunnel (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -971,7 +940,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1909460231603707489}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ground 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,8 +971,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3166182701878528847}
-  m_Layer: 9
-  m_Name: Tunnel (1)
+  m_Layer: 0
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1020,9 +989,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3161485256323369463}
-  - {fileID: 8915338160309257348}
-  - {fileID: 4165139162094810261}
+  - {fileID: 1290905496070351974}
   m_Father: {fileID: 4111894157592348244}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -1035,7 +1002,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8702146302795376563}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1033,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 791334130499977058}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1097,7 +1064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1305049892906975843}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1131,7 +1098,7 @@ GameObject:
   - component: {fileID: 1440811509147950758}
   - component: {fileID: 937685675992037811}
   - component: {fileID: 2384513483118949484}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1223,7 +1190,7 @@ GameObject:
   - component: {fileID: 7411694870188667324}
   - component: {fileID: 4668938096279171893}
   - component: {fileID: 3738184787177345507}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1316,7 +1283,7 @@ GameObject:
   - component: {fileID: 50862519046392705}
   - component: {fileID: 8964504944029170817}
   - component: {fileID: 3835439647464771083}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1497,7 +1464,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7094071874694470217}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ground 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1531,7 +1498,7 @@ GameObject:
   - component: {fileID: 8458062196840403249}
   - component: {fileID: 6134738225402913410}
   - component: {fileID: 6209437207036597584}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1623,7 +1590,7 @@ GameObject:
   - component: {fileID: 1772973511339334600}
   - component: {fileID: 4331343206588931623}
   - component: {fileID: 1430945497189291969}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1704,36 +1671,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &6150806994795531519
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8915338160309257348}
-  m_Layer: 9
-  m_Name: Wall 3x1x3 (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8915338160309257348
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6150806994795531519}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3166182701878528847}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &6165239462540903855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1683,7 @@ GameObject:
   - component: {fileID: 685866191456624047}
   - component: {fileID: 6077740693576769622}
   - component: {fileID: 3559010499747907696}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1836,7 +1773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5965772456688099155}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ground 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1870,7 +1807,7 @@ GameObject:
   - component: {fileID: 2583642531160036430}
   - component: {fileID: 4163242186265119938}
   - component: {fileID: 2756955325565032263}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1950,36 +1887,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &6855177624775726023
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3161485256323369463}
-  m_Layer: 9
-  m_Name: Wall 3x1x3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3161485256323369463
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6855177624775726023}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3166182701878528847}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7004223095291992695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,7 +1896,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5251283274771813148}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2020,7 +1927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5492280470125169470}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2143,7 +2050,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1686494968931019529}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2177,7 +2084,7 @@ GameObject:
   - component: {fileID: 6421470053323449225}
   - component: {fileID: 8295927735503411448}
   - component: {fileID: 5789080824797656025}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2270,7 +2177,7 @@ GameObject:
   - component: {fileID: 4081709237970027958}
   - component: {fileID: 4285262518898836654}
   - component: {fileID: 3023126493791676829}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2363,7 +2270,7 @@ GameObject:
   - component: {fileID: 4780922381197782455}
   - component: {fileID: 5411506751295412879}
   - component: {fileID: 124229325590475772}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2453,7 +2360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4111894157592348244}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Tunnel X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2491,7 +2398,7 @@ GameObject:
   - component: {fileID: 5774429861390107828}
   - component: {fileID: 2117300106466063623}
   - component: {fileID: 6845862097477089662}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2581,7 +2488,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4664079253616450928}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ground 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

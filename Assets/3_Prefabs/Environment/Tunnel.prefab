@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4161138473381746716}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Tunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1090041070543605556}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Ground 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1912899940840111427}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 2486439484890153881}
   - component: {fileID: 4999157989445292556}
   - component: {fileID: 8395097048688101345}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 5378496205884734884}
   - component: {fileID: 3131340154837280594}
   - component: {fileID: 6286096306209706647}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 992348143630748317}
   - component: {fileID: 2973322229500546930}
   - component: {fileID: 469751207330989716}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 8324051059001647337}
   - component: {fileID: 6166623148972040800}
   - component: {fileID: 2792207720530722998}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Meshe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6755143469839581769}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wall 3x1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -23,7 +23,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isHiding;
+	private bool _isCrouching, _isHiding, _isPulling;
 	private string[] _triggerAnimationNames;
 	private int _lightbulbNbr;
 	private int _oilLevel, _oilLevelMax;
@@ -230,15 +230,17 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isHiding)
 				{
-					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 2.7f)
+					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && (_hitForward.distance < 2.5f || _isPulling))
 					{
 						_currentSpeed = _pullObjectSpeed;
+						_isPulling = true;
 						PullObject();
 					}
 
 					else
 					{
 						_currentSpeed = _walkSpeed;
+						_isPulling = false;
 					}
 				}
 
@@ -351,7 +353,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		_positionBeforeHide = this.transform.position;
 		this.transform.position = _hitForward.transform.parent.GetChild(0).transform.position;
-		Quaternion rotation = Quaternion.LookRotation(_hitForward.transform.forward, Vector3.up);
+		Quaternion rotation = Quaternion.LookRotation(-_hitForward.transform.right, Vector3.up);
 		this.transform.rotation = rotation;
 		_isActionPlaying = false;
 	}

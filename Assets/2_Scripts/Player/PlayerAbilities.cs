@@ -301,10 +301,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController.enabled = true;
 	}
 
-	private void HoldItem(GameObject goToHandle, GameObject goToHide)
+	private void HoldItem(GameObject goToHandle, GameObject goToHide, bool mustDropItem = false)
 	{
-		goToHandle.SetActive(!goToHandle.activeSelf);
-		goToHide.SetActive(false);
+		if (!mustDropItem)
+		{
+			goToHandle.SetActive(!goToHandle.activeSelf);
+			goToHide.SetActive(false);
+		}
+
+		else
+		{
+			goToHandle.SetActive(false);
+			goToHide.SetActive(false);
+		}
 	}
 
 	private void CollectItems()
@@ -354,6 +363,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Hide()
 	{
+		HoldItem(_lanternGO, _photoCameraGO, true);
 		_isActionPlaying = true;
 		_characterController.enabled = false;
 		_isHiding = true;
@@ -376,8 +386,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void EventSubscription()
 	{
 		FindObjectOfType<InputManager>().OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
-		InputManager._current.OnCameraMove += PlayerAbilities_OnCameraInputPressed;
-		InputManager._current.OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
+		FindObjectOfType<InputManager>().OnCameraMove += PlayerAbilities_OnCameraInputPressed;
+		FindObjectOfType<InputManager>().OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
 	}
 
 	#endregion

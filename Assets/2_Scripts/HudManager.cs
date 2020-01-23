@@ -28,7 +28,6 @@ public class HudManager : MonoBehaviour
 	private void HudManager_OnHUDDisplay(object sender, PlayerAbilities.HUDDisplayEventArgs e)
 	{
 		_textComponent.enabled = e.isActive;
-		Debug.Log(e.isActive + " " + e.layerDetected);
 		_textComponent.text = e.isActive ? ConvertLayerIndexToInputName(e.layerDetected) : "";
 	}
 

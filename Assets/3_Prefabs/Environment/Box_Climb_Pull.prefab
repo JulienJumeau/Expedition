@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2011623915676556642}
   - component: {fileID: 2011623915676556645}
   - component: {fileID: 2011623915676556646}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: Box_Climb_Pull
   m_TagString: Pullable
   m_Icon: {fileID: 0}

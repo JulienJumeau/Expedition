@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public sealed class PlayerAbilities : MonoBehaviour
@@ -60,7 +61,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 			Movement();
 		}
 
-		Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask);
+		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask))
+		{
+			HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer });
+		}
+
+		else
+		{
+			HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0 });
+		}
 	}
 
 	#endregion
@@ -346,28 +355,44 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void Hide()
 	{
 		_isActionPlaying = true;
+		_characterController.enabled = false;
 		_isHiding = true;
 		ResetAllTriggerAnimation();
 
 		_positionBeforeHide = this.transform.position;
 		this.transform.position = _hitForward.transform.parent.GetChild(0).transform.position;
-		Quaternion rotation = Quaternion.LookRotation(_hitForward.transform.forward, Vector3.up);
+		Quaternion rotation = Quaternion.LookRotation(-_hitForward.transform.right, Vector3.up);
 		this.transform.rotation = rotation;
 		_isActionPlaying = false;
 	}
 
 	private void GetOut()
 	{
-		_isHiding = false;
 		this.transform.position = _positionBeforeHide;
+		_isHiding = false;
+		_characterController.enabled = true;
 	}
 
 	private void EventSubscription()
 	{
-		InputManager._current.OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
+		FindObjectOfType<InputManager>().OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
 		InputManager._current.OnCameraMove += PlayerAbilities_OnCameraInputPressed;
 		InputManager._current.OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
 	}
+
+	#endregion
+
+	#region Events
+
+	public class HUDDisplayEventArgs : EventArgs
+	{
+		public bool isActive;
+		public int layerDetected;
+	}
+
+	public event EventHandler<HUDDisplayEventArgs> OnHUDDisplay;
+
+	public void HUDDisplay(HUDDisplayEventArgs e) => OnHUDDisplay?.Invoke(this, e);
 
 	#endregion
 }

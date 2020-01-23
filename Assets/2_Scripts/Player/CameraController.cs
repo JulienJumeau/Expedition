@@ -13,11 +13,7 @@ public sealed class CameraController : MonoBehaviour
 	private void Awake()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
-	}
-
-	private void Start()
-	{
-		InputManager._current.OnCameraMove += CameraController_OnCameraInputPressed;
+		FindObjectOfType<InputManager>().OnCameraMove += CameraController_OnCameraInputPressed;
 	}
 
 	#endregion

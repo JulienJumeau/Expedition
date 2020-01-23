@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 349597807321260391}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Wall_inside_full_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,11 +226,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: E_Mur_04
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 31d31b005336f264085f57fd8ae1091c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 6219479713449922940, guid: 31d31b005336f264085f57fd8ae1091c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: af756428c28bb36418041bc5b9a4f70a, type: 2}
+    - target: {fileID: 6634025053481119385, guid: 31d31b005336f264085f57fd8ae1091c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31d31b005336f264085f57fd8ae1091c, type: 3}
 --- !u!4 &2348501742515642951 stripped

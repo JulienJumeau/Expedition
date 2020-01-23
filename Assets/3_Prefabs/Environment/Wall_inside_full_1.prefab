@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 870950371279063973}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Wall_inside_full_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,6 +205,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: E_Mur_01
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: ca0797c05c71284489ab075704b067f2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750737272227008834, guid: ca0797c05c71284489ab075704b067f2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6824777664409846321, guid: ca0797c05c71284489ab075704b067f2,
         type: 3}

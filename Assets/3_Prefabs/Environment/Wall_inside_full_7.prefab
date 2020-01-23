@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5155790273348956499}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Wall_inside_full_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,10 +186,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1435731609481958067, guid: 5cae5e431ee519443bd68f67b8ab56ec,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 5cae5e431ee519443bd68f67b8ab56ec,
         type: 3}
       propertyPath: m_Name
       value: E_Mur_03
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5cae5e431ee519443bd68f67b8ab56ec,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7366097213897262966, guid: 5cae5e431ee519443bd68f67b8ab56ec,
         type: 3}

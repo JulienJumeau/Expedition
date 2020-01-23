@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3840316102474110708}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Wall_inside_full_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,6 +131,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3840316102474110708}
     m_Modifications:
+    - target: {fileID: -6141133179636403037, guid: 6604bcb50eb77ad4eaedbb6fa8586a49,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 6604bcb50eb77ad4eaedbb6fa8586a49,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -205,6 +210,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: E_Mur_02
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 6604bcb50eb77ad4eaedbb6fa8586a49,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3552192364571003525, guid: 6604bcb50eb77ad4eaedbb6fa8586a49,
         type: 3}

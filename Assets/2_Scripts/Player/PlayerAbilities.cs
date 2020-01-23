@@ -24,7 +24,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isHiding;
+	private bool _isCrouching;
+	[HideInInspector] public bool _isHiding;
 	private string[] _triggerAnimationNames;
 	private int _lightbulbNbr;
 	private int _oilLevel, _oilLevelMax;

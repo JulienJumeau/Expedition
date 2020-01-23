@@ -211,6 +211,7 @@ MonoBehaviour:
   - {fileID: 7544752226288786325}
   - {fileID: 7544752227083561255}
   - {fileID: 7544752226325262778}
+  _isNextDestinationRandom: 0
 --- !u!1 &7544752227083561248
 GameObject:
   m_ObjectHideFlags: 0

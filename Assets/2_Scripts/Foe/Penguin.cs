@@ -6,8 +6,9 @@ public sealed class Penguin : MonoBehaviour
 	#region Variables declaration
 
 	[SerializeField] Transform[] _patrolPoints = null;
+	[SerializeField] private bool _isNextDestinationRandom = false;
 	private NavMeshAgent _agent;
-	private int _nextDesitnationIndex;
+	private int _nextDestinationIndex;
 
 	#endregion
 
@@ -16,19 +17,19 @@ public sealed class Penguin : MonoBehaviour
 	private void Awake()
 	{
 		_agent = GetComponent<NavMeshAgent>();
-		_nextDesitnationIndex = 0;
+		_nextDestinationIndex = 0;
 	}
 
 	private void Start()
 	{
-		GoToNextPoint();
+		GoToNextPatrolPoint();
 	}
 
 	private void Update()
 	{
 		if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
 		{
-			GoToNextPoint();
+			GoToNextPatrolPoint();
 		}
 	}
 
@@ -36,7 +37,7 @@ public sealed class Penguin : MonoBehaviour
 
 	#region Foe Patrol
 
-	private void GoToNextPoint()
+	private void GoToNextPatrolPoint()
 	{
 		if (_patrolPoints.Length == 0)
 		{
@@ -44,8 +45,20 @@ public sealed class Penguin : MonoBehaviour
 			return;
 		}
 
-		_agent.SetDestination(_patrolPoints[_nextDesitnationIndex].position);
-		_nextDesitnationIndex = (_nextDesitnationIndex + 1) % _patrolPoints.Length;
+
+		_agent.SetDestination(_patrolPoints[_nextDestinationIndex].position);
+		
+		if (_isNextDestinationRandom)
+		{
+			_nextDestinationIndex = Random.Range(0, _patrolPoints.Length);
+		}
+
+		else
+		{
+			_nextDestinationIndex++;
+		}
+
+		_nextDestinationIndex = (_nextDestinationIndex) % _patrolPoints.Length;
 	}
 
 	#endregion

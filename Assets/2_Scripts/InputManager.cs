@@ -19,8 +19,6 @@ public sealed class InputManager : MonoBehaviour
 {
 	#region Variables declaration
 
-	public static InputManager _current;
-
 	[Range(1, 10)] [SerializeField] private float _initialCameraSensitivity = 3;
 	private float _cameraSensitivity;
 	private float _verticalRot, _horizontalRot;
@@ -33,7 +31,6 @@ public sealed class InputManager : MonoBehaviour
 	{
 		#region Variables initialization
 
-		_current = this;
 		_cameraSensitivity = _initialCameraSensitivity;
 		_verticalRot = _horizontalRot = 0f;
 

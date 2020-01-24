@@ -22,7 +22,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private CharacterController _characterController;
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
-	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
+	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
 	private bool _isCrouching;
 	[HideInInspector] public bool _isHiding;
 	private string[] _triggerAnimationNames;
@@ -92,6 +92,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void Movement()
 	{
 		_motion = Vector3.zero;
+		Debug.Log(_currentSpeed);
 		_motion += (_motionForward + _motionStrafe).normalized * _currentSpeed;
 
 		if (_characterController.isGrounded)
@@ -117,20 +118,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		switch (e.actionPressed)
 		{
-			case InputAction.Stand:
-
-				if (_hitTopFront.transform == null && _hitTopBack.transform == null && !_isHiding)
-				{
-					StartCoroutine(CheckTopCollisionBeforeStand(_characterInitialHeight));
-				}
-
-				break;
-
 			case InputAction.Walk:
 
 				if (!_isHiding)
 				{
-					_currentSpeed = _walkSpeed;
+					if (!_isCrouching)
+					{
+						_currentSpeed = _walkSpeed;
+					}
+
 					ResetAllTriggerAnimation();
 					_animator.SetBool(_triggerAnimationNames[0], true);
 				}
@@ -152,12 +148,18 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isHiding)
 				{
-					_currentSpeed = _crouchSpeed;
-
-					if (_characterController.isGrounded)
+					if (!_isCrouching)
 					{
 						_isCrouching = true;
+						_currentSpeed = _crouchSpeed;
 						CrouchAndStand(_characterInitialHeight / 6);
+					}
+
+					else if (!CheckTopCollisionBeforeStand2(_characterInitialHeight))
+					{
+						_isCrouching = false;
+						_currentSpeed = _walkSpeed;
+						CrouchAndStand(_characterInitialHeight);
 					}
 				}
 
@@ -260,20 +262,14 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void CrouchAndStand(float height)
 	{
 		float lastHeight = _characterController.height;
+		//this.transform.position = new Vector3(this.transform.position.x, (_characterController.height - lastHeight) * 0.5f, this.transform.position.z);
 		_characterController.height = height;
-		this.transform.position = new Vector3(this.transform.position.x, (_characterController.height - lastHeight) * 0.5f, this.transform.position.z);
 	}
 
-	private IEnumerator CheckTopCollisionBeforeStand(float height)
+	private bool CheckTopCollisionBeforeStand2(float height)
 	{
-		while (Physics.Raycast(_direction * _characterController.radius + _characterController.transform.position, _characterController.transform.up, out _hitTopFront, (height / 3) + 1f)
-			|| Physics.Raycast(-_direction * _characterController.radius + _characterController.transform.position, _characterController.transform.up, out _hitTopBack, (height / 3) + 1f))
-		{
-			yield return new WaitForEndOfFrame();
-		}
-
-		CrouchAndStand(height);
-		_isCrouching = false;
+		return (Physics.Raycast(_direction * _characterController.radius + _characterController.transform.position, _characterController.transform.up, (height / 3) + 1f)
+			|| Physics.Raycast(-_direction * _characterController.radius + _characterController.transform.position, _characterController.transform.up, (height / 3) + 1f));
 	}
 
 	private IEnumerator AnimateMove(Vector3 origin, Vector3 targetPosition, float duration, AnimationCurve animationCurve)

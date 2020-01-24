@@ -6,7 +6,6 @@ public enum InputAction
 	Idle,
 	Use,
 	Lantern,
-	Stand,
 	Crouch,
 	Walk,
 	Run,
@@ -51,7 +50,7 @@ public sealed class InputManager : MonoBehaviour
 			{
 				DirectionInputPressed(new DirectionInputPressedEventArgs() { directionVector = new Vector3(strafeInput, 0, forwardInput) });
 
-				if (Input.GetButton("Running") && !Input.GetButton("Crouching"))
+				if (Input.GetButton("Running"))
 				{
 					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Run });
 				}
@@ -76,7 +75,6 @@ public sealed class InputManager : MonoBehaviour
 
 			if (_horizontalRot != 0 || _verticalRot != 0)
 			{
-				//_verticalRot = Mathf.Clamp(_verticalRot, -90, 90);
 				CameraMove(new CameraMoveEventArgs() { rotationVector = new Vector3(_verticalRot, _horizontalRot, 0) });
 			}
 
@@ -94,14 +92,9 @@ public sealed class InputManager : MonoBehaviour
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Lantern });
 			}
 
-			if (Input.GetButton("Crouching"))
+			if (Input.GetButtonDown("Crouching"))
 			{
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Crouch });
-			}
-
-			if (Input.GetButtonUp("Crouching"))
-			{
-				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Stand });
 			}
 
 			if (Input.GetButtonDown("JumpClimb"))

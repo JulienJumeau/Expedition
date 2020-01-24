@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/1_Scenes/Dev.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/1_Scenes/LDMaze.unity
     guid: 0bcc7e2a2d3bc3546b88279c6c4946ef
+  - enabled: 1
+    path: Assets/1_Scenes/LDTuto.unity
+    guid: 2b85398ca4eab254fa7bbc4c4ad68a19
   m_configObjects: {}

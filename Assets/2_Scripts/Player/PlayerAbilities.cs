@@ -15,13 +15,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[Range(1, 5)] [SerializeField] private float _pullObjectSpeed = 2;
 	[Range(1, 5)] [SerializeField] private int _lightbulbNbrMax = 2;
 	[SerializeField] private LayerMask _layerMask = 0;
-	[SerializeField] private GameObject _lanternGO = null, _photoCameraGO = null, _flashlightGO = null;
+	[SerializeField] private GameObject _lanternGO = null, _photoCameraGO = null;
 	[SerializeField] private AnimationCurve _climbWallAnimationCurve = null, _climbBoxAnimationCurve = null, _jumpAnimationCurve = null;
 
 	private Camera _camera;
 	private CharacterController _characterController;
 	private Animator _animator;
-	private Light _flashlight;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitTopFront, _hitTopBack, _hitDownFront, _hitDownBack;
 	private bool _isCrouching;
@@ -39,7 +38,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		_camera = Camera.main;
 		_characterController = GetComponent<CharacterController>();
-		_flashlight = _flashlightGO.GetComponent<Light>();
 		_animator = _camera.GetComponent<Animator>();
 		_triggerAnimationNames = new string[4] { "IsWalk", "IsRun", "IsJumping", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
@@ -169,7 +167,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isHiding)
 				{
-					_flashlight.enabled = !_flashlight.enabled;
 					HoldItem(_lanternGO, _photoCameraGO);
 				}
 

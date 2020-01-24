@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &7776653180382176180
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749317734568762093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -7784141540257144527, guid: eadf83da885c94b489f90cb58304e5ce, type: 3}
 --- !u!1 &4150480973739401564
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +23,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8072296508707460192}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Wall_corner_out
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,8 +117,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: E_Wall_Corner_Out
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: eadf83da885c94b489f90cb58304e5ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eadf83da885c94b489f90cb58304e5ce, type: 3}
+--- !u!1 &2749317734568762093 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: eadf83da885c94b489f90cb58304e5ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 6126695392981042148}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1188053311936391422 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: eadf83da885c94b489f90cb58304e5ce,

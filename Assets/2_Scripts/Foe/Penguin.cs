@@ -64,6 +64,12 @@ public sealed class Penguin : MonoBehaviour
 		}
 	}
 
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, _detectionRadius);
+	}
+
 	#endregion
 
 	#region Foe Patrol

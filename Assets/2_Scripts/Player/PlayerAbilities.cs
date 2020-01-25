@@ -92,7 +92,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void Movement()
 	{
 		_motion = Vector3.zero;
-		Debug.Log(_currentSpeed);
 		_motion += (_motionForward + _motionStrafe).normalized * _currentSpeed;
 
 		if (_characterController.isGrounded)

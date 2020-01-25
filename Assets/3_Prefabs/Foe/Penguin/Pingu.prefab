@@ -306,6 +306,8 @@ MonoBehaviour:
   - {fileID: 7544752227083561255}
   - {fileID: 7544752226325262778}
   _isNextDestinationRandom: 0
+  _foePatrolSpeed: 1
+  _foeChaseSpeed: 3
   _detectionRadius: 7
   _detectionRadiusWHoldingBreath: 1
   _player: {fileID: 0}

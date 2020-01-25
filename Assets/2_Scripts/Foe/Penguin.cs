@@ -1,19 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+enum FoeState
+{
+	idle,
+	Patrol,
+	Chase,
+	Attack
+}
+
 public sealed class Penguin : MonoBehaviour
 {
 	#region Variables declaration
 
 	[SerializeField] Transform[] _patrolPoints = null;
 	[SerializeField] private bool _isNextDestinationRandom = false;
+	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0;
 	[SerializeField] private PlayerAbilities _player;
 	private NavMeshAgent _agent;
+	private Transform _targetPlayer;
+	private FoeState _foeState;
 	private int _nextDestinationIndex;
-	private Transform _target;
 	private float _distanceTargetAgent;
-	private bool _isChasingPlayer;
 
 	#endregion
 
@@ -22,46 +31,20 @@ public sealed class Penguin : MonoBehaviour
 	private void Awake()
 	{
 		_agent = GetComponent<NavMeshAgent>();
+		_targetPlayer = _player.transform;
 		_nextDestinationIndex = 0;
 		_distanceTargetAgent = 0;
-		_target = _player.transform;
+		_foeState = FoeState.Patrol;
 	}
 
 	private void Start()
 	{
-		GoToNextPatrolPoint();
+		//GoToNextPatrolPoint();
 	}
 
 	private void Update()
 	{
-		gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = _isChasingPlayer ? Color.red : Color.green;
-
-		if (!_agent.pathPending && _agent.remainingDistance < 0.5f && !_isChasingPlayer)
-		{
-			GoToNextPatrolPoint();
-		}
-
-		_distanceTargetAgent = Vector3.Distance(_target.position, transform.position);
-
-		if (_distanceTargetAgent <= _detectionRadius && _player._isHiding == false)
-		{
-			_agent.SetDestination(_target.position);
-			_isChasingPlayer = true;
-			Debug.Log("Chasing started!");
-
-			// When Enemy arrives at "StoppingDistance"
-			if (_distanceTargetAgent <= _agent.stoppingDistance)
-			{
-				//Attack the target
-				FaceTarget();
-			}
-		}
-		if ((_player._isHiding || _distanceTargetAgent > _detectionRadius) && _isChasingPlayer)
-		{
-			_agent.SetDestination(transform.position);
-			_isChasingPlayer = false;
-			Debug.Log("Chasing stopped!");
-		}
+		FoePattern();
 	}
 
 	private void OnDrawGizmosSelected()
@@ -72,7 +55,45 @@ public sealed class Penguin : MonoBehaviour
 
 	#endregion
 
-	#region Foe Patrol
+	private void FoePattern()
+	{
+		//gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = _isChasingPlayer ? Color.red : Color.green;
+
+		if (_foeState == FoeState.Patrol && !_agent.pathPending && _agent.remainingDistance < 0.5f)
+		{
+			GoToNextPatrolPoint();
+		}
+
+		_distanceTargetAgent = Vector3.Distance(_targetPlayer.position, this.transform.position);
+
+
+		if (_distanceTargetAgent <= _detectionRadius && _player._isHiding == false)
+		{
+			_foeState = FoeState.Chase;
+			SetFoeAgentProperties(_targetPlayer.position, _foeChaseSpeed, 4, false);
+
+			if (IsFoeNearTarget())
+			{
+				_foeState = FoeState.Attack;
+			}
+		}
+
+		else if (_foeState == FoeState.Chase)
+		{
+			_agent.SetDestination(this.transform.position);
+			_foeState = FoeState.Patrol;
+		}
+
+		if (_foeState == FoeState.Attack)
+		{
+			FaceTarget();
+
+			if (!IsFoeNearTarget() || _player._isHiding == true)
+			{
+				_foeState = FoeState.Chase;
+			}
+		}
+	}
 
 	private void GoToNextPatrolPoint()
 	{
@@ -82,9 +103,8 @@ public sealed class Penguin : MonoBehaviour
 			return;
 		}
 
+		SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, true);
 
-		_agent.SetDestination(_patrolPoints[_nextDestinationIndex].position);
-		
 		if (_isNextDestinationRandom)
 		{
 			_nextDestinationIndex = Random.Range(0, _patrolPoints.Length);
@@ -100,10 +120,18 @@ public sealed class Penguin : MonoBehaviour
 
 	private void FaceTarget()
 	{
-		Vector3 direction = (_target.position - transform.position).normalized;
+		Vector3 direction = (_targetPlayer.position - transform.position).normalized;
 		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
 		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 	}
 
-	#endregion
+	private void SetFoeAgentProperties(Vector3 targetPosition, float speed, float stoppingDistance, bool autoBraking)
+	{
+		_agent.SetDestination(targetPosition);
+		_agent.speed = speed;
+		_agent.stoppingDistance = stoppingDistance;
+		_agent.autoBraking = autoBraking;
+	}
+
+	private bool IsFoeNearTarget() => _distanceTargetAgent <= _agent.stoppingDistance;
 }

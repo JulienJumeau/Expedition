@@ -280,7 +280,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					if (!_isHoldingBreathOnCooldown)
 					{
-					StartCoroutine(HoldingBreathCooldown(_HoldingBreathSoftCooldown));
+						StartCoroutine(HoldingBreathCooldown(_HoldingBreathSoftCooldown));
 					}
 				}
 

@@ -82,22 +82,32 @@ public sealed class Penguin : MonoBehaviour
 		else if (_foeState == FoeState.Chase)
 		{
 			_agent.SetDestination(this.transform.position);
-			_foeState = FoeState.Patrol;
+			//Alerte a coder
+
+			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
+
+			if (_agent.remainingDistance < 0.5f)
+			{
+				_foeState = FoeState.Patrol;
+			}
 		}
 
 		if (_foeState == FoeState.Attack)
 		{
 			FaceTarget();
+			Attack();
 
 			if (!IsFoeNearTarget() || _player._isHiding == true)
 			{
 				_foeState = FoeState.Chase;
 			}
 		}
+
 		if (_player._isHoldingBreath && _foeState == FoeState.Patrol)
 		{
 			_detectionRadius = _detectionRadiusWHoldingBreath;
 		}
+
 		else _detectionRadius = _CurrentDetectionRadius;
 	}
 
@@ -129,6 +139,12 @@ public sealed class Penguin : MonoBehaviour
 		Vector3 direction = (_targetPlayer.position - transform.position).normalized;
 		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
 		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+	}
+
+	private void Attack()
+	{
+		// Play Anim attack penguin here
+		
 	}
 
 	private void SetFoeAgentProperties(Vector3 targetPosition, float speed, float stoppingDistance, bool autoBraking)

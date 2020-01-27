@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public enum FoeState
@@ -23,6 +24,7 @@ public sealed class Penguin : MonoBehaviour
 	public FoeState _foeState;
 	private int _nextDestinationIndex;
 	private float _distanceTargetAgent, _CurrentDetectionRadius;
+	private bool _isAttacking;
 
 	#endregion
 
@@ -68,9 +70,10 @@ public sealed class Penguin : MonoBehaviour
 		_distanceTargetAgent = Vector3.Distance(_targetPlayer.position, this.transform.position);
 
 
-		if (_distanceTargetAgent <= _detectionRadius && _player._isHiding == false)
+		if (_distanceTargetAgent <= _detectionRadius && _player._isHiding == false && !_isAttacking)
 		{
 			_foeState = FoeState.Chase;
+			Debug.Log("_foeState = FoeState.Chase");
 			PlayerAbilities._isDetected = true;
 			SetFoeAgentProperties(_targetPlayer.position, _foeChaseSpeed, 4, false);
 
@@ -95,11 +98,16 @@ public sealed class Penguin : MonoBehaviour
 		if (_foeState == FoeState.Attack)
 		{
 			FaceTarget();
-			Attack();
+			if (!_isAttacking)
+			{
+				StartCoroutine(Attack());
+			}
 
 			if (!IsFoeNearTarget() || _player._isHiding == true)
 			{
 				_foeState = FoeState.Chase;
+				_isAttacking = false;
+				Debug.Log("_isAttacking = false");
 			}
 		}
 
@@ -141,10 +149,22 @@ public sealed class Penguin : MonoBehaviour
 		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
 	}
 
-	private void Attack()
+	private IEnumerator Attack()
 	{
+		_isAttacking = true;
+		yield return new WaitForSeconds(1);
 		// Play Anim attack penguin here
 
+		if (PostProcessManager._isPostProssessOn)
+		{
+			print("YOU DIED");
+		}
+		else
+		{
+			PostProcessManager._isPostProssessOn = true;
+			print("FIRST HIT");
+		}
+		_isAttacking = false;
 	}
 
 	private void SetFoeAgentProperties(Vector3 targetPosition, float speed, float stoppingDistance, bool autoBraking)
@@ -156,4 +176,13 @@ public sealed class Penguin : MonoBehaviour
 	}
 
 	private bool IsFoeNearTarget() => _distanceTargetAgent <= _agent.stoppingDistance;
+
+	//private IEnumerator AttackCooldown()
+	//{
+	//	yield return new WaitForSeconds(2);
+	//	if (PostProcessManager._isPostProssessOn)
+	//	{
+	//		print("YOU DIED");
+	//	}
+	//}
 }

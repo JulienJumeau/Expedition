@@ -283,6 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3fce869d8694240ba7565f1bb75e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vignetteIntensityMin: 0.2
+  _vignetteIntensityMax: 0.35
 --- !u!4 &59842611 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2011623915676556642, guid: be0c36fde0ab50a4f89a1f2724a95212,
@@ -2335,6 +2337,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470129689728851271, guid: 3c72ad32e5457e44aaee3da35ea46723,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c72ad32e5457e44aaee3da35ea46723, type: 3}

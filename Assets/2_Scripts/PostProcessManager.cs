@@ -10,6 +10,9 @@ public sealed class PostProcessManager : MonoBehaviour
 	Camera _camera;
 	PostProcessVolume _processVolume;
 
+	[SerializeField] private float _vignetteIntensityMin, _vignetteIntensityMax;
+	public static bool _isPostProssessOn;
+
 	private void Awake()
 	{
 		_camera = Camera.main;
@@ -20,23 +23,25 @@ public sealed class PostProcessManager : MonoBehaviour
 	{
 		_processVolume.profile.TryGetSettings(out _chromaticAberrationLayer);
 		_processVolume.profile.TryGetSettings(out _vignetteLayer);
+		_isPostProssessOn = false;
 	}
 
 	private void Update()
 	{
-		OnOffPostProcess();
+		if (_isPostProssessOn)
+		{
+			PostProcess();
+		}
 	}
 
-	public void OnOffPostProcess()
+	public void PostProcess()
 	{
-		//_vignetteLayer.intensity.value = Mathf.PingPong();
-		_chromaticAberrationLayer.intensity.value = (Mathf.Sin(Time.time) + 1);
+		_vignetteLayer.intensity.value = Mathf.Lerp(_vignetteIntensityMin, _vignetteIntensityMax, (Mathf.Sin(3* Time.time) + 1) * 0.5f);
+		_chromaticAberrationLayer.intensity.value = (Mathf.Sin(3* Time.time) + 1) * 0.5f;
 	}
 
 	public void GetPostProcessValue()
 	{
 
 	}
-
-	//public 
 }

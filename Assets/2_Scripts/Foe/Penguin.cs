@@ -84,11 +84,13 @@ public sealed class Penguin : MonoBehaviour
 			_agent.SetDestination(this.transform.position);
 			//Alerte a coder
 
-			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
+			Debug.Log(_foeState);
+;			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 
 			if (_agent.remainingDistance < 0.5f)
 			{
 				_foeState = FoeState.Patrol;
+				Debug.Log(_foeState);
 			}
 		}
 

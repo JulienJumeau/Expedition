@@ -16,18 +16,26 @@ public sealed class PostProcessManager : MonoBehaviour
 		_processVolume = _camera.GetComponent<PostProcessVolume>();
 	}
 
-	// Start is called before the first frame update
 	private void Start()
 	{
 		_processVolume.profile.TryGetSettings(out _chromaticAberrationLayer);
 		_processVolume.profile.TryGetSettings(out _vignetteLayer);
 	}
 
-	// Update is called once per frame
 	private void Update()
 	{
-		//_vignetteLayer.intensity.value = (Mathf.Sin(Time.time) + 1) * 0.5f;
-		Debug.Log((Mathf.Sin(Time.time) + 1) * 0.5f);
+		OnOffPostProcess();
+	}
+
+	public void OnOffPostProcess()
+	{
+		//_vignetteLayer.intensity.value = Mathf.PingPong();
+		_chromaticAberrationLayer.intensity.value = (Mathf.Sin(Time.time) + 1);
+	}
+
+	public void GetPostProcessValue()
+	{
+
 	}
 
 	//public 

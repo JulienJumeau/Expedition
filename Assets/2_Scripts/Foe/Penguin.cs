@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-enum FoeState
+public enum FoeState
 {
 	idle,
 	Patrol,
@@ -20,9 +20,9 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private PlayerAbilities _player;
 	private NavMeshAgent _agent;
 	private Transform _targetPlayer;
-	private FoeState _foeState;
+	public static FoeState _foeState;
 	private int _nextDestinationIndex;
-	private float _distanceTargetAgent;
+	private float _distanceTargetAgent, _CurrentDetectionRadius;
 
 	#endregion
 
@@ -35,6 +35,7 @@ public sealed class Penguin : MonoBehaviour
 		_nextDestinationIndex = 0;
 		_distanceTargetAgent = 0;
 		_foeState = FoeState.Patrol;
+		_CurrentDetectionRadius = _detectionRadius;
 	}
 
 	private void Start()
@@ -93,6 +94,11 @@ public sealed class Penguin : MonoBehaviour
 				_foeState = FoeState.Chase;
 			}
 		}
+		if (_player._isHoldingBreath && _foeState == FoeState.Patrol)
+		{
+			_detectionRadius = _detectionRadiusWHoldingBreath;
+		}
+		else _detectionRadius = _CurrentDetectionRadius;
 	}
 
 	private void GoToNextPatrolPoint()

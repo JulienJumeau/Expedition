@@ -219,7 +219,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _holdingBreathSecondsAllowed: 3
+  _HoldingBreathSoftCooldown: 2.5
+  _HoldingBreathHardCooldown: 5
   _isHiding: 0
+  _isHoldingBreath: 0
+  _isHoldingBreathOnCooldown: 0
+  _holdingBreathSeconds: 0
 --- !u!1 &1213406187385127705
 GameObject:
   m_ObjectHideFlags: 0

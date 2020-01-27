@@ -18,17 +18,21 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private GameObject _lanternGO = null, _photoCameraGO = null;
 	[SerializeField] private AnimationCurve _climbWallAnimationCurve = null, _climbBoxAnimationCurve = null, _jumpAnimationCurve = null;
 
+	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
+
 	private Camera _camera;
 	private CharacterController _characterController;
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
 	private bool _isCrouching;
-	[HideInInspector] public bool _isHiding;
+	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
-	private int _lightbulbNbr;
 	private int _oilLevel, _oilLevelMax;
+	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
+
+	[HideInInspector] public float _holdingBreathSeconds;
 
 	#endregion
 
@@ -252,6 +256,36 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				break;
 
+			case InputAction.HoldBreath:
+				if (Penguin._foeState == FoeState.Patrol)
+				{
+					if (_holdingBreathSeconds < _holdingBreathSecondsAllowed && !_isHoldingBreathOnCooldown)
+					{
+						_isHoldingBreath = true;
+						_holdingBreathSeconds += Time.deltaTime;
+					}
+					else
+					{
+						if (!_isHoldingBreathOnCooldown)
+						{
+							StartCoroutine(HoldingBreathCooldown(_HoldingBreathHardCooldown));
+						}
+					}
+				}
+
+				break;
+
+			case InputAction.StopHoldingBreath:
+				if (Penguin._foeState == FoeState.Patrol)
+				{
+					if (!_isHoldingBreathOnCooldown)
+					{
+					StartCoroutine(HoldingBreathCooldown(_HoldingBreathSoftCooldown));
+					}
+				}
+
+				break;
+
 			default:
 				ResetAllTriggerAnimation();
 				break;
@@ -374,6 +408,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 		this.transform.position = _positionBeforeHide;
 		_isHiding = false;
 		_characterController.enabled = true;
+	}
+
+	private IEnumerator HoldingBreathCooldown(float cooldown)
+	{
+		_isHoldingBreathOnCooldown = true;
+		_isHoldingBreath = false;
+		_holdingBreathSeconds = 0;
+		yield return new WaitForSeconds(cooldown);
+		_isHoldingBreathOnCooldown = false;
 	}
 
 	private void EventSubscription()

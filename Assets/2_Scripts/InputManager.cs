@@ -11,7 +11,9 @@ public enum InputAction
 	Run,
 	Jump,
 	Pull,
-	PhotoCamera
+	PhotoCamera,
+	HoldBreath,
+	StopHoldingBreath
 }
 
 public sealed class InputManager : MonoBehaviour
@@ -105,6 +107,16 @@ public sealed class InputManager : MonoBehaviour
 			if (Input.GetButtonDown("PhotoCamera"))
 			{
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.PhotoCamera });
+			}
+
+			if (Input.GetButton("HoldBreath"))
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.HoldBreath });
+			}
+
+			if (Input.GetButtonUp("HoldBreath"))
+			{
+				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.StopHoldingBreath });
 			}
 
 			if (!Input.anyKey)

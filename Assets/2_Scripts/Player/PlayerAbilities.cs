@@ -8,6 +8,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	public static PlayerAbilities _current;
 	public static bool _isActionPlaying;
+	public static bool _isDetected;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
 	[Range(5, 15)] [SerializeField] private float _sprintSpeed = 10;
@@ -50,6 +51,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lightbulbNbrMax = 2;
 		_oilLevel = 0;
 		_oilLevelMax = 3;
+		_isDetected = false;
 	}
 
 	private void Start()
@@ -257,13 +259,16 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.HoldBreath:
-				if (Penguin._foeState == FoeState.Patrol)
+
+				Debug.Log(_isDetected);
+				if (!_isDetected)
 				{
 					if (_holdingBreathSeconds < _holdingBreathSecondsAllowed && !_isHoldingBreathOnCooldown)
 					{
 						_isHoldingBreath = true;
 						_holdingBreathSeconds += Time.deltaTime;
 					}
+
 					else
 					{
 						if (!_isHoldingBreathOnCooldown)
@@ -276,7 +281,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.StopHoldingBreath:
-				if (Penguin._foeState == FoeState.Patrol)
+
+
+				if (!_isDetected)
 				{
 					if (!_isHoldingBreathOnCooldown)
 					{

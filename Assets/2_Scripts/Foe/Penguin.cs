@@ -20,7 +20,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private PlayerAbilities _player;
 	private NavMeshAgent _agent;
 	private Transform _targetPlayer;
-	public static FoeState _foeState;
+	public FoeState _foeState;
 	private int _nextDestinationIndex;
 	private float _distanceTargetAgent, _CurrentDetectionRadius;
 
@@ -71,6 +71,7 @@ public sealed class Penguin : MonoBehaviour
 		if (_distanceTargetAgent <= _detectionRadius && _player._isHiding == false)
 		{
 			_foeState = FoeState.Chase;
+			PlayerAbilities._isDetected = true;
 			SetFoeAgentProperties(_targetPlayer.position, _foeChaseSpeed, 4, false);
 
 			if (IsFoeNearTarget())
@@ -82,8 +83,7 @@ public sealed class Penguin : MonoBehaviour
 		else if (_foeState == FoeState.Chase)
 		{
 			_agent.SetDestination(this.transform.position);
-			//Alerte a coder
-
+			PlayerAbilities._isDetected = false;
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 
 			if (_agent.remainingDistance < 0.5f)
@@ -144,7 +144,7 @@ public sealed class Penguin : MonoBehaviour
 	private void Attack()
 	{
 		// Play Anim attack penguin here
-		
+
 	}
 
 	private void SetFoeAgentProperties(Vector3 targetPosition, float speed, float stoppingDistance, bool autoBraking)

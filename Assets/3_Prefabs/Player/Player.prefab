@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _walkSpeed: 2
   _sprintSpeed: 5
-  _crouchSpeed: 2
+  _crouchSpeed: 1
   _pullObjectSpeed: 1
   _lightbulbNbrMax: 2
   _layerMask:

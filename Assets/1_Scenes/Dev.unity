@@ -285,6 +285,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vignetteIntensityMin: 0.2
   _vignetteIntensityMax: 0.35
+--- !u!114 &50669764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50669762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d533b351d94a468aa3c9276e42a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &59842611 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2011623915676556642, guid: be0c36fde0ab50a4f89a1f2724a95212,
@@ -2357,6 +2369,11 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 999628152}
+    - target: {fileID: 7544752226871954568, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
+        type: 3}
+      propertyPath: _secondsBetweenAttacks
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7544752227484751378, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
       propertyPath: m_LocalPosition.x

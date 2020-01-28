@@ -17,7 +17,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] Transform[] _patrolPoints = null;
 	[SerializeField] private bool _isNextDestinationRandom = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
-	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0;
+	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBetweenAttacks = 0;
 	[SerializeField] private PlayerAbilities _player;
 	private NavMeshAgent _agent;
 	private Transform _targetPlayer;
@@ -152,17 +152,18 @@ public sealed class Penguin : MonoBehaviour
 	private IEnumerator Attack()
 	{
 		_isAttacking = true;
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(_secondsBetweenAttacks);
 		// Play Anim attack penguin here
 
 		if (PostProcessManager._isPostProssessOn)
 		{
-			print("YOU DIED");
+			ScenesManager._isGameOver = true;
+			//print("YOU DIED");
 		}
 		else
 		{
 			PostProcessManager._isPostProssessOn = true;
-			print("FIRST HIT");
+			//print("FIRST HIT");
 		}
 		_isAttacking = false;
 	}
@@ -177,12 +178,4 @@ public sealed class Penguin : MonoBehaviour
 
 	private bool IsFoeNearTarget() => _distanceTargetAgent <= _agent.stoppingDistance;
 
-	//private IEnumerator AttackCooldown()
-	//{
-	//	yield return new WaitForSeconds(2);
-	//	if (PostProcessManager._isPostProssessOn)
-	//	{
-	//		print("YOU DIED");
-	//	}
-	//}
 }

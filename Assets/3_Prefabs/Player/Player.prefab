@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3002b1e62caacf14b8332ab8f60b6195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _walkSpeed: 3
-  _sprintSpeed: 6
+  _walkSpeed: 2
+  _sprintSpeed: 5
   _crouchSpeed: 2
   _pullObjectSpeed: 1
   _lightbulbNbrMax: 2
@@ -219,9 +219,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _holdingBreathSecondsAllowed: 3
-  _HoldingBreathSoftCooldown: 2.5
-  _HoldingBreathHardCooldown: 5
+  _holdingBreathSecondsAllowed: 10
+  _HoldingBreathSoftCooldown: 3
+  _HoldingBreathHardCooldown: 6
   _isHiding: 0
   _isHoldingBreath: 0
   _isHoldingBreathOnCooldown: 0

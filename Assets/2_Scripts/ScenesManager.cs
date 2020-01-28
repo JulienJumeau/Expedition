@@ -7,7 +7,7 @@ public class ScenesManager : MonoBehaviour
 	public static bool _isGameOver;
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetKeyDown(KeyCode.F1))
 		{
 			EditorApplication.isPlaying = false;
 		}
@@ -20,6 +20,7 @@ public class ScenesManager : MonoBehaviour
 		if(_isGameOver)
 		{
 			GameOverScene();
+			_isGameOver = false;
 		}
 	}
 

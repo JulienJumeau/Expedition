@@ -18,6 +18,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private bool _isNextDestinationRandom = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBetweenAttacks = 0;
+	[SerializeField] private bool _AllowAttacks = false;
 	[SerializeField] private PlayerAbilities _player;
 	private NavMeshAgent _agent;
 	private Transform _targetPlayer;
@@ -48,6 +49,12 @@ public sealed class Penguin : MonoBehaviour
 	private void Update()
 	{
 		FoePattern();
+
+		//Sound for chasing (provisoire car à incorporer à SoundManager)
+		if (PlayerAbilities._isDetected)
+		{
+			GetComponent<AudioSource>().enabled = true;
+		}else GetComponent<AudioSource>().enabled = false;
 	}
 
 	private void OnDrawGizmosSelected()
@@ -73,7 +80,7 @@ public sealed class Penguin : MonoBehaviour
 		if (_distanceTargetAgent <= _detectionRadius && _player._isHiding == false && !_isAttacking)
 		{
 			_foeState = FoeState.Chase;
-			Debug.Log("_foeState = FoeState.Chase");
+			//Debug.Log("_foeState = FoeState.Chase");
 			PlayerAbilities._isDetected = true;
 			SetFoeAgentProperties(_targetPlayer.position, _foeChaseSpeed, 4, false);
 
@@ -98,16 +105,19 @@ public sealed class Penguin : MonoBehaviour
 		if (_foeState == FoeState.Attack)
 		{
 			FaceTarget();
-			if (!_isAttacking)
+			if (_AllowAttacks)
 			{
-				StartCoroutine(Attack());
+				if (!_isAttacking)
+				{
+					StartCoroutine(Attack());
+				}
 			}
 
 			if (!IsFoeNearTarget() || _player._isHiding == true)
 			{
 				_foeState = FoeState.Chase;
 				_isAttacking = false;
-				Debug.Log("_isAttacking = false");
+				//Debug.Log("_isAttacking = false");
 			}
 		}
 

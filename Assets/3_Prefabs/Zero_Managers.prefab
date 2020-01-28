@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5634259180212196395}
   - component: {fileID: 5634259180212196394}
   - component: {fileID: 1981510761}
+  - component: {fileID: 50669763}
+  - component: {fileID: 50669764}
   m_Layer: 0
   m_Name: Zero_Managers
   m_TagString: Untagged
@@ -71,3 +73,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hudInputGO: {fileID: 0}
+--- !u!114 &50669763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634259180212196397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3fce869d8694240ba7565f1bb75e4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _vignetteIntensityMin: 0.2
+  _vignetteIntensityMax: 0.35
+--- !u!114 &50669764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634259180212196397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d533b351d94a468aa3c9276e42a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

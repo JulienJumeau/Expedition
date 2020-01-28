@@ -40,8 +40,8 @@ public sealed class PostProcessManager : MonoBehaviour
 		_chromaticAberrationLayer.intensity.value = (Mathf.Sin(3* Time.time) + 1) * 0.5f;
 	}
 
-	public void GetPostProcessValue()
-	{
+	//public void GetPostProcessValue()
+	//{
 
-	}
+	//}
 }

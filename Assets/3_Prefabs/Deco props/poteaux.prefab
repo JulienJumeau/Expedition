@@ -244,7 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4158345376702960303}
   - component: {fileID: 4093149847285794972}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3888736982600734895}
   - component: {fileID: 1110090102063238648}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

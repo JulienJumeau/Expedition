@@ -333,11 +333,11 @@ MonoBehaviour:
   _holdingBreathSecondsAllowed: 15
   _HoldingBreathSoftCooldown: 3
   _HoldingBreathHardCooldown: 6
-  _audioClipHoldBreath: {fileID: 8300000, guid: a4c2907f98e772542a07bcf1bb882f65,
+  _audioClipHoldBreath: {fileID: 8300000, guid: 843fb240435dd604d992df45600ca0a0,
     type: 3}
-  _audioClipGetBreathSoft: {fileID: 8300000, guid: 3fac6be0809d969449ed8bd5ee538d99,
+  _audioClipGetBreathSoft: {fileID: 8300000, guid: 88a1afd0c8ed275438f3bd853326b2bd,
     type: 3}
-  _audioClipGetBreathHard: {fileID: 8300000, guid: c3b1d07c20db684408fbb7d63fe2d3d7,
+  _audioClipGetBreathHard: {fileID: 8300000, guid: 7ebc94dba1053924a88da25ed49513ae,
     type: 3}
   _isHiding: 0
   _isHoldingBreath: 0

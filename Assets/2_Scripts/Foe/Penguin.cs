@@ -18,11 +18,11 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private bool _isNextDestinationRandom = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBetweenAttacks = 0;
-	[SerializeField] private bool _AllowAttacks = false;
+	[SerializeField] private bool _AllowAttacks = false, _AllowChasingAudiosource = false;
 	[SerializeField] private PlayerAbilities _player;
+	[HideInInspector] public FoeState _foeState;
 	private NavMeshAgent _agent;
 	private Transform _targetPlayer;
-	public FoeState _foeState;
 	private int _nextDestinationIndex;
 	private float _distanceTargetAgent, _CurrentDetectionRadius;
 	private bool _isAttacking;
@@ -53,8 +53,17 @@ public sealed class Penguin : MonoBehaviour
 		//Sound for chasing (provisoire car à incorporer à SoundManager)
 		if (PlayerAbilities._isDetected)
 		{
-			GetComponent<AudioSource>().enabled = true;
-		}else GetComponent<AudioSource>().enabled = false;
+			if (_AllowChasingAudiosource)
+			{
+				GetComponent<AudioSource>().enabled = true;
+			}
+		}else
+		{
+			if (_AllowChasingAudiosource)
+			{
+				GetComponent<AudioSource>().enabled = false;
+			}
+		}
 	}
 
 	private void OnDrawGizmosSelected()

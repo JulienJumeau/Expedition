@@ -340,12 +340,13 @@ MonoBehaviour:
   _isNextDestinationRandom: 0
   _foePatrolSpeed: 1
   _foeChaseSpeed: 4
-  _detectionRadius: 10
-  _detectionRadiusWHoldingBreath: 2
-  _secondsBetweenAttacks: 1.5
+  _detectionRadius: 5
+  _detectionRadiusWHoldingBreath: 1
+  _secondsBeforeFirstAttack: 1
+  _secondsBeforeSecondAttack: 3
+  _secondsToRecoverFullLife: 10
   _AllowAttacks: 1
   _AllowChasingAudiosource: 0
-  _player: {fileID: 0}
   _foeState: 0
 --- !u!82 &3764835297144611460
 AudioSource:

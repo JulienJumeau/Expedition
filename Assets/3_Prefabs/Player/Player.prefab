@@ -43,7 +43,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.7735849, g: 0.5067967, b: 0, a: 1}
   m_Intensity: 3
-  m_Range: 5
+  m_Range: 7
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -330,7 +330,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _holdingBreathSecondsAllowed: 10
+  _holdingBreathSecondsAllowed: 15
   _HoldingBreathSoftCooldown: 3
   _HoldingBreathHardCooldown: 6
   _audioClipHoldBreath: {fileID: 8300000, guid: a4c2907f98e772542a07bcf1bb882f65,

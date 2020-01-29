@@ -18,8 +18,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private LayerMask _layerMask = 0;
 	[SerializeField] private GameObject _lanternGO = null, _photoCameraGO = null;
 	[SerializeField] private AnimationCurve _climbWallAnimationCurve = null, _climbBoxAnimationCurve = null, _jumpAnimationCurve = null;
-
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
+	[SerializeField] private AudioClip _audioClipHoldBreath, _audioClipGetBreathSoft, _audioClipGetBreathHard;
 
 	private Camera _camera;
 	private CharacterController _characterController;
@@ -32,6 +32,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private int _oilLevel, _oilLevelMax;
 	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
+	private AudioSource _audioSource;
 
 	[HideInInspector] public float _holdingBreathSeconds;
 
@@ -44,6 +45,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_camera = Camera.main;
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
+		_audioSource = GetComponent<AudioSource>();
 		_triggerAnimationNames = new string[4] { "IsWalk", "IsRun", "IsJumping", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
 		_currentSpeed = _walkSpeed;
@@ -260,15 +262,18 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.HoldBreath:
 
-				Debug.Log(_isDetected);
 				if (!_isDetected)
 				{
 					if (_holdingBreathSeconds < _holdingBreathSecondsAllowed && !_isHoldingBreathOnCooldown)
 					{
-						_isHoldingBreath = true;
+						if (!_isHoldingBreath)
+						{
+							_audioSource.clip = _audioClipHoldBreath;
+							_audioSource.Play();
+						}
 
-						//Sound for HoldBreath (provisoire car à incorporer à SoundManager)
-						GetComponent<AudioSource>().enabled = true;
+						_isHoldingBreath = true;
+						PostProcessManager._isPostProssessHoldBreath = true;
 
 						_holdingBreathSeconds += Time.deltaTime;
 					}
@@ -285,7 +290,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			case InputAction.StopHoldingBreath:
-
 
 				if (!_isDetected)
 				{
@@ -425,9 +429,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		_isHoldingBreathOnCooldown = true;
 		_isHoldingBreath = false;
+		PostProcessManager._isPostProssessHoldBreath = false;
 
-		//Stop Holding Breath Sound
-		GetComponent<AudioSource>().enabled = false;
+		if (cooldown == _HoldingBreathSoftCooldown)
+		{
+			_audioSource.clip = _audioClipGetBreathSoft;
+		}
+
+		else
+		{
+			_audioSource.clip = _audioClipGetBreathHard;
+		}
+
+		_audioSource.Play();
 
 		_holdingBreathSeconds = 0;
 		yield return new WaitForSeconds(cooldown);

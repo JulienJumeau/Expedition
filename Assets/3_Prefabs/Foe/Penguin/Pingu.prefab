@@ -311,7 +311,7 @@ MonoBehaviour:
   _foeChaseSpeed: 4
   _detectionRadius: 10
   _detectionRadiusWHoldingBreath: 2
-  _secondsBetweenAttacks: 2
+  _secondsBetweenAttacks: 1.5
   _AllowAttacks: 1
   _player: {fileID: 0}
   _foeState: 0

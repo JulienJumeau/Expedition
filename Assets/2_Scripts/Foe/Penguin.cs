@@ -20,9 +20,9 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBetweenAttacks = 0;
 	[SerializeField] private bool _AllowAttacks = false;
 	[SerializeField] private PlayerAbilities _player;
+	[HideInInspector] public FoeState _foeState;
 	private NavMeshAgent _agent;
 	private Transform _targetPlayer;
-	public FoeState _foeState;
 	private int _nextDestinationIndex;
 	private float _distanceTargetAgent, _CurrentDetectionRadius;
 	private bool _isAttacking;

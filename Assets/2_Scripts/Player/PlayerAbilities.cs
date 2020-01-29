@@ -266,6 +266,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 					if (_holdingBreathSeconds < _holdingBreathSecondsAllowed && !_isHoldingBreathOnCooldown)
 					{
 						_isHoldingBreath = true;
+
+						//Sound for HoldBreath (provisoire car à incorporer à SoundManager)
+						GetComponent<AudioSource>().enabled = true;
+
 						_holdingBreathSeconds += Time.deltaTime;
 					}
 
@@ -421,6 +425,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		_isHoldingBreathOnCooldown = true;
 		_isHoldingBreath = false;
+
+		//Stop Holding Breath Sound
+		GetComponent<AudioSource>().enabled = false;
+
 		_holdingBreathSeconds = 0;
 		yield return new WaitForSeconds(cooldown);
 		_isHoldingBreathOnCooldown = false;

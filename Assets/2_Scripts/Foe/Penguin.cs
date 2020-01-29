@@ -19,9 +19,9 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBetweenAttacks = 0;
 	[SerializeField] private bool _AllowAttacks = false, _AllowChasingAudiosource = false;
-	[SerializeField] private PlayerAbilities _player;
 	[HideInInspector] public FoeState _foeState;
 	private NavMeshAgent _agent;
+	private PlayerAbilities _player;
 	private Transform _targetPlayer;
 	private int _nextDestinationIndex;
 	private float _distanceTargetAgent, _CurrentDetectionRadius;
@@ -34,6 +34,7 @@ public sealed class Penguin : MonoBehaviour
 	private void Awake()
 	{
 		_agent = GetComponent<NavMeshAgent>();
+		_player = FindObjectOfType<PlayerAbilities>();
 		_targetPlayer = _player.transform;
 		_nextDestinationIndex = 0;
 		_distanceTargetAgent = 0;

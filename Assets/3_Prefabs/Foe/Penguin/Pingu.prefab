@@ -313,6 +313,7 @@ MonoBehaviour:
   _detectionRadiusWHoldingBreath: 2
   _secondsBetweenAttacks: 1.5
   _AllowAttacks: 1
+  _AllowChasingAudiosource: 0
   _player: {fileID: 0}
   _foeState: 0
 --- !u!82 &110068455

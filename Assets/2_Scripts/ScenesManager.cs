@@ -9,12 +9,12 @@ public class ScenesManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
-			EditorApplication.isPlaying = false;
+			//EditorApplication.isPlaying = false;
 		}
 
 		if (Input.GetKeyDown(KeyCode.Keypad0))
 		{
-			SceneManager.LoadScene("Dev");
+			SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);
 		}
 
 		if(_isGameOver)

@@ -17,14 +17,14 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] Transform[] _patrolPoints = null;
 	[SerializeField] private bool _isNextDestinationRandom = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
-	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBetweenAttacks = 0;
+	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
 	[SerializeField] private bool _AllowAttacks = false, _AllowChasingAudiosource = false;
 	[HideInInspector] public FoeState _foeState;
 	private NavMeshAgent _agent;
 	private PlayerAbilities _player;
 	private Transform _targetPlayer;
 	private int _nextDestinationIndex;
-	private float _distanceTargetAgent, _CurrentDetectionRadius;
+	private float _distanceTargetAgent, _currentDetectionRadius, _secondsWhileWounded;
 	private bool _isAttacking;
 
 	#endregion
@@ -39,7 +39,8 @@ public sealed class Penguin : MonoBehaviour
 		_nextDestinationIndex = 0;
 		_distanceTargetAgent = 0;
 		_foeState = FoeState.Patrol;
-		_CurrentDetectionRadius = _detectionRadius;
+		_currentDetectionRadius = _detectionRadius;
+		_secondsWhileWounded = 0;
 	}
 
 	private void Start()
@@ -58,7 +59,8 @@ public sealed class Penguin : MonoBehaviour
 			{
 				GetComponent<AudioSource>().enabled = true;
 			}
-		}else
+		}
+		else
 		{
 			if (_AllowChasingAudiosource)
 			{
@@ -78,6 +80,12 @@ public sealed class Penguin : MonoBehaviour
 	private void FoePattern()
 	{
 		//gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = _isChasingPlayer ? Color.red : Color.green;
+
+		if (PostProcessManager._isPostProssessOn)
+		{
+			_secondsWhileWounded += Time.deltaTime;
+			Debug.Log(_secondsWhileWounded + " s");
+		}
 
 		if (_foeState == FoeState.Patrol && !_agent.pathPending && _agent.remainingDistance < 0.5f)
 		{
@@ -134,9 +142,17 @@ public sealed class Penguin : MonoBehaviour
 		if (_player._isHoldingBreath && _foeState == FoeState.Patrol)
 		{
 			_detectionRadius = _detectionRadiusWHoldingBreath;
-		}
 
-		else _detectionRadius = _CurrentDetectionRadius;
+		}else _detectionRadius = _currentDetectionRadius;
+
+		if (_secondsWhileWounded != 0)
+		{
+			if (_secondsWhileWounded >= _secondsToRecoverFullLife)
+			{
+				PostProcessManager._isPostProssessOn = false;
+				_secondsWhileWounded = 0;
+			}
+		}
 	}
 
 	private void GoToNextPatrolPoint()
@@ -172,18 +188,23 @@ public sealed class Penguin : MonoBehaviour
 	private IEnumerator Attack()
 	{
 		_isAttacking = true;
-		yield return new WaitForSeconds(_secondsBetweenAttacks);
 		// Play Anim attack penguin here
 
 		if (PostProcessManager._isPostProssessOn)
 		{
-			ScenesManager._isGameOver = true;
-			//print("YOU DIED");
+			yield return new WaitForSeconds(_secondsBeforeSecondAttack);
+			if (IsFoeNearTarget())
+			{
+				ScenesManager._isGameOver = true;
+			}
 		}
 		else
 		{
-			PostProcessManager._isPostProssessOn = true;
-			//print("FIRST HIT");
+			yield return new WaitForSeconds(_secondsBeforeFirstAttack);
+			if (IsFoeNearTarget())
+			{
+				PostProcessManager._isPostProssessOn = true;
+			}
 		}
 		_isAttacking = false;
 	}

@@ -33,12 +33,16 @@ public sealed class PostProcessManager : MonoBehaviour
 		{
 			PostProcessAttack();
 		}
+		if (!_isPostProssessOn)
+		{
+			PostProcessOff();
+		}
 
-		else if (_isPostProssessHoldBreath)
+
+		if (_isPostProssessHoldBreath)
 		{
 			PostProcessHoldBreath(true);
 		}
-
 		else
 		{
 			PostProcessHoldBreath();
@@ -69,5 +73,11 @@ public sealed class PostProcessManager : MonoBehaviour
 			_vignetteLayer.intensity.value = Mathf.Lerp(_vignetteLayer.intensity.value, 0, _durationGetdBreath);
 			_durationGetdBreath += Time.deltaTime / 10;
 		}
+	}
+
+	public void PostProcessOff()
+	{
+		_vignetteLayer.intensity.value = 0;
+		_chromaticAberrationLayer.intensity.value = 0;
 	}
 }

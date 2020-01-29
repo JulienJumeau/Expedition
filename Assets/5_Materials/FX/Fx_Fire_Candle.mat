@@ -8,16 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Fx_Fire_Candle
-  m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: eddd2e1d91df5604e8ec806b19ad4334, type: 3}
   m_ShaderKeywords: _ALPHABLEND_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses:
-  - ALWAYS
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -27,6 +25,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Color:
+        m_Texture: {fileID: 2800000, guid: 6fa46537a29dde84097b7ecb0cb32ff4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -61,6 +63,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _WaveNoise:
+        m_Texture: {fileID: 2800000, guid: ba41665e966ae8048b7e00a6e92cfd58, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -84,7 +90,7 @@ Material:
     - _DistortionStrengthScaled: 0
     - _DstBlend: 1
     - _EmissionEnabled: 0
-    - _EmissiveIntensity: 13
+    - _EmissiveIntensity: 9.78
     - _FlipbookMode: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -102,7 +108,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _UVSec: 0
-    - _WaveAmount: 0.1
+    - _WaveAmount: 0.2
     - _WaveSize: 4
     - _WaveSpeed: 2
     - _ZWrite: 0

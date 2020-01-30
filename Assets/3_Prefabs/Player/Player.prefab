@@ -339,6 +339,11 @@ MonoBehaviour:
     type: 3}
   _audioClipGetBreathHard: {fileID: 8300000, guid: 7ebc94dba1053924a88da25ed49513ae,
     type: 3}
+  _isLanternInInventory: 0
+  _lanternLightGO: {fileID: 1058561638}
+  _lanternMinIntensity: 3
+  _lanternMaxIntensity: 7
+  _secondsOilLevelFullToEmpty: 100
   _isHiding: 0
   _isHoldingBreath: 0
   _isHoldingBreathOnCooldown: 0
@@ -828,7 +833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1552757344684194850
 Transform:
   m_ObjectHideFlags: 0

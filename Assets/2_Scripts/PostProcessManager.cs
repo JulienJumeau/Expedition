@@ -2,7 +2,6 @@
 using UnityEngine.Rendering.PostProcessing;
 
 
-
 public sealed class PostProcessManager : MonoBehaviour
 {
 	private Vignette _vignetteLayer;
@@ -13,11 +12,13 @@ public sealed class PostProcessManager : MonoBehaviour
 
 	[SerializeField] private float _vignetteIntensityMin, _vignetteIntensityMax;
 	public static bool _isPostProssessOn, _isPostProssessHoldBreath;
+	private bool _isAttacking, _isBreathing;
 
 	private void Awake()
 	{
 		_camera = Camera.main;
 		_processVolume = _camera.GetComponent<PostProcessVolume>();
+		_isAttacking = _isBreathing = false;
 	}
 
 	private void Start()
@@ -31,22 +32,25 @@ public sealed class PostProcessManager : MonoBehaviour
 	{
 		if (_isPostProssessOn)
 		{
+			_isAttacking = true;
 			PostProcessAttack();
 			Debug.Log(_isPostProssessOn);
 		}
 
-		if (!_isPostProssessOn)
+		else if (!_isPostProssessOn && _isAttacking == true)
 		{
+			_isAttacking = false;
 			PostProcessOff();
 			Debug.Log(_isPostProssessOn);
 		}
 
 		if (_isPostProssessHoldBreath)
 		{
+			_isBreathing = true;
 			PostProcessHoldBreath(true);
 		}
 
-		else
+		else if (!_isPostProssessHoldBreath && !_isAttacking)
 		{
 			PostProcessHoldBreath();
 		}

@@ -11,7 +11,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public static bool _isDetected;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
-	[Range(5, 15)] [SerializeField] private float _sprintSpeed = 10;
+	[Range(1, 15)] [SerializeField] private float _sprintSpeed = 10;
 	[Range(1, 5)] [SerializeField] private float _crouchSpeed = 3;
 	[Range(1, 5)] [SerializeField] private float _pullObjectSpeed = 2;
 	[Range(1, 5)] [SerializeField] private int _lightbulbNbrMax = 2;
@@ -20,6 +20,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AnimationCurve _climbWallAnimationCurve = null, _climbBoxAnimationCurve = null, _jumpAnimationCurve = null;
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
 	[SerializeField] private AudioClip _audioClipHoldBreath, _audioClipGetBreathSoft, _audioClipGetBreathHard;
+	[SerializeField] private bool _isLanternInInventory = false;
 
 	private Camera _camera;
 	private CharacterController _characterController;
@@ -52,7 +53,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lightbulbNbr = 0;
 		_lightbulbNbrMax = 2;
 		_oilLevel = 0;
-		_oilLevelMax = 3;
+		_oilLevelMax = 1;
 		_isDetected = false;
 	}
 
@@ -174,7 +175,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Lantern:
 
-				if (!_isHiding)
+				if (!_isHiding && _isLanternInInventory)
 				{
 					HoldItem(_lanternGO, _photoCameraGO);
 				}
@@ -367,15 +368,24 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_lightbulbNbr++;
 				Destroy(_hitForward.transform.gameObject);
 			}
+			else print("You can't carry more lightbulbs!");
 		}
 
 		if (_hitForward.transform.gameObject.CompareTag("Oil"))
 		{
 			if (_oilLevel < _oilLevelMax)
 			{
-				_oilLevel++;
+				_oilLevel = _oilLevelMax;
 				Destroy(_hitForward.transform.gameObject);
 			}
+			else print("Lantern is already full!");
+		}
+
+		if (_hitForward.transform.gameObject.CompareTag("Lantern"))
+		{
+			_isLanternInInventory = true;
+			HoldItem(_lanternGO, _photoCameraGO);
+			Destroy(_hitForward.transform.gameObject);
 		}
 	}
 

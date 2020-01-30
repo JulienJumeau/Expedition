@@ -346,7 +346,7 @@ MonoBehaviour:
   _secondsBeforeFirstAttack: 3
   _secondsBeforeSecondAttack: 6
   _secondsToRecoverFullLife: 6
-  _allowAttacks: 0
+  _allowAttacks: 1
   _allowChasingAudiosource: 0
   _stoppingDistanceAttack: 2.5
   _foeState: 0

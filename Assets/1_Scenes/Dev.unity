@@ -372,7 +372,7 @@ PrefabInstance:
     - target: {fileID: 3764835297144611461, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
       propertyPath: _secondsToRecoverFullLife
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3764835297144611461, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
@@ -388,6 +388,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _stoppingDistanceAttack
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3764835297144611461, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
+        type: 3}
+      propertyPath: _allowAttacks
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7544752226871954568, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
@@ -2549,7 +2554,7 @@ PrefabInstance:
     - target: {fileID: 3764835297144611461, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
       propertyPath: _secondsToRecoverFullLife
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3764835297144611461, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
@@ -2565,6 +2570,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _stoppingDistanceAttack
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3764835297144611461, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
+        type: 3}
+      propertyPath: _allowAttacks
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7544752226871954568, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}

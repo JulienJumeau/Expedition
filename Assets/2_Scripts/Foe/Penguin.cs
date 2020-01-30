@@ -17,7 +17,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] Transform[] _patrolPoints = null;
 	[SerializeField] private bool _isNextDestinationRandom = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
-	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
+	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
 	[HideInInspector] public FoeState _foeState;
@@ -74,7 +74,9 @@ public sealed class Penguin : MonoBehaviour
 	private void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, _currentDetectionRadius);
+		Gizmos.DrawWireSphere(transform.position, _detectionRadiusAggro);
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(transform.position, _detectionRadius);
 	}
 
 	#endregion
@@ -86,7 +88,6 @@ public sealed class Penguin : MonoBehaviour
 		if (PostProcessManager._isPostProssessOn)
 		{
 			_secondsWhileWounded += Time.deltaTime;
-			Debug.Log(_secondsWhileWounded + " s");
 		}
 
 		if (_foeState == FoeState.Patrol && !_agent.pathPending && _agent.remainingDistance < 0.5f)
@@ -99,7 +100,7 @@ public sealed class Penguin : MonoBehaviour
 
 		if (_distanceTargetAgent <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking)
 		{
-			_currentDetectionRadius = 10;
+			_currentDetectionRadius = _detectionRadiusAggro;
 			_foeState = FoeState.Chase;
 			PlayerAbilities._isDetected = true;
 			_currentChaseSpeed = _distanceTargetAgent <= _agent.stoppingDistance * 2 ? 2 : _foeChaseSpeed;
@@ -115,9 +116,7 @@ public sealed class Penguin : MonoBehaviour
 		{
 			_agent.SetDestination(this.transform.position);
 			PlayerAbilities._isDetected = false;
-			Debug.Log(_currentDetectionRadius);
 			_currentDetectionRadius = _detectionRadius;
-			Debug.Log(_currentDetectionRadius);
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 
 			if (_agent.remainingDistance < 0.5f)
@@ -208,6 +207,7 @@ public sealed class Penguin : MonoBehaviour
 				ScenesManager._isGameOver = true;
 			}
 		}
+
 		else
 		{
 			yield return new WaitForSeconds(_secondsBeforeFirstAttack);

@@ -32,21 +32,23 @@ public sealed class PostProcessManager : MonoBehaviour
 		if (_isPostProssessOn)
 		{
 			PostProcessAttack();
+			Debug.Log(_isPostProssessOn);
 		}
+
 		if (!_isPostProssessOn)
 		{
 			PostProcessOff();
+			Debug.Log(_isPostProssessOn);
 		}
 
-
-		if (_isPostProssessHoldBreath)
-		{
-			PostProcessHoldBreath(true);
-		}
-		else
-		{
-			PostProcessHoldBreath();
-		}
+		//if (_isPostProssessHoldBreath)
+		//{
+		//	PostProcessHoldBreath(true);
+		//}
+		//else
+		//{
+		//	PostProcessHoldBreath();
+		//}
 	}
 
 	public void PostProcessAttack()

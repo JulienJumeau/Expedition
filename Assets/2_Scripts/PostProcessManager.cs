@@ -32,17 +32,20 @@ public sealed class PostProcessManager : MonoBehaviour
 		if (_isPostProssessOn)
 		{
 			PostProcessAttack();
+			Debug.Log(_isPostProssessOn);
 		}
+
 		if (!_isPostProssessOn)
 		{
 			PostProcessOff();
+			Debug.Log(_isPostProssessOn);
 		}
-
 
 		if (_isPostProssessHoldBreath)
 		{
 			PostProcessHoldBreath(true);
 		}
+
 		else
 		{
 			PostProcessHoldBreath();
@@ -58,10 +61,9 @@ public sealed class PostProcessManager : MonoBehaviour
 
 	public void PostProcessHoldBreath(bool isHoldingBreath = false)
 	{
-		_vignetteLayer.color.value = Color.black;
-		
 		if (isHoldingBreath)
 		{
+			_vignetteLayer.color.value = Color.black;
 			_durationGetdBreath = 0;
 			_vignetteLayer.intensity.value = Mathf.Lerp(0, 0.5f, _durationHoldBreath);
 			_durationHoldBreath += Time.deltaTime / 10;

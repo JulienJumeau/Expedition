@@ -340,12 +340,14 @@ MonoBehaviour:
   _isNextDestinationRandom: 0
   _foePatrolSpeed: 1
   _foeChaseSpeed: 4
-  _detectionRadius: 10
-  _detectionRadiusWHoldingBreath: 2
-  _secondsBetweenAttacks: 1.5
-  _AllowAttacks: 1
-  _AllowChasingAudiosource: 0
-  _player: {fileID: 0}
+  _detectionRadius: 5
+  _detectionRadiusWHoldingBreath: 1
+  _secondsBeforeFirstAttack: 3
+  _secondsBeforeSecondAttack: 6
+  _secondsToRecoverFullLife: 5
+  _allowAttacks: 0
+  _allowChasingAudiosource: 0
+  _stoppingDistanceAttack: 2.5
   _foeState: 0
 --- !u!82 &3764835297144611460
 AudioSource:
@@ -357,7 +359,7 @@ AudioSource:
   m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: eddad184fcf78af44af7cafe9b51e7b1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e009a29934a79a54cabfa4225661cadc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -367,8 +369,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0
-  MaxDistance: 7
+  MinDistance: 1
+  MaxDistance: 5
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

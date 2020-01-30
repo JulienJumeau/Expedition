@@ -143,6 +143,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tonneau_02
       objectReference: {fileID: 0}
+    - target: {fileID: 5656127245769182638, guid: 5545506afd4fd484d8f92bc64f95dc6d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f941240a0eacdc341b71637920dd5bd4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5545506afd4fd484d8f92bc64f95dc6d, type: 3}
 --- !u!4 &4718250433972932516 stripped

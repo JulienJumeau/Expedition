@@ -185,6 +185,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: bougie_01
       objectReference: {fileID: 0}
+    - target: {fileID: 539902183326195734, guid: eb1833f5a3073e94aa7d1b29e78d1425,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4f2e966f1e31a1b438bbec252afa7405, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb1833f5a3073e94aa7d1b29e78d1425, type: 3}
 --- !u!4 &6601999177334988073 stripped

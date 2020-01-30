@@ -341,8 +341,8 @@ MonoBehaviour:
     type: 3}
   _isLanternInInventory: 0
   _lanternLightGO: {fileID: 1058561638}
-  _lanternMinIntensity: 3
-  _lanternMaxIntensity: 7
+  _lanternMinIntensity: 0.5
+  _lanternMaxIntensity: 3
   _secondsOilLevelFullToEmpty: 100
   _isHiding: 0
   _isHoldingBreath: 0

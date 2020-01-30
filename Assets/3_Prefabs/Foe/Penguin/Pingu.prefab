@@ -341,10 +341,11 @@ MonoBehaviour:
   _foePatrolSpeed: 1
   _foeChaseSpeed: 4
   _detectionRadius: 5
+  _detectionRadiusAggro: 10
   _detectionRadiusWHoldingBreath: 1
   _secondsBeforeFirstAttack: 3
   _secondsBeforeSecondAttack: 6
-  _secondsToRecoverFullLife: 5
+  _secondsToRecoverFullLife: 6
   _allowAttacks: 0
   _allowChasingAudiosource: 0
   _stoppingDistanceAttack: 2.5

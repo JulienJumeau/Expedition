@@ -21,6 +21,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
 	[SerializeField] private AudioClip _audioClipHoldBreath, _audioClipGetBreathSoft, _audioClipGetBreathHard;
 	[SerializeField] private bool _isLanternInInventory = false;
+	[SerializeField] private GameObject _lanternLightGO = null;
+	[SerializeField] public float _lanternMinIntensity = 0, _lanternMaxIntensity = 0, _secondsOilLevelFullToEmpty = 1;
 
 	private Camera _camera;
 	private CharacterController _characterController;
@@ -30,10 +32,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private bool _isCrouching;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
-	private int _oilLevel, _oilLevelMax;
+	private float _oilLevel, _oilLevelMax;
 	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
 	private AudioSource _audioSource;
+	private Light _lanternLight;
 
 	[HideInInspector] public float _holdingBreathSeconds;
 
@@ -55,6 +58,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_oilLevel = 0;
 		_oilLevelMax = 1;
 		_isDetected = false;
+		_lanternLight = _lanternLightGO.GetComponent<Light>();
 	}
 
 	private void Start()
@@ -77,6 +81,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 		else
 		{
 			HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0 });
+		}
+
+		//Lantern oil level decrease over time
+		if (_oilLevel <= _oilLevelMax && _oilLevel != 0)
+		{
+			_oilLevel -= Time.deltaTime / _secondsOilLevelFullToEmpty;
+
+			if (_oilLevel <= 0)
+			{
+				_oilLevel = 0;
+				_lanternLight.intensity = _lanternMinIntensity;
+			}
+			Debug.Log(_oilLevel + " s");
 		}
 	}
 
@@ -376,6 +393,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			if (_oilLevel < _oilLevelMax)
 			{
 				_oilLevel = _oilLevelMax;
+				_lanternLight.intensity = _lanternMaxIntensity;
 				Destroy(_hitForward.transform.gameObject);
 			}
 			else print("Lantern is already full!");
@@ -383,9 +401,14 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		if (_hitForward.transform.gameObject.CompareTag("Lantern"))
 		{
-			_isLanternInInventory = true;
-			HoldItem(_lanternGO, _photoCameraGO);
-			Destroy(_hitForward.transform.gameObject);
+			if (!_isLanternInInventory)
+			{
+				_lanternLight.intensity = 0;
+				_isLanternInInventory = true;
+				HoldItem(_lanternGO, _photoCameraGO);
+				Destroy(_hitForward.transform.gameObject);
+			}
+			else print("You are already carrying a lantern!");
 		}
 	}
 

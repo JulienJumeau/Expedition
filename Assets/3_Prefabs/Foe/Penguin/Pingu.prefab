@@ -343,8 +343,8 @@ MonoBehaviour:
   _detectionRadius: 5
   _detectionRadiusAggro: 10
   _detectionRadiusWHoldingBreath: 1
-  _secondsBeforeFirstAttack: 3
-  _secondsBeforeSecondAttack: 6
+  _secondsBeforeFirstAttack: 1
+  _secondsBeforeSecondAttack: 2
   _secondsToRecoverFullLife: 6
   _allowAttacks: 1
   _allowChasingAudiosource: 0
@@ -371,7 +371,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 5
+  MaxDistance: 7
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

@@ -11,7 +11,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public static bool _isDetected;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
-	[Range(5, 15)] [SerializeField] private float _sprintSpeed = 10;
+	[Range(1, 15)] [SerializeField] private float _sprintSpeed = 10;
 	[Range(1, 5)] [SerializeField] private float _crouchSpeed = 3;
 	[Range(1, 5)] [SerializeField] private float _pullObjectSpeed = 2;
 	[Range(1, 5)] [SerializeField] private int _lightbulbNbrMax = 2;

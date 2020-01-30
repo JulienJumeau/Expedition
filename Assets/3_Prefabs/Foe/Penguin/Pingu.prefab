@@ -342,11 +342,12 @@ MonoBehaviour:
   _foeChaseSpeed: 4
   _detectionRadius: 5
   _detectionRadiusWHoldingBreath: 1
-  _secondsBeforeFirstAttack: 1
-  _secondsBeforeSecondAttack: 3
-  _secondsToRecoverFullLife: 10
-  _AllowAttacks: 1
-  _AllowChasingAudiosource: 1
+  _secondsBeforeFirstAttack: 3
+  _secondsBeforeSecondAttack: 6
+  _secondsToRecoverFullLife: 5
+  _allowAttacks: 0
+  _allowChasingAudiosource: 0
+  _stoppingDistanceAttack: 2.5
   _foeState: 0
 --- !u!82 &3764835297144611460
 AudioSource:

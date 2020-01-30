@@ -18,13 +18,14 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private bool _isNextDestinationRandom = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
-	[SerializeField] private bool _AllowAttacks = false, _AllowChasingAudiosource = false;
+	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
+	[SerializeField] private float _stoppingDistanceAttack = 4;
 	[HideInInspector] public FoeState _foeState;
 	private NavMeshAgent _agent;
 	private PlayerAbilities _player;
 	private Transform _targetPlayer;
 	private int _nextDestinationIndex;
-	private float _distanceTargetAgent, _currentDetectionRadius, _secondsWhileWounded;
+	private float _distanceTargetAgent, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed;
 	private bool _isAttacking;
 
 	#endregion
@@ -41,6 +42,7 @@ public sealed class Penguin : MonoBehaviour
 		_foeState = FoeState.Patrol;
 		_currentDetectionRadius = _detectionRadius;
 		_secondsWhileWounded = 0;
+		_currentChaseSpeed = _foeChaseSpeed;
 	}
 
 	private void Start()
@@ -55,14 +57,14 @@ public sealed class Penguin : MonoBehaviour
 		//Sound for chasing (provisoire car à incorporer à SoundManager)
 		if (PlayerAbilities._isDetected)
 		{
-			if (_AllowChasingAudiosource)
+			if (_allowChasingAudiosource)
 			{
 				GetComponent<AudioSource>().enabled = true;
 			}
 		}
 		else
 		{
-			if (_AllowChasingAudiosource)
+			if (_allowChasingAudiosource)
 			{
 				GetComponent<AudioSource>().enabled = false;
 			}
@@ -72,7 +74,7 @@ public sealed class Penguin : MonoBehaviour
 	private void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, _detectionRadius);
+		Gizmos.DrawWireSphere(transform.position, _currentDetectionRadius);
 	}
 
 	#endregion
@@ -95,12 +97,13 @@ public sealed class Penguin : MonoBehaviour
 		_distanceTargetAgent = Vector3.Distance(_targetPlayer.position, this.transform.position);
 
 
-		if (_distanceTargetAgent <= _detectionRadius && _player._isHiding == false && !_isAttacking)
+		if (_distanceTargetAgent <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking)
 		{
+			_currentDetectionRadius = 10;
 			_foeState = FoeState.Chase;
-			//Debug.Log("_foeState = FoeState.Chase");
 			PlayerAbilities._isDetected = true;
-			SetFoeAgentProperties(_targetPlayer.position, _foeChaseSpeed, 4, false);
+			_currentChaseSpeed = _distanceTargetAgent <= _agent.stoppingDistance * 2 ? 2 : _foeChaseSpeed;
+			SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
 
 			if (IsFoeNearTarget())
 			{
@@ -112,6 +115,9 @@ public sealed class Penguin : MonoBehaviour
 		{
 			_agent.SetDestination(this.transform.position);
 			PlayerAbilities._isDetected = false;
+			Debug.Log(_currentDetectionRadius);
+			_currentDetectionRadius = _detectionRadius;
+			Debug.Log(_currentDetectionRadius);
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 
 			if (_agent.remainingDistance < 0.5f)
@@ -123,7 +129,7 @@ public sealed class Penguin : MonoBehaviour
 		if (_foeState == FoeState.Attack)
 		{
 			FaceTarget();
-			if (_AllowAttacks)
+			if (_allowAttacks)
 			{
 				if (!_isAttacking)
 				{
@@ -141,9 +147,13 @@ public sealed class Penguin : MonoBehaviour
 
 		if (_player._isHoldingBreath && _foeState == FoeState.Patrol)
 		{
-			_detectionRadius = _detectionRadiusWHoldingBreath;
+			_currentDetectionRadius = _detectionRadiusWHoldingBreath;
+		}
 
-		}else _detectionRadius = _currentDetectionRadius;
+		else if (_foeState == FoeState.Patrol)
+		{
+			_currentDetectionRadius = _detectionRadius;
+		}
 
 		if (_secondsWhileWounded != 0)
 		{
@@ -163,7 +173,7 @@ public sealed class Penguin : MonoBehaviour
 			return;
 		}
 
-		SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, true);
+		SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
 
 		if (_isNextDestinationRandom)
 		{

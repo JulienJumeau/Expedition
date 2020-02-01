@@ -20,7 +20,7 @@ public sealed class MusicTrigger : MonoBehaviour
 
 	private void OnTriggerEnter(Collider _)
 	{
-		MusicTriggered(new MusicTriggeredEventArgs { musicTriggered = _music, id = this.transform.GetSiblingIndex() });
+		MusicTriggered(new MusicTriggeredEventArgs { musicTriggered = _music, id = this.transform.GetSiblingIndex(), mustBePlayed = true });
 		_collider.enabled = false;
 	}
 
@@ -32,6 +32,7 @@ public sealed class MusicTrigger : MonoBehaviour
 	{
 		public AudioClip musicTriggered;
 		public int id;
+		public bool mustBePlayed;
 	}
 
 	public event EventHandler<MusicTriggeredEventArgs> OnMusicTriggered;

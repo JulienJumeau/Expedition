@@ -40,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d2dc7098915fe7a479644d45fcc58cb4, type: 3}
+        m_Texture: {fileID: 2800000, guid: bde321b4a73145c41a281330c7213484, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetalicRGBSmoothnessA:
-        m_Texture: {fileID: 2800000, guid: f31457378700c4c46ac86221c815d05d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2e66c4095acd7944f8c5e07245ce4590, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 42149f9f346268040bfa4f1385c220b3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 51ccdc0eba849614996edcd609489798, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SubSurface:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 6c572b07a53564143b1e0baa411d1957, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
@@ -83,21 +83,21 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _MetalicIntensity: 0
+    - _MetalicIntensity: 0.547
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SmoothnessIntensity: 0.525
+    - _SmoothnessIntensity: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TransAmbient: 0
-    - _TransDirect: 0.6
-    - _TransNormalDistortion: 0.15
-    - _TransScattering: 8.4
-    - _TransShadow: 1
-    - _Translucency: 0.1
+    - _TransDirect: 0.199
+    - _TransNormalDistortion: 0.185
+    - _TransScattering: 9.1
+    - _TransShadow: 0
+    - _Translucency: 23.5
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
@@ -105,4 +105,4 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SubSurface: {r: 1, g: 1, b: 1, a: 1}
-    - _SubSurfaceColor: {r: 1, g: 0.4404881, b: 0, a: 0}
+    - _SubSurfaceColor: {r: 0.49056602, g: 0.19527388, b: 0, a: 0}

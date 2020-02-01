@@ -22,8 +22,12 @@ public sealed class SoundManager : MonoBehaviour
 			GameObject go = new GameObject(_audioSourceName[i]);
 			go.transform.parent = this.gameObject.transform;
 			_audioSources[i] = go.AddComponent<AudioSource>();
+			_audioSources[i].loop = true;
 		}
+	}
 
+	private void Start()
+	{
 		EventSubscription();
 	}
 
@@ -33,6 +37,7 @@ public sealed class SoundManager : MonoBehaviour
 
 	private void SoundManager_OnMusicTriggered(object sender, MusicTrigger.MusicTriggeredEventArgs e)
 	{
+		Debug.Log(e.id);
 		_musicGo[e.id].OnMusicTriggered -= SoundManager_OnMusicTriggered;
 		_audioSources[0].clip = e.musicTriggered;
 		_audioSources[0].Play();

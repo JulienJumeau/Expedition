@@ -24,9 +24,11 @@ public sealed class Penguin : MonoBehaviour
 	private NavMeshAgent _agent;
 	private PlayerAbilities _player;
 	private Transform _targetPlayer;
+	private Animator _animator;
 	private int _nextDestinationIndex;
 	private float _distanceTargetAgent, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed;
 	private bool _isAttacking;
+	private string[] _triggerAnimationNames;
 
 	#endregion
 
@@ -36,18 +38,15 @@ public sealed class Penguin : MonoBehaviour
 	{
 		_agent = GetComponent<NavMeshAgent>();
 		_player = FindObjectOfType<PlayerAbilities>();
+		_animator = GetComponentInChildren<Animator>();
 		_targetPlayer = _player.transform;
 		_nextDestinationIndex = 0;
 		_distanceTargetAgent = 0;
 		_foeState = FoeState.Patrol;
 		_currentDetectionRadius = _detectionRadius;
 		_secondsWhileWounded = 0;
+		_triggerAnimationNames = new string[4] { "P_IsWalking", "P_IsRunning", "P_IsLookingFor", "P_IsBiting2" };
 		_currentChaseSpeed = _foeChaseSpeed;
-	}
-
-	private void Start()
-	{
-		//GoToNextPatrolPoint();
 	}
 
 	private void Update()
@@ -69,6 +68,24 @@ public sealed class Penguin : MonoBehaviour
 			{
 				GetComponent<AudioSource>().enabled = false;
 			}
+		}
+
+		if (_foeState == FoeState.Patrol)
+		{
+			ResetAllTriggerAnimation();
+			_animator.SetBool(_triggerAnimationNames[0], true);
+		}
+
+		if (_foeState == FoeState.Chase)
+		{
+			ResetAllTriggerAnimation();
+			_animator.SetBool(_triggerAnimationNames[1], true);
+		}
+
+		if (_foeState == FoeState.Attack)
+		{
+			_animator.SetBool(_triggerAnimationNames[0], false);
+			_animator.SetBool(_triggerAnimationNames[1], false);
 		}
 	}
 
@@ -206,6 +223,7 @@ public sealed class Penguin : MonoBehaviour
 			yield return new WaitForSeconds(_secondsBeforeSecondAttack);
 			if (IsFoeNearTarget())
 			{
+				_animator.SetBool(_triggerAnimationNames[3], true);
 				ScenesManager._isGameOver = true;
 			}
 		}
@@ -215,6 +233,7 @@ public sealed class Penguin : MonoBehaviour
 			yield return new WaitForSeconds(_secondsBeforeFirstAttack);
 			if (IsFoeNearTarget())
 			{
+				_animator.SetBool(_triggerAnimationNames[3], true);
 				PostProcessManager._isPostProssessOn = true;
 			}
 		}
@@ -227,6 +246,14 @@ public sealed class Penguin : MonoBehaviour
 		_agent.speed = speed;
 		_agent.stoppingDistance = stoppingDistance;
 		_agent.autoBraking = autoBraking;
+	}
+
+	private void ResetAllTriggerAnimation()
+	{
+		for (int i = 0; i < _triggerAnimationNames.Length; i++)
+		{
+			_animator.ResetTrigger(_triggerAnimationNames[i]);
+		}
 	}
 
 	private bool IsFoeNearTarget() => _distanceTargetAgent <= _agent.stoppingDistance;

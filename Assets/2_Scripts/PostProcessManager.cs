@@ -34,14 +34,12 @@ public sealed class PostProcessManager : MonoBehaviour
 		{
 			_isAttacking = true;
 			PostProcessAttack();
-			Debug.Log(_isPostProssessOn);
 		}
 
 		else if (!_isPostProssessOn && _isAttacking == true)
 		{
 			_isAttacking = false;
 			PostProcessOff();
-			Debug.Log(_isPostProssessOn);
 		}
 
 		if (_isPostProssessHoldBreath)

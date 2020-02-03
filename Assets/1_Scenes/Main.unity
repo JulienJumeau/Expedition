@@ -513,57 +513,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
       propertyPath: _hudInputGO
       value: 
       objectReference: {fileID: 1163041416}
     - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 2b0f941f14e1b884ab2381db4d0a8a26,
-        type: 2}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: ce7549d8503e83e4c95c156792110430,
-        type: 2}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: f402f220e8cb6294e9879816ee0531e0,
-        type: 2}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
       propertyPath: _hudSheetGO
       value: 
       objectReference: {fileID: 232845946}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: 38a717d429ace5e43a7af1d8bd1c1232,
-        type: 2}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: 8cac37cff0ca1bb4187137f96d286088,
-        type: 2}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[6]
-      value: 
-      objectReference: {fileID: 11400000, guid: 50aaddfce9fff824786f313bcc3ba122,
-        type: 2}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[7]
-      value: 
-      objectReference: {fileID: 11400000, guid: 2144722e21f1bca46b8038cf4a7cc8ea,
-        type: 2}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _sheetSOList.Array.data[8]
-      value: 
-      objectReference: {fileID: 11400000, guid: 640f475c4b82296479fd4b5bd1f3a03f,
-        type: 2}
     - target: {fileID: 5634259180212196396, guid: cacd2035fe310184385694804aebfe4e,
         type: 3}
       propertyPath: m_LocalPosition.x

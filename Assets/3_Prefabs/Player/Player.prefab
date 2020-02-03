@@ -344,7 +344,7 @@ MonoBehaviour:
   _fxFireLantern: {fileID: 1261568074}
   _lanternMinIntensity: 1
   _lanternMaxIntensity: 3
-  _secondsOilLevelFullToEmpty: 20
+  _secondsOilLevelFullToEmpty: 180
   _isHiding: 0
   _isHoldingBreath: 0
   _isHoldingBreathOnCooldown: 0

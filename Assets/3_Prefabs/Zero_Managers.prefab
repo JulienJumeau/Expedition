@@ -76,8 +76,14 @@ MonoBehaviour:
   _hudSheetGO: {fileID: 0}
   _sheetSOList:
   - {fileID: 11400000, guid: 891c11cffb81ac34a9b623d0ad1745d9, type: 2}
-  - {fileID: 11400000, guid: 946d15173cee4884e88d563809019925, type: 2}
-  - {fileID: 11400000, guid: 87cd1bfad68343240a3a0330f5529401, type: 2}
+  - {fileID: 11400000, guid: 2b0f941f14e1b884ab2381db4d0a8a26, type: 2}
+  - {fileID: 11400000, guid: ce7549d8503e83e4c95c156792110430, type: 2}
+  - {fileID: 11400000, guid: f402f220e8cb6294e9879816ee0531e0, type: 2}
+  - {fileID: 11400000, guid: 38a717d429ace5e43a7af1d8bd1c1232, type: 2}
+  - {fileID: 11400000, guid: 8cac37cff0ca1bb4187137f96d286088, type: 2}
+  - {fileID: 11400000, guid: 50aaddfce9fff824786f313bcc3ba122, type: 2}
+  - {fileID: 11400000, guid: 2144722e21f1bca46b8038cf4a7cc8ea, type: 2}
+  - {fileID: 11400000, guid: 640f475c4b82296479fd4b5bd1f3a03f, type: 2}
 --- !u!114 &50669763
 MonoBehaviour:
   m_ObjectHideFlags: 0

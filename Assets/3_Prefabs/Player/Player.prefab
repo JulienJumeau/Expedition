@@ -341,9 +341,10 @@ MonoBehaviour:
     type: 3}
   _isLanternInInventory: 0
   _lanternLightGO: {fileID: 1058561638}
+  _fxFireLantern: {fileID: 1261568074}
   _lanternMinIntensity: 1
   _lanternMaxIntensity: 3
-  _secondsOilLevelFullToEmpty: 100
+  _secondsOilLevelFullToEmpty: 20
   _isHiding: 0
   _isHoldingBreath: 0
   _isHoldingBreathOnCooldown: 0

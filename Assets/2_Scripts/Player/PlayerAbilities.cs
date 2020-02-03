@@ -21,7 +21,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
 	[SerializeField] private AudioClip _audioClipHoldBreath, _audioClipGetBreathSoft, _audioClipGetBreathHard;
 	[SerializeField] private bool _isLanternInInventory = false;
-	[SerializeField] private GameObject _lanternLightGO = null;
+	[SerializeField] private GameObject _lanternLightGO = null, _fxFireLantern = null;
 	[SerializeField] public float _lanternMinIntensity = 0, _lanternMaxIntensity = 0, _secondsOilLevelFullToEmpty = 1;
 
 	private Camera _camera;
@@ -29,10 +29,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
-	private bool _isCrouching;
+	private bool _isCrouching, _isLanternOnScreen;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
-	private float _oilLevel, _oilLevelMax;
+	private float _oilLevel, _oilLevelMax, _lanternElapsedTime;
 	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
 	private AudioSource _audioSource;
@@ -57,6 +57,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lightbulbNbrMax = 2;
 		_oilLevel = 0;
 		_oilLevelMax = 1;
+		_lanternElapsedTime = 0;
 		_isDetected = false;
 		_lanternLight = _lanternLightGO.GetComponent<Light>();
 	}
@@ -84,17 +85,23 @@ public sealed class PlayerAbilities : MonoBehaviour
 		}
 
 		//Lantern oil level decrease over time
-		if (_oilLevel <= _oilLevelMax && _oilLevel != 0)
+		if (_oilLevel <= _oilLevelMax && _oilLevel != 0 && _isLanternOnScreen)
 		{
 			_oilLevel -= Time.deltaTime / _secondsOilLevelFullToEmpty;
+
+			//_lanternElapsedTime += Time.deltaTime;
+			//_fxFireLantern.transform.position = Vector3.Lerp(new Vector3(_fxFireLantern.transform.position.x, -0.155f, _fxFireLantern.transform.position.z), new Vector3(_fxFireLantern.transform.position.x, -0.24f, _fxFireLantern.transform.position.z), _lanternElapsedTime / _secondsOilLevelFullToEmpty);
 
 			if (_oilLevel <= 0)
 			{
 				_oilLevel = 0;
+				_lanternElapsedTime = 0;
+				//_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.position.x, -0.24f, _fxFireLantern.transform.position.z);
 				_lanternLight.intensity = _lanternMinIntensity;
 			}
-			Debug.Log(_oilLevel + " s");
 		}
+		Debug.Log("Oil lvl:" + _oilLevel + " s");
+		//Debug.Log("Elapsed time:" + _lanternElapsedTime + " s");
 	}
 
 	#endregion
@@ -194,6 +201,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isHiding && _isLanternInInventory)
 				{
+					_isLanternOnScreen = !_isLanternOnScreen;
 					HoldItem(_lanternGO, _photoCameraGO);
 				}
 
@@ -393,6 +401,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			if (_oilLevel < _oilLevelMax)
 			{
 				_oilLevel = _oilLevelMax;
+				//_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.position.x, -0.155f, _fxFireLantern.transform.position.z);
 				_lanternLight.intensity = _lanternMaxIntensity;
 				Destroy(_hitForward.transform.gameObject);
 			}
@@ -405,6 +414,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 			{
 				_lanternLight.intensity = 0;
 				_isLanternInInventory = true;
+				_isLanternOnScreen = true;
+				//_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.position.x, -0.4f, _fxFireLantern.transform.position.z);
 				HoldItem(_lanternGO, _photoCameraGO);
 				Destroy(_hitForward.transform.gameObject);
 			}

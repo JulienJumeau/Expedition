@@ -101,8 +101,6 @@ public sealed class Penguin : MonoBehaviour
 
 	private void FoePattern()
 	{
-		//gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = _isChasingPlayer ? Color.red : Color.green;
-
 		if (PostProcessManager._isPostProssessOn)
 		{
 			_secondsWhileWounded += Time.deltaTime;
@@ -138,10 +136,9 @@ public sealed class Penguin : MonoBehaviour
 				_foeState = FoeState.Attack;
 			}
 		}
-
 		else if (_foeState == FoeState.Chase)
 		{
-			_agent.SetDestination(this.transform.position);
+			//_agent.SetDestination(this.transform.position);
 			PlayerAbilities._isDetected = false;
 			_currentDetectionRadius = _detectionRadius;
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
@@ -167,7 +164,6 @@ public sealed class Penguin : MonoBehaviour
 			{
 				_foeState = FoeState.Chase;
 				_isAttacking = false;
-				//Debug.Log("_isAttacking = false");
 			}
 		}
 
@@ -175,7 +171,6 @@ public sealed class Penguin : MonoBehaviour
 		{
 			_currentDetectionRadius = _detectionRadiusWHoldingBreath;
 		}
-
 		else if (_foeState == FoeState.Patrol)
 		{
 			_currentDetectionRadius = _detectionRadius;

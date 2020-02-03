@@ -84,10 +84,6 @@ public sealed class InputManager : MonoBehaviour
 
 			#region ActionInput
 
-			if (Input.GetButtonDown("ActionButton"))
-			{
-				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
-			}
 
 			if (Input.GetButtonDown("Lantern"))
 			{
@@ -123,6 +119,11 @@ public sealed class InputManager : MonoBehaviour
 			{
 				ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Idle });
 			}
+		}
+
+		if (Input.GetButtonDown("ActionButton"))
+		{
+			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
 		}
 
 		#endregion

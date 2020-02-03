@@ -255,7 +255,7 @@ MonoBehaviour:
   _lightbulbNbrMax: 2
   _layerMask:
     serializedVersion: 2
-    m_Bits: 261120
+    m_Bits: 2358272
   _lanternGO: {fileID: 6706517576754872396}
   _photoCameraGO: {fileID: 2851746197378630181}
   _climbWallAnimationCurve:

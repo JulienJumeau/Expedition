@@ -68,7 +68,7 @@ public sealed class SoundManager : MonoBehaviour
 		}
 
 		_stopMusicGo = FindObjectsOfType<StopMusicTrigger>().OrderBy(m => m.transform.GetSiblingIndex()).ToArray();
-		for (int i = 0; i < _musicGo.Length; i++)
+		for (int i = 0; i < _stopMusicGo.Length; i++)
 		{
 			_stopMusicGo[i].OnStopMusicTriggered += SoundManager_OnStopMusicTriggered;
 		}

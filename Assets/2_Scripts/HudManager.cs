@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class HudManager : MonoBehaviour
@@ -6,7 +7,11 @@ public class HudManager : MonoBehaviour
 	#region Variables Declaration
 
 	[SerializeField] private GameObject _hudInputGO;
+	[SerializeField] private GameObject _hudSheetGO;
+	[SerializeField] private SheetsSO[] _sheetSOList;
 	private TextMeshProUGUI _textComponent;
+	private TextMeshProUGUI _textSheetComponent;
+	private RawImage _sheetToRender;
 
 	#endregion
 
@@ -15,6 +20,8 @@ public class HudManager : MonoBehaviour
 	private void Awake()
 	{
 		_textComponent = _hudInputGO.GetComponent<TextMeshProUGUI>();
+		_textSheetComponent = _hudSheetGO.GetComponentInChildren<TextMeshProUGUI>();
+		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
 		EventSubscription();
 	}
 
@@ -29,6 +36,13 @@ public class HudManager : MonoBehaviour
 	{
 		_textComponent.enabled = e.isActive;
 		_textComponent.text = e.isActive ? ConvertLayerIndexToInputName(e.layerDetected) : "";
+
+		if (e.isSheet)
+		{
+			_hudSheetGO.SetActive(!_hudSheetGO.activeSelf);
+			_textSheetComponent.text = _sheetSOList[e.sheetID]._sheetText.Replace("\\n", "\n");
+			_sheetToRender.texture = _sheetSOList[e.sheetID]._sheetSprite;
+		}
 	}
 
 	private string ConvertLayerIndexToInputName(int layerIndex)
@@ -53,7 +67,10 @@ public class HudManager : MonoBehaviour
 				text = "E : Hide";
 				break;
 			case 17:
-				text = "Left Click : Pull/Push \n Space : Climb";
+				text = "Hold Left Click : Pull/Push \n Space : Climb";
+				break;
+			case 21:
+				text = "E: Readable";
 				break;
 
 			default:

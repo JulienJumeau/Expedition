@@ -29,7 +29,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isLanternOnScreen;
+	private bool _isCrouching, _isLanternOnScreen, _isReading, _isPulling;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
 	private float _oilLevel, _oilLevelMax, _lanternElapsedTime;
@@ -58,7 +58,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_oilLevel = 0;
 		_oilLevelMax = 1;
 		_lanternElapsedTime = 0;
-		_isDetected = false;
+		_isDetected = _isReading = _isPulling = false;
 		_lanternLight = _lanternLightGO.GetComponent<Light>();
 	}
 
@@ -74,14 +74,14 @@ public sealed class PlayerAbilities : MonoBehaviour
 			Movement();
 		}
 
-		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask))
+		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask) && !_isActionPlaying && !_isPulling)
 		{
-			HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer });
+			HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = false });
 		}
 
 		else
 		{
-			HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0 });
+			HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
 		}
 
 		//Lantern oil level decrease over time
@@ -242,6 +242,22 @@ public sealed class PlayerAbilities : MonoBehaviour
 							GetOut();
 						}
 					}
+
+					if (_hitForward.transform.gameObject.layer == 21 && !_isReading)
+					{
+						_isActionPlaying = !_isActionPlaying;
+						_isReading = !_isReading;
+						Sheet sheet = _hitForward.transform.parent.GetComponentInChildren<Sheet>();
+						HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = true, sheetID = sheet.sheetID });
+						break;
+					}
+				}
+
+				if (_isReading)
+				{
+					_isActionPlaying = !_isActionPlaying;
+					_isReading = !_isReading;
+					HUDDisplay(new HUDDisplayEventArgs { isActive = false, isSheet = true });
 				}
 
 				break;
@@ -275,12 +291,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 2.7f)
 					{
 						_currentSpeed = _pullObjectSpeed;
+						_isPulling = true;
 						PullObject();
-					}
-
-					else
-					{
-						_currentSpeed = _walkSpeed;
 					}
 				}
 
@@ -329,6 +341,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			default:
 				ResetAllTriggerAnimation();
+				_isPulling = false;
 				break;
 		}
 	}
@@ -506,7 +519,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public class HUDDisplayEventArgs : EventArgs
 	{
 		public bool isActive;
+		public bool isSheet;
 		public int layerDetected;
+		public int sheetID;
 	}
 
 	public event EventHandler<HUDDisplayEventArgs> OnHUDDisplay;

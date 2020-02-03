@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36b8513495d87c41a2f8030726ca540, type: 3}
+  m_Name: Story_2
+  m_EditorClassIdentifier: 
+  _sheetID: 2
+  _sheetSprite: {fileID: 2800000, guid: f4b722f8f62c0c24db1686a051958695, type: 3}
+  _sheetText: "9 January 1931 \\n\\n Dr. Niels Evans\u2019s expedition diary \\n\\n
+    \ We are fucked \\n\\n  We were setting the dynamite up when we heard some noises
+    in the west galleries, as we were all going there to witness what was happening
+    we found the dead corpses of three scientists they were devastated by something
+    bigger and more dangerous than the penguins and noises were starting to be heard
+    in the east galleries\u2026, this was a really bad idea to come here. \\n\\n"

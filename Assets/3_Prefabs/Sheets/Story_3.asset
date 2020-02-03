@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36b8513495d87c41a2f8030726ca540, type: 3}
+  m_Name: Story_3
+  m_EditorClassIdentifier: 
+  _sheetID: 3
+  _sheetSprite: {fileID: 2800000, guid: 6e3222eeb1b394e469972a7f3851fa57, type: 3}
+  _sheetText: "9 January 1931 \\n\\n Dr. Niels Evans\u2019s expedition diary \\n\\n
+    \ This will be my last entry in this diary. I\u2019m dying... everyone is dying.
+    I lost the others while trying to flee and my chest is bleeding. These fuckers
+    at Miskatonic left us dead and grounded\u2026 All hope is lo...\\n\\n"

@@ -5,6 +5,7 @@ public class ScenesManager : MonoBehaviour
 {
 	public static bool _isGameOver;
 	private static Vector3 _chosenCheckPointPosition;
+	private static Vector3 _chosenCheckPointRotation;
 	private GameObject[] _checkPoints;
 	private GameObject _player;
 
@@ -18,12 +19,15 @@ public class ScenesManager : MonoBehaviour
 			if (_chosenCheckPointPosition == Vector3.zero)
 			{
 				_chosenCheckPointPosition = _checkPoints[0].transform.position;
+				_chosenCheckPointRotation.y = _checkPoints[0].transform.eulerAngles.y;
 				_player.transform.position = _chosenCheckPointPosition;
+				_player.transform.Rotate(new Vector3(_player.transform.eulerAngles.x, _chosenCheckPointRotation.y, _player.transform.eulerAngles.z));
 			}
 
 			else
 			{
 				_player.transform.position = _chosenCheckPointPosition;
+				_player.transform.Rotate(new Vector3(_player.transform.eulerAngles.x, _chosenCheckPointRotation.y, _player.transform.eulerAngles.z));
 			}
 		}
 	}
@@ -35,7 +39,7 @@ public class ScenesManager : MonoBehaviour
 			SceneManager.LoadScene("SceneLoader");
 		}
 
-		if(_isGameOver)
+		if (_isGameOver)
 		{
 			_isGameOver = false;
 			GameOverScene();
@@ -55,16 +59,19 @@ public class ScenesManager : MonoBehaviour
 				PlayerAbilities._isActionPlaying = false;
 				PlayerAbilities._isLanternInInventory = false;
 				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
+				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			case 2:
 				PlayerAbilities._isActionPlaying = false;
 				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
+				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			case 3:
 				PlayerAbilities._isActionPlaying = false;
 				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
+				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			default:

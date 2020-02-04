@@ -42,15 +42,44 @@ public sealed class Penguin : MonoBehaviour
 		_targetPlayer = _player.transform;
 		_nextDestinationIndex = 0;
 		_distanceTargetAgent = 0;
-		_foeState = FoeState.Patrol;
 		_currentDetectionRadius = _detectionRadius;
 		_secondsWhileWounded = 0;
 		_triggerAnimationNames = new string[4] { "P_IsWalking", "P_IsRunning", "P_IsLookingFor", "P_IsBiting2" };
 		_currentChaseSpeed = _foeChaseSpeed;
 	}
 
+	private void Start()
+	{
+		if (_patrolPoints.Length == 1 && transform.position == _patrolPoints[0].position)
+		{
+			_foeState = FoeState.idle;
+		}
+		else
+		{
+			_foeState = FoeState.Patrol;
+		}
+	}
+
 	private void Update()
 	{
+		//Dans quel state est-on?
+		if (_foeState == FoeState.idle)
+		{
+			Debug.Log("Idle");
+		}
+		else if (_foeState == FoeState.Attack)
+		{
+			Debug.Log("Attack");
+		}
+		else if (_foeState == FoeState.Chase)
+		{
+			Debug.Log("Chase");
+		}
+		else if (_foeState == FoeState.Patrol)
+		{
+			Debug.Log("Patrol");
+		}
+
 		FoePattern();
 
 		//Sound for chasing (provisoire car à incorporer à SoundManager)
@@ -116,13 +145,17 @@ public sealed class Penguin : MonoBehaviour
 			PostProcessManager._isPostProssessOn = false;
 		}
 
+		// STATE = PATROL
 		if (_foeState == FoeState.Patrol && !_agent.pathPending && _agent.remainingDistance < 0.5f)
 		{
+			Debug.Log("Go to next patrol point");
 			GoToNextPatrolPoint();
 		}
 
+		// STATE = CHASE
 		_distanceTargetAgent = Vector3.Distance(_targetPlayer.position, this.transform.position);
 
+				// PLAYER AGGRO
 		if (_distanceTargetAgent <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking)
 		{
 			_currentDetectionRadius = _detectionRadiusAggro;
@@ -136,19 +169,27 @@ public sealed class Penguin : MonoBehaviour
 				_foeState = FoeState.Attack;
 			}
 		}
+				// STOP AGGRO PLAYER
 		else if (_foeState == FoeState.Chase)
 		{
-			//_agent.SetDestination(this.transform.position);
+			Debug.Log("foeState == FoeState.Chase");
 			PlayerAbilities._isDetected = false;
 			_currentDetectionRadius = _detectionRadius;
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 
 			if (_agent.remainingDistance < 0.5f)
 			{
-				_foeState = FoeState.Patrol;
+				//Debug.Log("agent.remainingDistance < 0.5f");
+				//if (_patrolPoints.Length == 1)
+				//{
+				//	_foeState = FoeState.idle;
+				//}
+				//else
+					_foeState = FoeState.Patrol;
 			}
 		}
 
+		// STATE = ATTACK
 		if (_foeState == FoeState.Attack)
 		{
 			FaceTarget();
@@ -167,15 +208,21 @@ public sealed class Penguin : MonoBehaviour
 			}
 		}
 
-		if (_player._isHoldingBreath && _foeState == FoeState.Patrol)
+		if (_player._isHoldingBreath && (_foeState == FoeState.Patrol || _foeState == FoeState.idle))
 		{
 			_currentDetectionRadius = _detectionRadiusWHoldingBreath;
 		}
-		else if (_foeState == FoeState.Patrol)
+		else if (_foeState == FoeState.Patrol || _foeState == FoeState.idle)
 		{
 			_currentDetectionRadius = _detectionRadius;
 		}
 
+		// STATE = IDLE
+		if (_foeState == FoeState.idle)
+		{
+			_agent.SetDestination(transform.position);
+			ResetAllTriggerAnimation();
+		}
 	}
 
 	private void GoToNextPatrolPoint()
@@ -186,19 +233,25 @@ public sealed class Penguin : MonoBehaviour
 			return;
 		}
 
-		SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
-
-		if (_isNextDestinationRandom)
+		if (_patrolPoints.Length == 1 && (transform.position.z > _patrolPoints[0].position.z - 0.2f && transform.position.z < _patrolPoints[0].position.z + 0.2f) && (transform.position.x > _patrolPoints[0].position.x - 0.2f && transform.position.x < _patrolPoints[0].position.x + 0.2f))
 		{
-			_nextDestinationIndex = Random.Range(0, _patrolPoints.Length);
+			_foeState = FoeState.idle;
 		}
-
 		else
 		{
-			_nextDestinationIndex++;
-		}
+			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
 
-		_nextDestinationIndex = (_nextDestinationIndex) % _patrolPoints.Length;
+			if (_isNextDestinationRandom)
+			{
+				_nextDestinationIndex = Random.Range(0, _patrolPoints.Length);
+			}
+			else
+			{
+				_nextDestinationIndex++;
+			}
+
+			_nextDestinationIndex = (_nextDestinationIndex) % _patrolPoints.Length;
+		}
 	}
 
 	private void FaceTarget()
@@ -222,7 +275,6 @@ public sealed class Penguin : MonoBehaviour
 				ScenesManager._isGameOver = true;
 			}
 		}
-
 		else
 		{
 			yield return new WaitForSeconds(_secondsBeforeFirstAttack);

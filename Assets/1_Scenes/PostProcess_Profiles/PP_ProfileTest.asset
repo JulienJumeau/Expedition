@@ -94,7 +94,7 @@ MonoBehaviour:
     value: 0.78
   aperture:
     overrideState: 1
-    value: 21.9
+    value: 26
   focalLength:
     overrideState: 1
     value: 50
@@ -153,8 +153,8 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   temperature:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -5
   tint:
     overrideState: 0
     value: 0
@@ -171,11 +171,11 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 0.4
   contrast:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 5
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -204,8 +204,8 @@ MonoBehaviour:
     overrideState: 0
     value: 100
   lift:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 0.9152802, y: 0.93646014, z: 1, w: 0}
   gamma:
     overrideState: 0
     value: {x: 1, y: 1, z: 1, w: 0}
@@ -990,7 +990,7 @@ MonoBehaviour:
       - 0.5
       - 0.5
   hueVsSatCurve:
-    overrideState: 0
+    overrideState: 1
     value:
       curve:
         serializedVersion: 2
@@ -1497,7 +1497,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1
+    value: 0.7
   color:
     overrideState: 0
     value: {r: 0.23584908, g: 0.14606807, b: 0.083437175, a: 1}

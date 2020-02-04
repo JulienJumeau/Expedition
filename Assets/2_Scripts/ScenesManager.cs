@@ -29,12 +29,15 @@ public class ScenesManager : MonoBehaviour
 		switch (chapterIndex)
 		{
 			case 1:
+				PlayerAbilities._isActionPlaying = false;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			case 2:
+				PlayerAbilities._isActionPlaying = false;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			case 3:
+				PlayerAbilities._isActionPlaying = false;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			default:

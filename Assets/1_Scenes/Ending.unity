@@ -887,8 +887,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287200028
-  m_fontColor: {r: 0.10980392, g: 0.48542663, b: 0.5372549, a: 1}
+    rgba: 4289502511
+  m_fontColor: {r: 0.18509401, g: 0.6192131, b: 0.67800003, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -936,8 +936,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
+  m_horizontalMapping: 1
+  m_verticalMapping: 1
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -2630,7 +2630,7 @@ PrefabInstance:
     - target: {fileID: 5079336173837489498, guid: 16c0006fbf3e6484c9dcb3e74a138716,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5079336173837489498, guid: 16c0006fbf3e6484c9dcb3e74a138716,
         type: 3}
@@ -2640,7 +2640,7 @@ PrefabInstance:
     - target: {fileID: 5079336173837489498, guid: 16c0006fbf3e6484c9dcb3e74a138716,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.8
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 5079336173837489498, guid: 16c0006fbf3e6484c9dcb3e74a138716,
         type: 3}

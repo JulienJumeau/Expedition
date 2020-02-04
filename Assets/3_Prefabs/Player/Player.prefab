@@ -339,7 +339,6 @@ MonoBehaviour:
     type: 3}
   _audioClipGetBreathHard: {fileID: 8300000, guid: 7ebc94dba1053924a88da25ed49513ae,
     type: 3}
-  _isLanternInInventory: 0
   _lanternLightGO: {fileID: 1058561638}
   _fxFireLantern: {fileID: 1261568074}
   _lanternMinIntensity: 1
@@ -520,7 +519,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -552,14 +551,14 @@ MonoBehaviour:
     m_Bits: 4294967295
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
     stationaryBlending: 0.95
     motionBlending: 0.85
   subpixelMorphologicalAntialiasing:
-    quality: 2
+    quality: 0
   fastApproximateAntialiasing:
     fastMode: 0
     keepAlpha: 0

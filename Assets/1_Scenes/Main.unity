@@ -639,6 +639,76 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 672
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_text
+      value: 'Antartica 1/6/1931
+
+
+        Dr Niels Evans''s expedition diary
+
+
+        We got here two weeks ago with the last shipment. An outpost has been set
+        in the entrance of a series of galleries found earlier this week.
+
+
+        I must say that I''m really excited about what we will be able to discover
+        inside this mountain and I sure hope to see my name on the next great paper
+        about our discoveries. I heard that the guys working in the snow outside the
+        galleries just found something big they talked about big corpses found in
+        the ice... it seems that some of them were in particularly good shape. I can''t
+        wait to get my eyes on these tomorrow.
+
+
+        This expedition is gonna lauch my career. I can feel it.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e,
+        type: 2}
+    - target: {fileID: 4631694783357919472, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+        type: 2}
     - target: {fileID: 5363143868409309744, guid: 90c0c261426dba4439c30772b7c375c4,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -674,6 +744,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 10451327}
+    - target: {fileID: 7096180265101152290, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096180265101152290, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096180265101152290, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.07166667
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096180265101152290, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7977190542248098836, guid: 90c0c261426dba4439c30772b7c375c4,
         type: 3}
       propertyPath: m_IsActive

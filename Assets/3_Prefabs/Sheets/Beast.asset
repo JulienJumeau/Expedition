@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sheetID: 4
   _sheetSprite: {fileID: 2800000, guid: 9a17f2bfcb80e474082f6bd2e4df0fc9, type: 3}
-  _sheetText: "To all members of the expedition \\n\\n Something horrible happened
-    yesterday a few scientists died, we will bear the grief of their death, they were
-    killed by some animals. These beasts are photosensitive it is possible to scare
-    them away with a powerful enough light source, lantern\u2019s light don\u2019t
+  _sheetText: "To all members of the expedition \\n\\n  Something horrible happened
+    yesterday, a few scientists died. We will bear the grief of their death, they
+    were killed by some animals. These beasts are photosensitive it is possible to
+    scare them away with a powerful enough light source, lantern\u2019s light don\u2019t
     suffice however. They also seem to be blind or at least they have really bad eyes
     so avoid making any sound if you have to confront them as they can hear you quite
     easily. \\n\\n  Miskatonic\u2019s expedition team \\n\\n"

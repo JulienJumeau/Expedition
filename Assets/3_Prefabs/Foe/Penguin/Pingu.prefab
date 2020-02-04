@@ -276,7 +276,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3764835297144611462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 3.2, y: 0.95, z: -5.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6249186752144372492}
@@ -334,17 +334,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _patrolPoints:
   - {fileID: 3764835295800566384}
-  - {fileID: 3764835297157445062}
-  - {fileID: 3764835296539796314}
-  - {fileID: 3764835295569353257}
   _isNextDestinationRandom: 0
   _foePatrolSpeed: 1
   _foeChaseSpeed: 4
   _detectionRadius: 5
   _detectionRadiusAggro: 10
   _detectionRadiusWHoldingBreath: 1
-  _secondsBeforeFirstAttack: 1
-  _secondsBeforeSecondAttack: 2
+  _secondsBeforeFirstAttack: 3
+  _secondsBeforeSecondAttack: 6
   _secondsToRecoverFullLife: 6
   _allowAttacks: 1
   _allowChasingAudiosource: 0

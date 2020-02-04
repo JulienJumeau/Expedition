@@ -61,6 +61,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_oilLevelMax = 1;
 		_isDetected = _isReading = _isPulling = false;
 		_lanternLight = _lanternLightGO.GetComponent<Light>();
+		
 	}
 
 	private void Start()

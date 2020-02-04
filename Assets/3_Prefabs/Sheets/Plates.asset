@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sheetID: 6
   _sheetSprite: {fileID: 2800000, guid: 7bd5ed21ff29e6e4eb763d37a3b01145, type: 3}
-  _sheetText: "To all members of the expedition \\n\\n Don\u2019t forget to put back
-    your plates after eating, the team is tired of having to pick all this mess up.
-    If you don\u2019t know where to put them just ask someone. \\n\\n  Miskatonic\u2019s
+  _sheetText: "To all members of the expedition \\n\\n   Don\u2019t forget to put
+    back your plates after eating, the team is tired of having to pick all this mess
+    up. If you don\u2019t know where to put them just ask someone. \\n\\n  Miskatonic\u2019s
     expedition team \\n\\n"

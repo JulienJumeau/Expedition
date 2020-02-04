@@ -74,6 +74,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hudInputGO: {fileID: 0}
   _hudSheetGO: {fileID: 0}
+  _hudCrosshairGO: {fileID: 0}
+  _menuPauseGO: {fileID: 0}
+  _menuChapterGO: {fileID: 0}
   _sheetSOList:
   - {fileID: 11400000, guid: 891c11cffb81ac34a9b623d0ad1745d9, type: 2}
   - {fileID: 11400000, guid: 2b0f941f14e1b884ab2381db4d0a8a26, type: 2}

@@ -13,7 +13,7 @@ public enum InputAction
 	Pull,
 	PhotoCamera,
 	HoldBreath,
-	StopHoldingBreath
+	StopHoldingBreath,
 }
 
 public sealed class InputManager : MonoBehaviour
@@ -23,6 +23,7 @@ public sealed class InputManager : MonoBehaviour
 	[Range(1, 10)] [SerializeField] private float _initialCameraSensitivity = 3;
 	private float _cameraSensitivity;
 	private float _verticalRot, _horizontalRot;
+	public static bool _isPaused;
 
 	#endregion
 
@@ -34,6 +35,7 @@ public sealed class InputManager : MonoBehaviour
 
 		_cameraSensitivity = _initialCameraSensitivity;
 		_verticalRot = _horizontalRot = 0f;
+		_isPaused = false;
 
 		#endregion
 	}
@@ -126,6 +128,12 @@ public sealed class InputManager : MonoBehaviour
 			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
 		}
 
+		if (Input.GetButtonDown("Pause"))
+		{
+			_isPaused = !_isPaused;
+			Pause(new PauseEventArgs { isPaused = _isPaused });
+		}
+
 		#endregion
 	}
 
@@ -165,6 +173,17 @@ public sealed class InputManager : MonoBehaviour
 	public event EventHandler<CameraMoveEventArgs> OnCameraMove;
 
 	private void CameraMove(CameraMoveEventArgs e) => OnCameraMove?.Invoke(this, e);
+
+	// Event to trigger when pause button is pressed
+
+	public class PauseEventArgs : EventArgs
+	{
+		public bool isPaused;
+	}
+
+	public event EventHandler<PauseEventArgs> OnPause;
+
+	private void Pause(PauseEventArgs e) => OnPause?.Invoke(this, e);
 
 	#endregion
 }

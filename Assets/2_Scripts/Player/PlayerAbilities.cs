@@ -20,7 +20,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AnimationCurve _climbWallAnimationCurve = null, _climbBoxAnimationCurve = null, _jumpAnimationCurve = null;
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
 	[SerializeField] private AudioClip _audioClipHoldBreath, _audioClipGetBreathSoft, _audioClipGetBreathHard;
-	[SerializeField] private bool _isLanternInInventory = false;
+	[SerializeField] public static bool _isLanternInInventory = false;
 	[SerializeField] private GameObject _lanternLightGO = null, _fxFireLantern = null;
 	[SerializeField] public float _lanternMinIntensity = 0, _lanternMaxIntensity = 0, _secondsOilLevelFullToEmpty = 1;
 

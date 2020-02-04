@@ -30,6 +30,7 @@ public class ScenesManager : MonoBehaviour
 		{
 			case 1:
 				PlayerAbilities._isActionPlaying = false;
+				PlayerAbilities._isLanternInInventory = false;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			case 2:

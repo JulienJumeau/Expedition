@@ -32,11 +32,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private bool _isCrouching, _isLanternOnScreen, _isReading, _isPulling;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
-	private float _oilLevel, _oilLevelMax, _lanternElapsedTime;
+	private float _oilLevel, _oilLevelMax;
 	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
 	private AudioSource _audioSource;
 	private Light _lanternLight;
+	private Material _lanternMaterial;
 
 	[HideInInspector] public float _holdingBreathSeconds;
 
@@ -50,6 +51,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_audioSource = GetComponent<AudioSource>();
+		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
 		_triggerAnimationNames = new string[4] { "IsWalk", "IsRun", "IsJumping", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
 		_currentSpeed = _walkSpeed;
@@ -57,7 +59,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lightbulbNbrMax = 2;
 		_oilLevel = 0;
 		_oilLevelMax = 1;
-		_lanternElapsedTime = 0;
 		_isDetected = _isReading = _isPulling = false;
 		_lanternLight = _lanternLightGO.GetComponent<Light>();
 	}
@@ -84,24 +85,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
 		}
 
-		//Lantern oil level decrease over time
-		if (_oilLevel <= _oilLevelMax && _oilLevel != 0 && _isLanternOnScreen)
-		{
-			_oilLevel -= Time.deltaTime / _secondsOilLevelFullToEmpty;
-
-			//_lanternElapsedTime += Time.deltaTime;
-			//_fxFireLantern.transform.position = Vector3.Lerp(new Vector3(_fxFireLantern.transform.position.x, -0.155f, _fxFireLantern.transform.position.z), new Vector3(_fxFireLantern.transform.position.x, -0.24f, _fxFireLantern.transform.position.z), _lanternElapsedTime / _secondsOilLevelFullToEmpty);
-
-			if (_oilLevel <= 0)
-			{
-				_oilLevel = 0;
-				_lanternElapsedTime = 0;
-				//_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.position.x, -0.24f, _fxFireLantern.transform.position.z);
-				_lanternLight.intensity = _lanternMinIntensity;
-			}
-		}
-		Debug.Log("Oil lvl:" + _oilLevel + " s");
-		//Debug.Log("Elapsed time:" + _lanternElapsedTime + " s");
+		OilLevelDecreasing();
 	}
 
 	#endregion
@@ -414,7 +398,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			if (_oilLevel < _oilLevelMax)
 			{
 				_oilLevel = _oilLevelMax;
-				//_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.position.x, -0.155f, _fxFireLantern.transform.position.z);
+				_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.155f, _fxFireLantern.transform.localPosition.z);
 				_lanternLight.intensity = _lanternMaxIntensity;
 				Destroy(_hitForward.transform.gameObject);
 			}
@@ -428,7 +412,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_lanternLight.intensity = 0;
 				_isLanternInInventory = true;
 				_isLanternOnScreen = true;
-				//_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.position.x, -0.4f, _fxFireLantern.transform.position.z);
+				_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.4f, _fxFireLantern.transform.localPosition.z);
 				HoldItem(_lanternGO, _photoCameraGO);
 				Destroy(_hitForward.transform.gameObject);
 			}
@@ -510,6 +494,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<InputManager>().OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
 		FindObjectOfType<InputManager>().OnCameraMove += PlayerAbilities_OnCameraInputPressed;
 		FindObjectOfType<InputManager>().OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
+	}
+
+	private void OilLevelDecreasing()
+	{
+		if (_oilLevel <= _oilLevelMax && _oilLevel != 0 && _isLanternOnScreen && !_isReading)
+		{
+			_oilLevel = Mathf.Clamp(_oilLevel - Time.deltaTime / _secondsOilLevelFullToEmpty, 0, 1);
+			_fxFireLantern.transform.localPosition = Vector3.Lerp(new Vector3(0, -0.24f, 0), new Vector3(0, -0.155f, 0), _oilLevel);
+			_lanternMaterial.SetFloat("_EmissiveIntensity", Mathf.Lerp(5, 40, _oilLevel));
+			_lanternLight.intensity = Mathf.Lerp(_lanternMinIntensity, _lanternMaxIntensity, _oilLevel);
+		}
+		Debug.Log("Oil lvl:" + _oilLevel + " s");
+		Debug.Log("lanternLight intensity:" + _lanternLight.intensity);
 	}
 
 	#endregion

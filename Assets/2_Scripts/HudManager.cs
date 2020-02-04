@@ -8,6 +8,9 @@ public class HudManager : MonoBehaviour
 
 	[SerializeField] private GameObject _hudInputGO;
 	[SerializeField] private GameObject _hudSheetGO;
+	[SerializeField] private GameObject _hudCrosshairGO;
+	[SerializeField] private GameObject _menuPauseGO;
+	[SerializeField] private GameObject _menuChapterGO;
 	[SerializeField] private SheetsSO[] _sheetSOList;
 	private TextMeshProUGUI _textComponent;
 	private TextMeshProUGUI _textSheetComponent;
@@ -30,6 +33,44 @@ public class HudManager : MonoBehaviour
 	private void EventSubscription()
 	{
 		FindObjectOfType<PlayerAbilities>().OnHUDDisplay += HudManager_OnHUDDisplay;
+		FindObjectOfType<InputManager>().OnPause += HudManager_OnPause;
+	}
+
+	private void HudManager_OnPause(object sender, InputManager.PauseEventArgs e)
+	{
+		PlayerAbilities._isActionPlaying = e.isPaused;
+		Cursor.visible = e.isPaused;
+		Cursor.lockState = e.isPaused ? CursorLockMode.Confined : CursorLockMode.Locked;
+		_menuChapterGO.SetActive(false);
+		_hudCrosshairGO.SetActive(!e.isPaused);
+		_menuPauseGO.SetActive(e.isPaused);
+	}
+
+	public void OnClickButton(string buttonName)
+	{
+		switch (buttonName)
+		{
+			case "Resume":
+				InputManager._isPaused = false; 
+				PlayerAbilities._isActionPlaying = false;
+				Cursor.visible = false;
+				Cursor.lockState = CursorLockMode.Locked;
+				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);
+				break;
+			case "Chapter":
+				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);
+				_menuChapterGO.SetActive(!_menuChapterGO.activeSelf);
+				break;
+			case "Quit":
+				Application.Quit();
+				break;
+			case "Back":
+				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);
+				_menuChapterGO.SetActive(!_menuChapterGO.activeSelf);
+				break;
+			default:
+				break;
+		}
 	}
 
 	private void HudManager_OnHUDDisplay(object sender, PlayerAbilities.HUDDisplayEventArgs e)

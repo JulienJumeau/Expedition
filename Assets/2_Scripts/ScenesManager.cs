@@ -1,33 +1,44 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 
 public class ScenesManager : MonoBehaviour
 {
 	public static bool _isGameOver;
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.F1))
-		{
-			//EditorApplication.isPlaying = false;
-			Application.Quit();
-		}
 
+	private void Update()
+	{
 		if (Input.GetKeyDown(KeyCode.Keypad0))
 		{
-			//SceneManager.LoadScene(SceneManager.GetSceneAt(0).name);
 			SceneManager.LoadScene("SceneLoader");
 		}
 
 		if(_isGameOver)
 		{
-			GameOverScene();
 			_isGameOver = false;
+			GameOverScene();
 		}
 	}
 
 	public void GameOverScene()
 	{
 		SceneManager.LoadScene("GameOver");
+	}
+
+	public void OnClickButton(int chapterIndex)
+	{
+		switch (chapterIndex)
+		{
+			case 1:
+				SceneManager.LoadScene("SceneLoader");
+				break;
+			case 2:
+				SceneManager.LoadScene("SceneLoader");
+				break;
+			case 3:
+				SceneManager.LoadScene("SceneLoader");
+				break;
+			default:
+				break;
+		}
 	}
 }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class ScenesManager : MonoBehaviour
 {
 	public static bool _isGameOver;
-	private Vector3 _chosenCheckPointPosition;
+	private static Vector3 _chosenCheckPointPosition;
 	private GameObject[] _checkPoints;
 	private GameObject _player;
 
@@ -12,11 +12,19 @@ public class ScenesManager : MonoBehaviour
 	{
 		_checkPoints = GameObject.FindGameObjectsWithTag("Checkpoints");
 		_player = GameObject.FindGameObjectWithTag("Player");
-		
+
 		if (_checkPoints.Length != 0)
 		{
-			_chosenCheckPointPosition = _checkPoints[0].transform.position;
-			_player.transform.position = _chosenCheckPointPosition;
+			if (_chosenCheckPointPosition == Vector3.zero)
+			{
+				_chosenCheckPointPosition = _checkPoints[0].transform.position;
+				_player.transform.position = _chosenCheckPointPosition;
+			}
+
+			else
+			{
+				_player.transform.position = _chosenCheckPointPosition;
+			}
 		}
 	}
 

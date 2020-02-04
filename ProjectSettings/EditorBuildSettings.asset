@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1_Scenes/GameOver.unity
     guid: 427f9b405397cc54a99afc8db028f39c
+  - enabled: 1
+    path: Assets/1_Scenes/LDEscape.unity
+    guid: 16233f19df2431546b65add2e845cdc1
   m_configObjects: {}

@@ -20,9 +20,24 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private GameObject _lanternGO = null, _photoCameraGO = null;
 	[SerializeField] private AnimationCurve _climbWallAnimationCurve = null, _climbBoxAnimationCurve = null, _jumpAnimationCurve = null;
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
-	[SerializeField] private AudioClip _audioClipHoldBreath, _audioClipGetBreathSoft, _audioClipGetBreathHard;
 	[SerializeField] private GameObject _lanternLightGO = null, _fxFireLantern = null;
 	[SerializeField] public float _lanternMinIntensity = 0, _lanternMaxIntensity = 0, _secondsOilLevelFullToEmpty = 1;
+
+	[Header("Sounds")]
+	[SerializeField] private AudioClip _audioClipWalk;
+	[SerializeField] private AudioClip _audioClipRun;
+	[SerializeField] private AudioClip _audioClipRunTooLong;
+	[SerializeField] private AudioClip _audioClipClimb;
+	[SerializeField] private AudioClip _audioClipDying;
+	[SerializeField] private AudioClip _audioClipTakingDamage;
+	[SerializeField] private AudioClip _audioClipHeartbeat;
+	[SerializeField] private AudioClip _audioClipHoldBreath;
+	[SerializeField] private AudioClip _audioClipGetBreathSoft;
+	[SerializeField] private AudioClip _audioClipGetBreathHard;
+	[SerializeField] private AudioClip _audioClipLootOil;
+	[SerializeField] private AudioClip _audioClipLantern;
+	[SerializeField] private AudioClip _audioClipReadSheet;
+	[SerializeField] private AudioClip _audioClipMoveBox;
 
 	private Camera _camera;
 	private CharacterController _characterController;
@@ -154,6 +169,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 					ResetAllTriggerAnimation();
 					_animator.SetBool(_triggerAnimationNames[0], true);
+
+					_audioSource.clip = _audioClipWalk;
+					_audioSource.Play();
 				}
 
 				break;
@@ -165,6 +183,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 					_currentSpeed = _sprintSpeed;
 					ResetAllTriggerAnimation();
 					_animator.SetBool(_triggerAnimationNames[1], true);
+
+					_audioSource.clip = _audioClipRun;
+					_audioSource.Play();
 				}
 
 				break;
@@ -196,6 +217,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					_isLanternOnScreen = !_isLanternOnScreen;
 					HoldItem(_lanternGO, _photoCameraGO);
+					_audioSource.clip = _audioClipLantern;
+					_audioSource.Play();
 				}
 
 				break;
@@ -242,6 +265,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 						_isReading = !_isReading;
 						Sheet sheet = _hitForward.transform.parent.GetComponentInChildren<Sheet>();
 						HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = true, sheetID = sheet.sheetID });
+						_audioSource.clip = _audioClipReadSheet;
+						_audioSource.Play();
 						break;
 					}
 				}
@@ -259,16 +284,25 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (_hitForward.transform != null && !_isActionPlaying && !_isHiding)
 				{
+					// Climbable walls
 					if (_hitForward.transform.gameObject.layer == 12 && _hitForward.distance < 1.1f)
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 1, _climbWallAnimationCurve));
+
+						_audioSource.clip = _audioClipClimb;
+						_audioSource.Play();
 					}
 
+					// Climbable Box
 					if (_hitForward.transform.gameObject.layer == 17)
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 0.5f, _climbBoxAnimationCurve));
+
+						_audioSource.clip = _audioClipClimb;
+						_audioSource.Play();
 					}
 
+					// Jumpable
 					if (_hitForward.transform.gameObject.layer == 13)
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 2, _jumpAnimationCurve));
@@ -334,7 +368,13 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			default:
 				ResetAllTriggerAnimation();
+
+				if (_audioSource.clip == _audioClipMoveBox || _audioSource.clip == _audioClipRun || _audioSource.clip == _audioClipWalk)
+				{
+					_audioSource.Stop();
+				}
 				_isPulling = false;
+
 				break;
 		}
 	}
@@ -391,6 +431,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void CollectItems()
 	{
+		// Loot Lightbulb
 		if (_hitForward.transform.gameObject.CompareTag("Lightbulb"))
 		{
 			if (_lightbulbNbr < _lightbulbNbrMax)
@@ -400,7 +441,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			}
 			else print("You can't carry more lightbulbs!");
 		}
-
+		// Loot Oil
 		if (_hitForward.transform.gameObject.CompareTag("Oil"))
 		{
 			if (_oilLevel < _oilLevelMax)
@@ -409,10 +450,13 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.155f, _fxFireLantern.transform.localPosition.z);
 				_lanternLight.intensity = _lanternMaxIntensity;
 				Destroy(_hitForward.transform.gameObject);
+				_audioSource.clip = _audioClipLootOil;
+				_audioSource.Play();
 			}
 			else print("Lantern is already full!");
 		}
 
+		// Loot lantern
 		if (_hitForward.transform.gameObject.CompareTag("Lantern"))
 		{
 			if (!_isLanternInInventory)
@@ -422,6 +466,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_isLanternOnScreen = true;
 				HoldItem(_lanternGO, _photoCameraGO);
 				Destroy(_hitForward.transform.gameObject);
+				_audioSource.clip = _audioClipLantern;
+				_audioSource.Play();
 			}
 			else print("You are already carrying a lantern!");
 		}
@@ -430,6 +476,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void PullObject()
 	{
 		_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
+		_audioSource.clip = _audioClipMoveBox;
+		_audioSource.Play();
 	}
 
 	private bool CheckCollisionBeforePull(float height)

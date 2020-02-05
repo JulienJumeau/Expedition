@@ -20,12 +20,22 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
-	[SerializeField] private GameObject _pinguSpawnCollider = null;
+
+	[Header("Sounds")]
+	[SerializeField] private AudioClip _audioClipDying;
+	[SerializeField] private AudioClip _audioClipTakingDamage;
+	[SerializeField] private AudioClip _audioClipPenguinAlert;
+	[SerializeField] private AudioClip _audioClipPenguinAggro;
+	[SerializeField] private AudioClip _audioClipPenguinFootstepsRunnning;
+	[SerializeField] private AudioClip _audioClipPenguinFootstepsWalking;
+	[SerializeField] private AudioClip _audioClipPenguinAttack;
+
 	[HideInInspector] public FoeState _foeState;
 	private NavMeshAgent _agent;
 	private PlayerAbilities _player;
 	private Transform _targetPlayer;
 	private Animator _animator;
+	private AudioSource _audioSource;
 	private int _nextDestinationIndex;
 	private float _distanceTargetAgent, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed;
 	private bool _isAttacking;
@@ -40,6 +50,7 @@ public sealed class Penguin : MonoBehaviour
 		_agent = GetComponent<NavMeshAgent>();
 		_player = FindObjectOfType<PlayerAbilities>();
 		_animator = GetComponentInChildren<Animator>();
+		_audioSource = GetComponent<AudioSource>();
 		_targetPlayer = _player.transform;
 		_nextDestinationIndex = 0;
 		_distanceTargetAgent = 0;
@@ -63,29 +74,23 @@ public sealed class Penguin : MonoBehaviour
 
 	private void Update()
 	{
-		//Dans quel state est-on?
-		if (_foeState == FoeState.idle)
-		{
-			Debug.Log("Idle");
-		}
-		else if (_foeState == FoeState.Attack)
-		{
-			Debug.Log("Attack");
-		}
-		else if (_foeState == FoeState.Chase)
-		{
-			Debug.Log("Chase");
-		}
-		else if (_foeState == FoeState.Patrol)
-		{
-			Debug.Log("Patrol");
-		}
-
-		// When GameObject Pingu not active by default
-		if (!gameObject.activeSelf && _pinguSpawnCollider != null)
-		{
-
-		}
+		////Dans quel state est-on?
+		//if (_foeState == FoeState.idle)
+		//{
+		//	Debug.Log("Idle");
+		//}
+		//else if (_foeState == FoeState.Attack)
+		//{
+		//	Debug.Log("Attack");
+		//}
+		//else if (_foeState == FoeState.Chase)
+		//{
+		//	Debug.Log("Chase");
+		//}
+		//else if (_foeState == FoeState.Patrol)
+		//{
+		//	Debug.Log("Patrol");
+		//}
 
 		FoePattern();
 
@@ -172,6 +177,9 @@ public sealed class Penguin : MonoBehaviour
 			_currentChaseSpeed = _distanceTargetAgent <= _agent.stoppingDistance * 2 ? 2 : _foeChaseSpeed;
 			SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
 
+			_audioSource.clip = _audioClipPenguinAggro;
+			_audioSource.Play();
+
 			if (IsFoeNearTarget())
 			{
 				_foeState = FoeState.Attack;
@@ -180,10 +188,14 @@ public sealed class Penguin : MonoBehaviour
 				// STOP AGGRO PLAYER
 		else if (_foeState == FoeState.Chase)
 		{
-			Debug.Log("foeState == FoeState.Chase");
 			PlayerAbilities._isDetected = false;
 			_currentDetectionRadius = _detectionRadius;
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
+
+			if (_audioSource.clip == _audioClipPenguinAggro)
+			{
+				_audioSource.Stop();
+			}
 
 			if (_agent.remainingDistance < 0.5f)
 			{
@@ -269,6 +281,9 @@ public sealed class Penguin : MonoBehaviour
 	private IEnumerator Attack()
 	{
 		_isAttacking = true;
+
+		_audioSource.clip = _audioClipPenguinAttack;
+		_audioSource.Play();
 		// Play Anim attack penguin here
 
 		if (PostProcessManager._isPostProssessOn)
@@ -277,7 +292,12 @@ public sealed class Penguin : MonoBehaviour
 			if (IsFoeNearTarget())
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
+
+				_audioSource.clip = _audioClipDying;
+				_audioSource.Play();
+
 				ScenesManager._isGameOver = true;
+
 			}
 		}
 		else
@@ -286,6 +306,10 @@ public sealed class Penguin : MonoBehaviour
 			if (IsFoeNearTarget())
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
+
+				_audioSource.clip = _audioClipTakingDamage;
+				_audioSource.Play();
+
 				PostProcessManager._isPostProssessOn = true;
 			}
 		}

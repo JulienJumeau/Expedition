@@ -6,15 +6,23 @@ public class HudManager : MonoBehaviour
 {
 	#region Variables Declaration
 
+	[Header("Game Objects")]
 	[SerializeField] private GameObject _hudInputGO;
 	[SerializeField] private GameObject _hudSheetGO;
 	[SerializeField] private GameObject _hudCrosshairGO;
 	[SerializeField] private GameObject _menuPauseGO;
 	[SerializeField] private GameObject _menuChapterGO;
 	[SerializeField] private SheetsSO[] _sheetSOList;
+
+	[Header("Sounds")]
+	[SerializeField] private AudioClip _audioClipMouseClick;
+	[SerializeField] private AudioClip _audioClipHoverButton;
+	[SerializeField] private AudioClip _audioClipPause;
+
 	private TextMeshProUGUI _textComponent;
 	private TextMeshProUGUI _textSheetComponent;
 	private RawImage _sheetToRender;
+	private AudioSource _audioSource;
 
 	#endregion
 
@@ -25,6 +33,7 @@ public class HudManager : MonoBehaviour
 		_textComponent = _hudInputGO.GetComponent<TextMeshProUGUI>();
 		_textSheetComponent = _hudSheetGO.GetComponentInChildren<TextMeshProUGUI>();
 		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
+		_audioSource = GetComponent<AudioSource>();
 		EventSubscription();
 	}
 
@@ -48,6 +57,9 @@ public class HudManager : MonoBehaviour
 		_menuChapterGO.SetActive(false);
 		_hudCrosshairGO.SetActive(!e.isPaused);
 		_menuPauseGO.SetActive(e.isPaused);
+
+		_audioSource.clip = _audioClipPause;
+		_audioSource.Play();
 	}
 
 	public void OnClickButton(string buttonName)
@@ -80,6 +92,9 @@ public class HudManager : MonoBehaviour
 			default:
 				break;
 		}
+
+		_audioSource.clip = _audioClipMouseClick;
+		_audioSource.Play();
 	}
 
 	private void HudManager_OnHUDDisplay(object sender, PlayerAbilities.HUDDisplayEventArgs e)

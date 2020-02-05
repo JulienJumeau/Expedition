@@ -335,6 +335,7 @@ MonoBehaviour:
   _patrolPoints:
   - {fileID: 3764835295800566384}
   _isNextDestinationRandom: 0
+  _isPenguinAggro: 1
   _foePatrolSpeed: 1
   _foeChaseSpeed: 4
   _detectionRadius: 5
@@ -346,6 +347,7 @@ MonoBehaviour:
   _allowAttacks: 1
   _allowChasingAudiosource: 0
   _stoppingDistanceAttack: 2.5
+  _pinguSpawnCollider: {fileID: 0}
   _foeState: 0
 --- !u!82 &3764835297144611460
 AudioSource:

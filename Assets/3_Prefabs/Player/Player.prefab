@@ -333,17 +333,28 @@ MonoBehaviour:
   _holdingBreathSecondsAllowed: 15
   _HoldingBreathSoftCooldown: 3
   _HoldingBreathHardCooldown: 6
+  _lanternLightGO: {fileID: 1058561638}
+  _fxFireLantern: {fileID: 1261568074}
+  _lanternMinIntensity: 1
+  _lanternMaxIntensity: 3
+  _secondsOilLevelFullToEmpty: 180
+  _audioClipWalk: {fileID: 0}
+  _audioClipRun: {fileID: 0}
+  _audioClipRunTooLong: {fileID: 0}
+  _audioClipClimb: {fileID: 0}
+  _audioClipDying: {fileID: 0}
+  _audioClipTakingDamage: {fileID: 0}
+  _audioClipHeartbeat: {fileID: 0}
   _audioClipHoldBreath: {fileID: 8300000, guid: 843fb240435dd604d992df45600ca0a0,
     type: 3}
   _audioClipGetBreathSoft: {fileID: 8300000, guid: 88a1afd0c8ed275438f3bd853326b2bd,
     type: 3}
   _audioClipGetBreathHard: {fileID: 8300000, guid: 7ebc94dba1053924a88da25ed49513ae,
     type: 3}
-  _lanternLightGO: {fileID: 1058561638}
-  _fxFireLantern: {fileID: 1261568074}
-  _lanternMinIntensity: 1
-  _lanternMaxIntensity: 3
-  _secondsOilLevelFullToEmpty: 180
+  _audioClipLootOil: {fileID: 8300000, guid: 6220cd0dcd06d8b49a58bfd6704a855c, type: 3}
+  _audioClipLantern: {fileID: 8300000, guid: 38f713430adcf1e499535ff5543d324d, type: 3}
+  _audioClipReadSheet: {fileID: 8300000, guid: 024587634f9e6c24aa8a9f5acf6d99cd, type: 3}
+  _audioClipMoveBox: {fileID: 0}
   _isHiding: 0
   _isHoldingBreath: 0
   _isHoldingBreathOnCooldown: 0

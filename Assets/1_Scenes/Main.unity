@@ -953,6 +953,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1163041416}
     - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _hudSheetGO
+      value: 
+      objectReference: {fileID: 624516547}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
       propertyPath: _hudCrosshairGO
       value: 
       objectReference: {fileID: 1163041421}
@@ -964,10 +968,6 @@ PrefabInstance:
       propertyPath: _menuChapterGO
       value: 
       objectReference: {fileID: 1163041419}
-    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
-      propertyPath: _hudSheetGO
-      value: 
-      objectReference: {fileID: 624516547}
     - target: {fileID: 5634259180212196396, guid: cacd2035fe310184385694804aebfe4e,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -38,7 +38,11 @@ public class HudManager : MonoBehaviour
 
 	private void HudManager_OnPause(object sender, InputManager.PauseEventArgs e)
 	{
-		PlayerAbilities._isActionPlaying = e.isPaused;
+		if (!PlayerAbilities._isReading)
+		{
+			PlayerAbilities._isActionPlaying = e.isPaused;
+		}
+
 		Cursor.visible = e.isPaused;
 		Cursor.lockState = e.isPaused ? CursorLockMode.Confined : CursorLockMode.Locked;
 		_menuChapterGO.SetActive(false);
@@ -52,7 +56,12 @@ public class HudManager : MonoBehaviour
 		{
 			case "Resume":
 				InputManager._isPaused = false; 
-				PlayerAbilities._isActionPlaying = false;
+				
+				if (!PlayerAbilities._isReading)
+				{
+					PlayerAbilities._isActionPlaying = false;
+				}
+
 				Cursor.visible = false;
 				Cursor.lockState = CursorLockMode.Locked;
 				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);

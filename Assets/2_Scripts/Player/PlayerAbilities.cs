@@ -554,7 +554,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void OilLevelDecreasing()
 	{
 		Debug.Log(_oilLevel > 0);
-		if (_oilLevel > 0f && _isLanternOnScreen && !_isReading)
+		if (_oilLevel > 0f && _isLanternOnScreen && !_isReading && !InputManager._isPaused)
 		{
 			_oilLevel = Mathf.Clamp(_oilLevel - Time.deltaTime / _secondsOilLevelFullToEmpty, 0, 1);
 			_fxFireLantern.transform.localPosition = Vector3.Lerp(new Vector3(0, -0.24f, 0), new Vector3(0, -0.155f, 0), _oilLevel);

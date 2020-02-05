@@ -20,6 +20,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
+	[SerializeField] private GameObject _pinguSpawnCollider = null;
 	[HideInInspector] public FoeState _foeState;
 	private NavMeshAgent _agent;
 	private PlayerAbilities _player;
@@ -58,11 +59,6 @@ public sealed class Penguin : MonoBehaviour
 		{
 			_foeState = FoeState.Patrol;
 		}
-
-		if (gameObject)
-		{
-
-		}
 	}
 
 	private void Update()
@@ -83,6 +79,12 @@ public sealed class Penguin : MonoBehaviour
 		else if (_foeState == FoeState.Patrol)
 		{
 			Debug.Log("Patrol");
+		}
+
+		// When GameObject Pingu not active by default
+		if (!gameObject.activeSelf && _pinguSpawnCollider != null)
+		{
+
 		}
 
 		FoePattern();

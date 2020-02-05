@@ -56,18 +56,21 @@ public sealed class SoundManager : MonoBehaviour
 			yield return null;
 		}
 
+		audioSource.clip = null;
 		audioSource.Stop();
 	}
 
 	private void EventSubscription()
 	{
-		_musicGo = FindObjectsOfType<MusicTrigger>().OrderBy(m => m.transform.GetSiblingIndex()).ToArray();
+		_musicGo = FindObjectsOfType<MusicTrigger>().OrderBy(m => m._musicindex).ToArray();
+
 		for (int i = 0; i < _musicGo.Length; i++)
 		{
 			_musicGo[i].OnMusicTriggered += SoundManager_OnMusicTriggered;
 		}
 
-		_stopMusicGo = FindObjectsOfType<StopMusicTrigger>().OrderBy(m => m.transform.GetSiblingIndex()).ToArray();
+		_stopMusicGo = FindObjectsOfType<StopMusicTrigger>().OrderBy(m => m._index).ToArray();
+
 		for (int i = 0; i < _stopMusicGo.Length; i++)
 		{
 			_stopMusicGo[i].OnStopMusicTriggered += SoundManager_OnStopMusicTriggered;

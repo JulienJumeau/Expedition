@@ -8,6 +8,7 @@ public sealed class MusicTrigger : MonoBehaviour
 
 	[SerializeField] private AudioClip _music = null;
 	private BoxCollider _collider;
+	public int _musicindex;
 
 	#endregion
 
@@ -20,7 +21,7 @@ public sealed class MusicTrigger : MonoBehaviour
 
 	private void OnTriggerEnter(Collider _)
 	{
-		MusicTriggered(new MusicTriggeredEventArgs { musicTriggered = _music, id = this.transform.GetSiblingIndex(), mustBePlayed = true });
+		MusicTriggered(new MusicTriggeredEventArgs { musicTriggered = _music, id = _musicindex, mustBePlayed = true });
 		_collider.enabled = false;
 	}
 

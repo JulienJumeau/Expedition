@@ -6,6 +6,7 @@ public class StopMusicTrigger : MonoBehaviour
 	#region Variables declaration
 
 	private BoxCollider _collider;
+	public int _index;
 
 	#endregion
 

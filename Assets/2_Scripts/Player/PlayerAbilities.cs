@@ -9,6 +9,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public static PlayerAbilities _current;
 	public static bool _isActionPlaying;
 	public static bool _isDetected;
+	public static bool _isReading;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
 	[Range(1, 15)] [SerializeField] private float _sprintSpeed = 10;
@@ -28,7 +29,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isLanternOnScreen, _isReading, _isPulling;
+	private bool _isCrouching, _isLanternOnScreen, _isPulling;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
 	public static float _oilLevel;
@@ -245,7 +246,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					}
 				}
 
-				if (_isReading)
+				if (_isReading && !InputManager._isPaused)
 				{
 					_isActionPlaying = !_isActionPlaying;
 					_isReading = !_isReading;

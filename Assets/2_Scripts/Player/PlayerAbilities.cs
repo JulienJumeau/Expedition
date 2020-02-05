@@ -71,6 +71,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
 		_triggerAnimationNames = new string[4] { "IsWalk", "IsRun", "IsJumping", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
+		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
 		_lightbulbNbr = 0;
 		_lightbulbNbrMax = 2;
@@ -83,6 +84,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Start()
 	{
+		StartCoroutine(WaitBeforeBeginMoves());
+
 		if (_isLanternInInventory)
 		{
 			_isLanternOnScreen = !_isLanternOnScreen;
@@ -563,6 +566,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 			//Debug.Log("Oil lvl:" + _oilLevel + " s");
 			//Debug.Log("lanternLight intensity:" + _lanternLight.intensity);
 		}
+	}
+
+	private IEnumerator WaitBeforeBeginMoves()
+	{
+		yield return new WaitForSeconds(0.5f);
+		_isActionPlaying = false;
 	}
 
 	#endregion

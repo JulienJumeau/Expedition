@@ -290,8 +290,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Game designer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -317,8 +317,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -347,8 +347,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -448,8 +448,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -475,8 +475,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -505,8 +505,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -780,8 +780,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Julien Jumeau
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -807,8 +807,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -837,8 +837,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -938,8 +938,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -965,8 +965,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -995,8 +995,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -1195,8 +1195,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Jeremy Alen
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1222,8 +1222,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1252,8 +1252,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -1677,8 +1677,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Thomas Wostyn
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1704,8 +1704,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1734,8 +1734,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -2036,8 +2036,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Game designer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2063,8 +2063,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2093,8 +2093,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -2267,8 +2267,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lionel Godineau
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2294,8 +2294,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2324,8 +2324,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -2524,8 +2524,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Developer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2551,8 +2551,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2581,8 +2581,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -2680,8 +2680,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Samuel Props
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2707,8 +2707,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2737,8 +2737,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -3012,8 +3012,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Artist
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3039,8 +3039,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3069,8 +3069,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1
@@ -3419,8 +3419,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Developer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7a65f373002c76247bdfd6ef6013e05e, type: 2}
-  m_sharedMaterial: {fileID: 5465636541324343230, guid: 7a65f373002c76247bdfd6ef6013e05e,
+  m_fontAsset: {fileID: 11400000, guid: 283c7738e7b07c247a935bb1eae1c8c8, type: 2}
+  m_sharedMaterial: {fileID: 2187808894922366536, guid: 283c7738e7b07c247a935bb1eae1c8c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3446,8 +3446,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3476,8 +3476,8 @@ MonoBehaviour:
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
-  m_horizontalMapping: 1
-  m_verticalMapping: 1
+  m_horizontalMapping: 2
+  m_verticalMapping: 2
   m_uvLineOffset: 0
   m_geometrySortingOrder: 0
   m_VertexBufferAutoSizeReduction: 1

@@ -58,18 +58,23 @@ public class ScenesManager : MonoBehaviour
 			case 1:
 				PlayerAbilities._isActionPlaying = false;
 				PlayerAbilities._isLanternInInventory = false;
+				PlayerAbilities._oilLevel = 0;
 				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
 				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			case 2:
 				PlayerAbilities._isActionPlaying = false;
+				PlayerAbilities._isLanternInInventory = true;
+				PlayerAbilities._oilLevel = 1;
 				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
 				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
 				SceneManager.LoadScene("SceneLoader");
 				break;
 			case 3:
 				PlayerAbilities._isActionPlaying = false;
+				PlayerAbilities._isLanternInInventory = true;
+				PlayerAbilities._oilLevel = 1;
 				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
 				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
 				SceneManager.LoadScene("SceneLoader");

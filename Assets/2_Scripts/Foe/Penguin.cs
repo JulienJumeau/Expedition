@@ -15,7 +15,7 @@ public sealed class Penguin : MonoBehaviour
 	#region Variables declaration
 
 	[SerializeField] Transform[] _patrolPoints = null;
-	[SerializeField] private bool _isNextDestinationRandom = false;
+	[SerializeField] private bool _isNextDestinationRandom = false, _isPenguinAggro = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
@@ -57,6 +57,11 @@ public sealed class Penguin : MonoBehaviour
 		else
 		{
 			_foeState = FoeState.Patrol;
+		}
+
+		if (gameObject)
+		{
+
 		}
 	}
 
@@ -128,18 +133,19 @@ public sealed class Penguin : MonoBehaviour
 
 	#endregion
 
-	private void FoePattern()
+	private void FoePattern() // /!\ A CORRIGER: Quand les pingu reviennent à leur next point de patrouille après avoir chase le player, ils ne reviennent pas exactement à ce point de patrouille mais le dépassent et se retrouvent plus loin que le point (à cause de la vitesse de cours élevée) 
 	{
+		// AFTER ATTACKING 1 TIME
 		if (PostProcessManager._isPostProssessOn)
 		{
 			_secondsWhileWounded += Time.deltaTime;
 		}
-
 		else
 		{
 			_secondsWhileWounded = 0;
 		}
 
+		// REGEN LIFE
 		if (_secondsWhileWounded >= _secondsToRecoverFullLife)
 		{
 			PostProcessManager._isPostProssessOn = false;
@@ -156,7 +162,7 @@ public sealed class Penguin : MonoBehaviour
 		_distanceTargetAgent = Vector3.Distance(_targetPlayer.position, this.transform.position);
 
 				// PLAYER AGGRO
-		if (_distanceTargetAgent <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking)
+		if (_distanceTargetAgent <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
 		{
 			_currentDetectionRadius = _detectionRadiusAggro;
 			_foeState = FoeState.Chase;
@@ -179,13 +185,7 @@ public sealed class Penguin : MonoBehaviour
 
 			if (_agent.remainingDistance < 0.5f)
 			{
-				//Debug.Log("agent.remainingDistance < 0.5f");
-				//if (_patrolPoints.Length == 1)
-				//{
-				//	_foeState = FoeState.idle;
-				//}
-				//else
-					_foeState = FoeState.Patrol;
+				_foeState = FoeState.Patrol;
 			}
 		}
 
@@ -208,6 +208,7 @@ public sealed class Penguin : MonoBehaviour
 			}
 		}
 
+		// WHEN HOLDING BREATH
 		if (_player._isHoldingBreath && (_foeState == FoeState.Patrol || _foeState == FoeState.idle))
 		{
 			_currentDetectionRadius = _detectionRadiusWHoldingBreath;
@@ -227,17 +228,19 @@ public sealed class Penguin : MonoBehaviour
 
 	private void GoToNextPatrolPoint()
 	{
+		// CASE 0 PATROL POINTS
 		if (_patrolPoints.Length == 0)
 		{
 			Debug.Log("Warning empty array points for partol");
 			return;
 		}
 
+		// CASE 1 PATROL POINT
 		if (_patrolPoints.Length == 1 && (transform.position.z > _patrolPoints[0].position.z - 0.2f && transform.position.z < _patrolPoints[0].position.z + 0.2f) && (transform.position.x > _patrolPoints[0].position.x - 0.2f && transform.position.x < _patrolPoints[0].position.x + 0.2f))
 		{
 			_foeState = FoeState.idle;
 		}
-		else
+		else // CASE MORE THAN 1 PATROL POINTS
 		{
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
 

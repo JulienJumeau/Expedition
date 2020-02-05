@@ -410,7 +410,7 @@ PrefabInstance:
     - target: {fileID: 1341474605427275743, guid: 19a6e47306ee7a14dba7f1bd60c53279,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -176.66667
+      value: -176.66669
       objectReference: {fileID: 0}
     - target: {fileID: 1341474605427275743, guid: 19a6e47306ee7a14dba7f1bd60c53279,
         type: 3}
@@ -887,8 +887,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289502511
-  m_fontColor: {r: 0.18509401, g: 0.6192131, b: 0.67800003, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -114,8 +114,8 @@ public class HudManager : MonoBehaviour
 	private IEnumerator EndingHud()
 	{
 		yield return new WaitForSeconds(25f);
-		Cursor.lockState = CursorLockMode.Confined;
 		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.Confined;
 		_hudVictoryGO.SetActive(true);
 	}
 
@@ -133,6 +133,7 @@ public class HudManager : MonoBehaviour
 
 				Cursor.visible = false;
 				Cursor.lockState = CursorLockMode.Locked;
+				_hudCrosshairGO.SetActive(!_hudCrosshairGO.activeSelf);
 				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);
 				break;
 			case "Chapter":

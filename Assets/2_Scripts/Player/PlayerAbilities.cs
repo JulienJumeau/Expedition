@@ -183,8 +183,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 					ResetAllTriggerAnimation();
 					_animator.SetBool(_triggerAnimationNames[0], true);
 
-					_audioSource.clip = _audioClipWalk;
-					_audioSource.Play();
+					//_audioSource.clip = _audioClipWalk;
+					//_audioSource.Play();
 				}
 
 				break;
@@ -197,8 +197,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 					ResetAllTriggerAnimation();
 					_animator.SetBool(_triggerAnimationNames[1], true);
 
-					_audioSource.clip = _audioClipRun;
-					_audioSource.Play();
+					//_audioSource.clip = _audioClipRun;
+					//_audioSource.Play();
 				}
 
 				break;
@@ -230,8 +230,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					_isLanternOnScreen = !_isLanternOnScreen;
 					HoldItem(_lanternGO, _photoCameraGO);
-					_audioSource.clip = _audioClipLantern;
-					_audioSource.Play();
+					_audioSource.PlayOneShot(_audioClipLantern);
 				}
 
 				break;
@@ -279,8 +278,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 						Sheet sheet = _hitForward.transform.parent.GetComponentInChildren<Sheet>();
 						_currentReadingSheetIndex = sheet.sheetID;
 						HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = true, sheetID = sheet.sheetID });
-						_audioSource.clip = _audioClipReadSheet;
-						_audioSource.Play();
+						_audioSource.PlayOneShot(_audioClipReadSheet);
 						break;
 					}
 				}
@@ -308,8 +306,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 1, _climbWallAnimationCurve));
 
-						_audioSource.clip = _audioClipClimb;
-						_audioSource.Play();
+						//_audioSource.clip = _audioClipClimb;
+						//_audioSource.Play();
 					}
 
 					// Climbable Box
@@ -317,8 +315,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 0.5f, _climbBoxAnimationCurve));
 
-						_audioSource.clip = _audioClipClimb;
-						_audioSource.Play();
+						//_audioSource.clip = _audioClipClimb;
+						//_audioSource.Play();
 					}
 
 					// Jumpable
@@ -352,8 +350,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						if (!_isHoldingBreath)
 						{
-							_audioSource.clip = _audioClipHoldBreath;
-							_audioSource.Play();
+							_audioSource.PlayOneShot(_audioClipHoldBreath);
 						}
 
 						_isHoldingBreath = true;
@@ -388,10 +385,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 			default:
 				ResetAllTriggerAnimation();
 
-				if (_audioSource.clip == _audioClipMoveBox || _audioSource.clip == _audioClipRun || _audioSource.clip == _audioClipWalk)
-				{
-					_audioSource.Stop();
-				}
+				//if (_audioSource.clip == _audioClipMoveBox || _audioSource.clip == _audioClipRun || _audioSource.clip == _audioClipWalk)
+				//{
+				//	_audioSource.Stop();
+				//}
 				_isPulling = false;
 
 				break;
@@ -469,8 +466,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.155f, _fxFireLantern.transform.localPosition.z);
 				_lanternLight.intensity = _lanternMaxIntensity;
 				Destroy(_hitForward.transform.gameObject);
-				_audioSource.clip = _audioClipLootOil;
-				_audioSource.Play();
+				_audioSource.PlayOneShot(_audioClipLootOil);
 			}
 			else print("Lantern is already full!");
 		}
@@ -485,8 +481,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_isLanternOnScreen = true;
 				HoldItem(_lanternGO, _photoCameraGO);
 				Destroy(_hitForward.transform.gameObject);
-				_audioSource.clip = _audioClipLantern;
-				_audioSource.Play();
+				_audioSource.PlayOneShot(_audioClipLantern);
 			}
 			else print("You are already carrying a lantern!");
 		}
@@ -495,8 +490,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void PullObject()
 	{
 		_hitForward.transform.Translate(new Vector3(_motion.x, 0, _motion.z) * Time.deltaTime);
-		_audioSource.clip = _audioClipMoveBox;
-		_audioSource.Play();
+		//_audioSource.clip = _audioClipMoveBox;
+		//_audioSource.Play();
 	}
 
 	private bool CheckCollisionBeforePull(float height)
@@ -594,8 +589,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		_isEndGame = true;
 		_isActionPlaying = true;
-		_audioSource.clip = _audioClipMonster;
-		_audioSource.Play();
+		_audioSource.PlayOneShot(_audioClipMonster);
 	}
 
 	#endregion

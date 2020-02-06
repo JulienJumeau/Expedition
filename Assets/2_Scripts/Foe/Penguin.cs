@@ -282,8 +282,8 @@ public sealed class Penguin : MonoBehaviour
 	{
 		_isAttacking = true;
 
-		_audioSource.clip = _audioClipPenguinAttack;
-		_audioSource.Play();
+		//_audioSource.clip = _audioClipPenguinAttack;
+		//_audioSource.Play();
 		// Play Anim attack penguin here
 
 		if (PostProcessManager._isPostProssessOn)
@@ -293,8 +293,8 @@ public sealed class Penguin : MonoBehaviour
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
 
-				_audioSource.clip = _audioClipDying;
-				_audioSource.Play();
+				//_audioSource.clip = _audioClipDying;
+				//_audioSource.Play();
 
 				ScenesManager._isGameOver = true;
 
@@ -306,9 +306,7 @@ public sealed class Penguin : MonoBehaviour
 			if (IsFoeNearTarget())
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
-
-				_audioSource.clip = _audioClipTakingDamage;
-				_audioSource.Play();
+				_audioSource.PlayOneShot(_audioClipTakingDamage);
 
 				PostProcessManager._isPostProssessOn = true;
 			}

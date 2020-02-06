@@ -81,8 +81,8 @@ public class HudManager : MonoBehaviour
 		_hudCrosshairGO.SetActive(!e.isPaused);
 		_menuPauseGO.SetActive(e.isPaused);
 
-		_audioSource.clip = _audioClipPause;
-		_audioSource.Play();
+		//_audioSource.clip = _audioClipPause;
+		//_audioSource.Play();
 	}
 
 	public static IEnumerator Fade(GameObject hudGoFade, bool fadeOut, float duration, float delayTime = 0)
@@ -151,8 +151,8 @@ public class HudManager : MonoBehaviour
 				break;
 		}
 
-		_audioSource.clip = _audioClipMouseClick;
-		_audioSource.Play();
+		//_audioSource.clip = _audioClipMouseClick;
+		//_audioSource.Play();
 	}
 
 	private void HudManager_OnHUDDisplay(object sender, PlayerAbilities.HUDDisplayEventArgs e)

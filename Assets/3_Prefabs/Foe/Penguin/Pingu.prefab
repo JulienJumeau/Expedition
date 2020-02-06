@@ -347,7 +347,14 @@ MonoBehaviour:
   _allowAttacks: 1
   _allowChasingAudiosource: 0
   _stoppingDistanceAttack: 2.5
-  _pinguSpawnCollider: {fileID: 0}
+  _audioClipDying: {fileID: 0}
+  _audioClipTakingDamage: {fileID: 8300000, guid: 775f4092a5519f74da314c524c94f51d,
+    type: 3}
+  _audioClipPenguinAlert: {fileID: 0}
+  _audioClipPenguinAggro: {fileID: 0}
+  _audioClipPenguinFootstepsRunnning: {fileID: 0}
+  _audioClipPenguinFootstepsWalking: {fileID: 0}
+  _audioClipPenguinAttack: {fileID: 0}
   _foeState: 0
 --- !u!82 &3764835297144611460
 AudioSource:
@@ -356,21 +363,21 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3764835297144611462}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e009a29934a79a54cabfa4225661cadc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 7
+  MinDistance: 0
+  MaxDistance: 12
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

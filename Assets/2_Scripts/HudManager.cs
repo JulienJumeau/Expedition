@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -7,6 +8,7 @@ public class HudManager : MonoBehaviour
 	#region Variables Declaration
 
 	[Header("Game Objects")]
+	[SerializeField] private GameObject _hudFadeOutGO;
 	[SerializeField] private GameObject _hudInputGO;
 	[SerializeField] private GameObject _hudSheetGO;
 	[SerializeField] private GameObject _hudCrosshairGO;
@@ -19,10 +21,12 @@ public class HudManager : MonoBehaviour
 	[SerializeField] private AudioClip _audioClipHoverButton;
 	[SerializeField] private AudioClip _audioClipPause;
 
+	public static bool _isFading;
 	private TextMeshProUGUI _textComponent;
 	private TextMeshProUGUI _textSheetComponent;
 	private RawImage _sheetToRender;
 	private AudioSource _audioSource;
+	private Image _imageToFade;
 
 	#endregion
 
@@ -30,11 +34,18 @@ public class HudManager : MonoBehaviour
 
 	private void Awake()
 	{
+		_isFading = false;
 		_textComponent = _hudInputGO.GetComponent<TextMeshProUGUI>();
 		_textSheetComponent = _hudSheetGO.GetComponentInChildren<TextMeshProUGUI>();
 		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
 		_audioSource = GetComponent<AudioSource>();
+		_imageToFade = _hudFadeOutGO.GetComponent<Image>();
 		EventSubscription();
+	}
+
+	private void Start()
+	{
+		StartCoroutine(Fade(_hudFadeOutGO, true, 2));
 	}
 
 	#endregion
@@ -62,13 +73,37 @@ public class HudManager : MonoBehaviour
 		_audioSource.Play();
 	}
 
+	public static IEnumerator Fade(GameObject hudGoFade, bool fadeOut, float duration)
+	{
+		_isFading = true;
+		float elapsedTime = 0;
+		Image imageToFade = hudGoFade.GetComponent<Image>();
+
+		hudGoFade.SetActive(!hudGoFade.activeSelf);
+
+		while (elapsedTime <= duration)
+		{
+			elapsedTime += Time.deltaTime;
+			float alphaColor = fadeOut ? Mathf.Lerp(1, 0, elapsedTime / duration) : Mathf.Lerp(0, 1, elapsedTime / duration);
+			imageToFade.color = new Color(0, 0, 0, alphaColor);
+			yield return null;
+		}
+
+		if (fadeOut)
+		{
+			hudGoFade.SetActive(!hudGoFade.activeSelf);
+		}
+
+		_isFading = false;
+	}
+
 	public void OnClickButton(string buttonName)
 	{
 		switch (buttonName)
 		{
 			case "Resume":
-				InputManager._isPaused = false; 
-				
+				InputManager._isPaused = false;
+
 				if (!PlayerAbilities._isReading)
 				{
 					PlayerAbilities._isActionPlaying = false;

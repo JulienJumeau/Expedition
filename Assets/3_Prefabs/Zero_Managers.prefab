@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ca23f4c3baa874d90e920d54e6746c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hudFadeOutGO: {fileID: 0}
   _hudInputGO: {fileID: 0}
   _hudSheetGO: {fileID: 0}
   _hudCrosshairGO: {fileID: 0}
@@ -116,3 +117,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79d533b351d94a468aa3c9276e42a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hudFadeOutGO: {fileID: 0}

@@ -570,7 +570,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private IEnumerator WaitBeforeBeginMoves()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(1.5f);
 		_isActionPlaying = false;
 	}
 

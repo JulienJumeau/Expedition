@@ -128,7 +128,7 @@ public sealed class InputManager : MonoBehaviour
 			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
 		}
 
-		if (Input.GetButtonDown("Pause"))
+		if (Input.GetButtonDown("Pause") && !HudManager._isFading)
 		{
 			_isPaused = !_isPaused;
 			Pause(new PauseEventArgs { isPaused = _isPaused });

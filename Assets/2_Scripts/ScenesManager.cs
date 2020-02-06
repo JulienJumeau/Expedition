@@ -1,13 +1,22 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ScenesManager : MonoBehaviour
 {
+	[SerializeField] private GameObject _hudFadeOutGO;
 	public static bool _isGameOver;
 	private static Vector3 _chosenCheckPointPosition;
 	private static Vector3 _chosenCheckPointRotation;
 	private GameObject[] _checkPoints;
 	private GameObject _player;
+	private Image _imageToFade;
+
+	private void Awake()
+	{
+
+	}
 
 	private void Start()
 	{
@@ -56,31 +65,26 @@ public class ScenesManager : MonoBehaviour
 		switch (chapterIndex)
 		{
 			case 1:
-				PlayerAbilities._isActionPlaying = false;
-				PlayerAbilities._isLanternInInventory = false;
-				PlayerAbilities._oilLevel = 0;
-				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
-				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
-				SceneManager.LoadScene("SceneLoader");
+				StartCoroutine(LoadChapter(false, false, chapterIndex - 1));
 				break;
 			case 2:
-				PlayerAbilities._isActionPlaying = false;
-				PlayerAbilities._isLanternInInventory = true;
-				PlayerAbilities._oilLevel = 1;
-				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
-				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
-				SceneManager.LoadScene("SceneLoader");
-				break;
 			case 3:
-				PlayerAbilities._isActionPlaying = false;
-				PlayerAbilities._isLanternInInventory = true;
-				PlayerAbilities._oilLevel = 1;
-				_chosenCheckPointPosition = _checkPoints[chapterIndex - 1].transform.position;
-				_chosenCheckPointRotation.y = _checkPoints[chapterIndex - 1].transform.eulerAngles.y;
-				SceneManager.LoadScene("SceneLoader");
+				StartCoroutine(LoadChapter(true, true, chapterIndex - 1));
 				break;
 			default:
 				break;
 		}
+	}
+
+	private IEnumerator LoadChapter(bool isLanternInInventory, bool isOilFull, int chapterIndex)
+	{
+		StartCoroutine(HudManager.Fade(_hudFadeOutGO, false, 2));
+		yield return new WaitForSeconds(2);
+		PlayerAbilities._isActionPlaying = false;
+		PlayerAbilities._isLanternInInventory = isLanternInInventory;
+		PlayerAbilities._oilLevel = isOilFull ? 1 : 0;
+		_chosenCheckPointPosition = _checkPoints[chapterIndex].transform.position;
+		_chosenCheckPointRotation.y = _checkPoints[chapterIndex].transform.eulerAngles.y;
+		SceneManager.LoadScene("SceneLoader");
 	}
 }

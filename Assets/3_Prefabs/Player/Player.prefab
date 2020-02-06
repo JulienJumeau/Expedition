@@ -355,6 +355,7 @@ MonoBehaviour:
   _audioClipLantern: {fileID: 8300000, guid: 38f713430adcf1e499535ff5543d324d, type: 3}
   _audioClipReadSheet: {fileID: 8300000, guid: 024587634f9e6c24aa8a9f5acf6d99cd, type: 3}
   _audioClipMoveBox: {fileID: 0}
+  _audioClipMonster: {fileID: 8300000, guid: 37cbefdec49b00443b5f4e1f281d20b6, type: 3}
   _isHiding: 0
   _isHoldingBreath: 0
   _isHoldingBreathOnCooldown: 0

@@ -1085,6 +1085,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8004235038517841883}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &758972674 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 241813033642549161, guid: 90c0c261426dba4439c30772b7c375c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 8004235038517841883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &774644582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2777,6 +2783,10 @@ PrefabInstance:
       propertyPath: _menuChapterGO
       value: 
       objectReference: {fileID: 753458529}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _hudFadeOutGO
+      value: 
+      objectReference: {fileID: 758972674}
     - target: {fileID: 5634259180212196396, guid: cacd2035fe310184385694804aebfe4e,
         type: 3}
       propertyPath: m_LocalPosition.x

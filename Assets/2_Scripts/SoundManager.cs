@@ -44,6 +44,7 @@ public sealed class SoundManager : MonoBehaviour
 		_audioSources[0].volume = 1;
 		_audioSources[0].Play();
 	}
+
 	private void SoundManager_OnStopMusicTriggered(object sender, System.EventArgs e) => StartCoroutine(FadeoutMusic(_audioSources[0], 2));
 
 	private IEnumerator FadeoutMusic(AudioSource audioSource, float fadeTime)

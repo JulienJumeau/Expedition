@@ -38,7 +38,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AudioClip _audioClipLantern;
 	[SerializeField] private AudioClip _audioClipReadSheet;
 	[SerializeField] private AudioClip _audioClipMoveBox;
+	[SerializeField] private AudioClip _audioClipMonster;
 
+	public static bool _isEndGame;
 	private Camera _camera;
 	private CharacterController _characterController;
 	private Animator _animator;
@@ -55,6 +57,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private AudioSource _audioSource;
 	private Light _lanternLight;
 	private Material _lanternMaterial;
+
+	private int _currentReadingSheetIndex;
 
 	[HideInInspector] public float _holdingBreathSeconds;
 
@@ -79,6 +83,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isDetected = _isReading = _isPulling = false;
 		_lanternLight = _lanternLightGO.GetComponent<Light>();
 		_lanternLight.intensity = 0;
+		_currentReadingSheetIndex = 0;
+		_isEndGame = false;
 		_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.4f, _fxFireLantern.transform.localPosition.z);
 	}
 
@@ -97,22 +103,26 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Update()
 	{
-		if (!_isActionPlaying && !_isHiding)
+		if (!_isEndGame)
 		{
-			Movement();
-		}
 
-		if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask) && !_isActionPlaying && !_isPulling)
-		{
-			HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = false });
-		}
+			if (!_isActionPlaying && !_isHiding)
+			{
+				Movement();
+			}
 
-		else
-		{
-			HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
-		}
+			if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask) && !_isActionPlaying && !_isPulling)
+			{
+				HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = false });
+			}
 
-		OilLevelDecreasing();
+			else
+			{
+				HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
+			}
+
+			OilLevelDecreasing();
+		}
 	}
 
 	#endregion
@@ -267,6 +277,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 						_isActionPlaying = !_isActionPlaying;
 						_isReading = !_isReading;
 						Sheet sheet = _hitForward.transform.parent.GetComponentInChildren<Sheet>();
+						_currentReadingSheetIndex = sheet.sheetID;
 						HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = true, sheetID = sheet.sheetID });
 						_audioSource.clip = _audioClipReadSheet;
 						_audioSource.Play();
@@ -279,6 +290,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 					_isActionPlaying = !_isActionPlaying;
 					_isReading = !_isReading;
 					HUDDisplay(new HUDDisplayEventArgs { isActive = false, isSheet = true });
+
+					if (_currentReadingSheetIndex == 3)
+					{
+						EndGame();
+					}
 				}
 
 				break;
@@ -572,6 +588,14 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1.5f);
 		_isActionPlaying = false;
+	}
+
+	private void EndGame()
+	{
+		_isEndGame = true;
+		_isActionPlaying = true;
+		_audioSource.clip = _audioClipMonster;
+		_audioSource.Play();
 	}
 
 	#endregion

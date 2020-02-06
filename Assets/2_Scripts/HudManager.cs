@@ -9,6 +9,7 @@ public class HudManager : MonoBehaviour
 
 	[Header("Game Objects")]
 	[SerializeField] private GameObject _hudFadeOutGO;
+	[SerializeField] private GameObject _hudVictoryGO;
 	[SerializeField] private GameObject _hudInputGO;
 	[SerializeField] private GameObject _hudSheetGO;
 	[SerializeField] private GameObject _hudCrosshairGO;
@@ -26,7 +27,7 @@ public class HudManager : MonoBehaviour
 	private TextMeshProUGUI _textSheetComponent;
 	private RawImage _sheetToRender;
 	private AudioSource _audioSource;
-	private Image _imageToFade;
+	private bool _isTheEnd;
 
 	#endregion
 
@@ -34,18 +35,29 @@ public class HudManager : MonoBehaviour
 
 	private void Awake()
 	{
+		_isTheEnd = false;
 		_isFading = false;
 		_textComponent = _hudInputGO.GetComponent<TextMeshProUGUI>();
 		_textSheetComponent = _hudSheetGO.GetComponentInChildren<TextMeshProUGUI>();
 		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
 		_audioSource = GetComponent<AudioSource>();
-		_imageToFade = _hudFadeOutGO.GetComponent<Image>();
+
 		EventSubscription();
 	}
 
 	private void Start()
 	{
 		StartCoroutine(Fade(_hudFadeOutGO, true, 2));
+	}
+
+	private void Update()
+	{
+		if (PlayerAbilities._isEndGame && !_isTheEnd)
+		{
+			_isTheEnd = true;
+			StartCoroutine(Fade(_hudFadeOutGO, false, 0.1f, 5f));
+			StartCoroutine(EndingHud());
+		}
 	}
 
 	#endregion
@@ -73,13 +85,15 @@ public class HudManager : MonoBehaviour
 		_audioSource.Play();
 	}
 
-	public static IEnumerator Fade(GameObject hudGoFade, bool fadeOut, float duration)
+	public static IEnumerator Fade(GameObject hudGoFade, bool fadeOut, float duration, float delayTime = 0)
 	{
 		_isFading = true;
 		float elapsedTime = 0;
 		Image imageToFade = hudGoFade.GetComponent<Image>();
 
 		hudGoFade.SetActive(!hudGoFade.activeSelf);
+
+		yield return new WaitForSeconds(delayTime);
 
 		while (elapsedTime <= duration)
 		{
@@ -95,6 +109,14 @@ public class HudManager : MonoBehaviour
 		}
 
 		_isFading = false;
+	}
+
+	private IEnumerator EndingHud()
+	{
+		yield return new WaitForSeconds(25f);
+		Cursor.lockState = CursorLockMode.Confined;
+		Cursor.visible = true;
+		_hudVictoryGO.SetActive(true);
 	}
 
 	public void OnClickButton(string buttonName)

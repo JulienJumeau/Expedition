@@ -11,12 +11,6 @@ public class ScenesManager : MonoBehaviour
 	private static Vector3 _chosenCheckPointRotation;
 	private GameObject[] _checkPoints;
 	private GameObject _player;
-	private Image _imageToFade;
-
-	private void Awake()
-	{
-
-	}
 
 	private void Start()
 	{

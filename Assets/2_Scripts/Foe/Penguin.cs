@@ -177,8 +177,8 @@ public sealed class Penguin : MonoBehaviour
 			_currentChaseSpeed = _distanceTargetAgent <= _agent.stoppingDistance * 2 ? 2 : _foeChaseSpeed;
 			SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
 
-			_audioSource.clip = _audioClipPenguinAggro;
-			_audioSource.Play();
+			//_audioSource.clip = _audioClipPenguinAggro;
+			//_audioSource.Play();
 
 			if (IsFoeNearTarget())
 			{
@@ -192,10 +192,10 @@ public sealed class Penguin : MonoBehaviour
 			_currentDetectionRadius = _detectionRadius;
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 
-			if (_audioSource.clip == _audioClipPenguinAggro)
-			{
-				_audioSource.Stop();
-			}
+			//if (_audioSource.clip == _audioClipPenguinAggro)
+			//{
+			//	_audioSource.Stop();
+			//}
 
 			if (_agent.remainingDistance < 0.5f)
 			{

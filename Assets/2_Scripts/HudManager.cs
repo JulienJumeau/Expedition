@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class HudManager : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class HudManager : MonoBehaviour
 	private TextMeshProUGUI _textSheetComponent;
 	private RawImage _sheetToRender;
 	private AudioSource _audioSource;
+	private DisplayInputTrigger[] _displayInputTriggersGO;
+	private bool _isTriggerHuInputdActive;
 
 	#endregion
 
@@ -39,6 +42,7 @@ public class HudManager : MonoBehaviour
 	{
 		_isTheEnd = false;
 		_isFading = false;
+		_isTriggerHuInputdActive = false;
 		_textComponent = _hudInputGO.GetComponent<TextMeshProUGUI>();
 		_textSheetComponent = _hudSheetGO.GetComponentInChildren<TextMeshProUGUI>();
 		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
@@ -68,6 +72,22 @@ public class HudManager : MonoBehaviour
 	{
 		FindObjectOfType<PlayerAbilities>().OnHUDDisplay += HudManager_OnHUDDisplay;
 		FindObjectOfType<InputManager>().OnPause += HudManager_OnPause;
+
+		_displayInputTriggersGO = FindObjectsOfType<DisplayInputTrigger>();
+
+		for (int i = 0; i < _displayInputTriggersGO.Length; i++)
+		{
+			_displayInputTriggersGO[i].OnHUDDisplay += HudManager_OnHUDDisplay1;
+		}
+	}
+
+	private void HudManager_OnHUDDisplay1(object sender, DisplayInputTrigger.HUDDisplayInputEventArgs e)
+	{
+		Debug.Log(_textComponent.enabled);
+
+		_isTriggerHuInputdActive = e.isActive;
+		_textComponent.enabled = e.isActive;
+		_textComponent.text = e.textInputToDisplay;
 	}
 
 	private void HudManager_OnPause(object sender, InputManager.PauseEventArgs e)
@@ -169,7 +189,7 @@ public class HudManager : MonoBehaviour
 
 	private void HudManager_OnHUDDisplay(object sender, PlayerAbilities.HUDDisplayEventArgs e)
 	{
-		if (!_isTheEnd)
+		if (!_isTheEnd && !_isTriggerHuInputdActive)
 		{
 			_textComponent.enabled = e.isActive;
 			_textComponent.text = e.isActive ? ConvertLayerIndexToInputName(e.layerDetected) : "";

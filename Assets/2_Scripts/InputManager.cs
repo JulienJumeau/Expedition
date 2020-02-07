@@ -123,7 +123,7 @@ public sealed class InputManager : MonoBehaviour
 			}
 		}
 
-		if (Input.GetButtonDown("ActionButton"))
+		if (Input.GetButtonDown("ActionButton") && !HudManager._isTheEnd)
 		{
 			ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Use });
 		}

@@ -56,6 +56,9 @@ public class ScenesManager : MonoBehaviour
 
 	public void OnClickButton(int chapterIndex)
 	{
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+
 		switch (chapterIndex)
 		{
 			case 1:

@@ -78,6 +78,8 @@ MonoBehaviour:
   _hudSheetGO: {fileID: 0}
   _hudCrosshairGO: {fileID: 0}
   _menuPauseGO: {fileID: 0}
+  _menuPauseEndGO: {fileID: 0}
+  _menuChapterEndGO: {fileID: 0}
   _menuChapterGO: {fileID: 0}
   _sheetSOList:
   - {fileID: 11400000, guid: 891c11cffb81ac34a9b623d0ad1745d9, type: 2}

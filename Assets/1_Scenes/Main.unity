@@ -184,12 +184,32 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 10451325}
+    - target: {fileID: 1341474604049803281, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 10451325}
+    - target: {fileID: 1341474604780983855, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 10451325}
+    - target: {fileID: 1341474605381094877, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 10451325}
     - target: {fileID: 2208040422576415199, guid: 90c0c261426dba4439c30772b7c375c4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 10451327}
     - target: {fileID: 5664744037818886694, guid: 90c0c261426dba4439c30772b7c375c4,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 10451327}
+    - target: {fileID: 6629534753340707718, guid: 90c0c261426dba4439c30772b7c375c4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -309,22 +329,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD (Canvas)
       objectReference: {fileID: 0}
-    - target: {fileID: 8004235038472488520, guid: 90c0c261426dba4439c30772b7c375c4,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 4f071123cbcfe7c4a9518504303bc626,
-        type: 3}
-    - target: {fileID: 8004235038472488521, guid: 90c0c261426dba4439c30772b7c375c4,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 8004235038472488521, guid: 90c0c261426dba4439c30772b7c375c4,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 8424823396349632940, guid: 90c0c261426dba4439c30772b7c375c4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -361,9 +365,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1163041415}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1197506849 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1341474605872550635, guid: 90c0c261426dba4439c30772b7c375c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1163041415}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1320960611 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 241813033642549161, guid: 90c0c261426dba4439c30772b7c375c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1163041415}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1561576152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8424823397081212234, guid: 90c0c261426dba4439c30772b7c375c4,
     type: 3}
   m_PrefabInstance: {fileID: 1163041415}
   m_PrefabAsset: {fileID: 0}
@@ -402,6 +418,14 @@ PrefabInstance:
       propertyPath: _menuPauseGO
       value: 
       objectReference: {fileID: 1163041420}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _menuPauseEndGO
+      value: 
+      objectReference: {fileID: 1561576152}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _menuChapterEndGO
+      value: 
+      objectReference: {fileID: 1197506849}
     - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
       propertyPath: _menuChapterGO
       value: 

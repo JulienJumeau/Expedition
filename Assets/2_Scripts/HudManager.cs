@@ -14,6 +14,8 @@ public class HudManager : MonoBehaviour
 	[SerializeField] private GameObject _hudSheetGO;
 	[SerializeField] private GameObject _hudCrosshairGO;
 	[SerializeField] private GameObject _menuPauseGO;
+	[SerializeField] private GameObject _menuPauseEndGO;
+	[SerializeField] private GameObject _menuChapterEndGO;
 	[SerializeField] private GameObject _menuChapterGO;
 	[SerializeField] private SheetsSO[] _sheetSOList;
 
@@ -131,13 +133,19 @@ public class HudManager : MonoBehaviour
 					PlayerAbilities._isActionPlaying = false;
 				}
 
-				Cursor.visible = false;
-				Cursor.lockState = CursorLockMode.Locked;
 				_hudCrosshairGO.SetActive(!_hudCrosshairGO.activeSelf);
 				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);
 				break;
 			case "Chapter":
 				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);
+				_menuChapterGO.SetActive(!_menuChapterGO.activeSelf);
+				break;
+			case "ChapterEnd":
+				_menuPauseEndGO.SetActive(!_menuPauseEndGO.activeSelf);
+				_menuChapterEndGO.SetActive(!_menuChapterEndGO.activeSelf);
+				break;
+			case "ChapterGameover":
+				_hudVictoryGO.SetActive(!_hudVictoryGO.activeSelf);
 				_menuChapterGO.SetActive(!_menuChapterGO.activeSelf);
 				break;
 			case "Quit":
@@ -146,6 +154,10 @@ public class HudManager : MonoBehaviour
 			case "Back":
 				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);
 				_menuChapterGO.SetActive(!_menuChapterGO.activeSelf);
+				break;
+			case "BackEnd":
+				_menuPauseEndGO.SetActive(!_menuPauseEndGO.activeSelf);
+				_menuChapterEndGO.SetActive(!_menuChapterEndGO.activeSelf);
 				break;
 			default:
 				break;
@@ -169,7 +181,6 @@ public class HudManager : MonoBehaviour
 				_sheetToRender.texture = _sheetSOList[e.sheetID]._sheetSprite;
 			}
 		}
-
 	}
 
 	private string ConvertLayerIndexToInputName(int layerIndex)

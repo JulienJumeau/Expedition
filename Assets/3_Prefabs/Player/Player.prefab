@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 1261568077}
   - component: {fileID: 1261568076}
   - component: {fileID: 1261568075}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Fx_Fire_Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1166,7 +1166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1552757344684194850
 Transform:
   m_ObjectHideFlags: 0
@@ -1495,12 +1495,12 @@ PrefabInstance:
     - target: {fileID: 4846668898775882409, guid: b86e05906d91959479d821723154f3c9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4846668898775882409, guid: b86e05906d91959479d821723154f3c9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4846668898775882409, guid: b86e05906d91959479d821723154f3c9,
         type: 3}
@@ -1527,10 +1527,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7864794008117877862, guid: b86e05906d91959479d821723154f3c9,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864794008117877862, guid: b86e05906d91959479d821723154f3c9,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8437927623395289274, guid: b86e05906d91959479d821723154f3c9,
         type: 3}
       propertyPath: m_Name
       value: prefab_bras
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437927623395289274, guid: b86e05906d91959479d821723154f3c9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437927623395289274, guid: b86e05906d91959479d821723154f3c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Lantern
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b86e05906d91959479d821723154f3c9, type: 3}

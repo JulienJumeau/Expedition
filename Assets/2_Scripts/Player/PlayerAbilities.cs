@@ -51,7 +51,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isLanternOnScreen, _isPulling;
+	private bool _isCrouching, _isLanternOnScreen, _isLanternOnScreenBeforeHiding, _isPulling;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
 	public static float _oilLevel;
@@ -518,7 +518,14 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Hide()
 	{
+		if (_isLanternOnScreen)
+		{
+			_isLanternOnScreenBeforeHiding = true;
+		}
+		else _isLanternOnScreenBeforeHiding = false;
+
 		HoldItem(_lanternGO, _photoCameraGO, true);
+		_isLanternOnScreen = false;
 		_isActionPlaying = true;
 		_characterController.enabled = false;
 		_isHiding = true;
@@ -533,6 +540,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void GetOut()
 	{
+		if (_isLanternOnScreenBeforeHiding)
+		{
+			HoldItem(_lanternGO, _photoCameraGO);
+			_isLanternOnScreen = true;
+		}
 		this.transform.position = _positionBeforeHide;
 		_isHiding = false;
 		_characterController.enabled = true;

@@ -23,6 +23,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private GameObject _lanternLightGO = null, _fxFireLantern = null;
 	[SerializeField] public float _lanternMinIntensity = 0, _lanternMaxIntensity = 0, _secondsOilLevelFullToEmpty = 1;
 
+	[Header("Audio Sources")]
+	[SerializeField] private AudioSource _audioSourceMovement = null;
+	[SerializeField] private AudioSource _audioSourcePlayerSounds = null;
+	[SerializeField] private AudioSource _audioSourceLoots = null;
+
 	[Header("Sounds")]
 	[SerializeField] private AudioClip _audioClipWalk;
 	[SerializeField] private AudioClip _audioClipRun;
@@ -46,7 +51,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isLanternOnScreen, _isPulling;
+	private bool _isCrouching, _isLanternOnScreen, _isLanternOnScreenBeforeHiding, _isPulling;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private string[] _triggerAnimationNames;
 	public static float _oilLevel;
@@ -54,7 +59,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private float _oilLevelMax;
 	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
-	private AudioSource _audioSource;
 	private Light _lanternLight;
 	private Material _lanternMaterial;
 
@@ -71,7 +75,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_camera = Camera.main;
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
-		_audioSource = GetComponent<AudioSource>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
 		_triggerAnimationNames = new string[4] { "IsWalk", "IsRun", "IsJumping", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
@@ -230,7 +233,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					_isLanternOnScreen = !_isLanternOnScreen;
 					HoldItem(_lanternGO, _photoCameraGO);
-					_audioSource.PlayOneShot(_audioClipLantern);
+					_audioSourceLoots.PlayOneShot(_audioClipLantern);
 				}
 
 				break;
@@ -278,7 +281,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 						Sheet sheet = _hitForward.transform.parent.GetComponentInChildren<Sheet>();
 						_currentReadingSheetIndex = sheet.sheetID;
 						HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = true, sheetID = sheet.sheetID });
-						_audioSource.PlayOneShot(_audioClipReadSheet);
+						_audioSourceLoots.PlayOneShot(_audioClipReadSheet);
 						break;
 					}
 				}
@@ -350,7 +353,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						if (!_isHoldingBreath)
 						{
-							_audioSource.PlayOneShot(_audioClipHoldBreath);
+							_audioSourcePlayerSounds.PlayOneShot(_audioClipHoldBreath);
 						}
 
 						_isHoldingBreath = true;
@@ -466,7 +469,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.155f, _fxFireLantern.transform.localPosition.z);
 				_lanternLight.intensity = _lanternMaxIntensity;
 				Destroy(_hitForward.transform.gameObject);
-				_audioSource.PlayOneShot(_audioClipLootOil);
+				_audioSourceLoots.PlayOneShot(_audioClipLootOil);
 			}
 			else print("Lantern is already full!");
 		}
@@ -481,7 +484,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_isLanternOnScreen = true;
 				HoldItem(_lanternGO, _photoCameraGO);
 				Destroy(_hitForward.transform.gameObject);
-				_audioSource.PlayOneShot(_audioClipLantern);
+				_audioSourceLoots.PlayOneShot(_audioClipLantern);
 			}
 			else print("You are already carrying a lantern!");
 		}
@@ -515,7 +518,14 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Hide()
 	{
+		if (_isLanternOnScreen)
+		{
+			_isLanternOnScreenBeforeHiding = true;
+		}
+		else _isLanternOnScreenBeforeHiding = false;
+
 		HoldItem(_lanternGO, _photoCameraGO, true);
+		_isLanternOnScreen = false;
 		_isActionPlaying = true;
 		_characterController.enabled = false;
 		_isHiding = true;
@@ -530,6 +540,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void GetOut()
 	{
+		if (_isLanternOnScreenBeforeHiding)
+		{
+			HoldItem(_lanternGO, _photoCameraGO);
+			_isLanternOnScreen = true;
+		}
 		this.transform.position = _positionBeforeHide;
 		_isHiding = false;
 		_characterController.enabled = true;
@@ -543,15 +558,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		if (cooldown == _HoldingBreathSoftCooldown)
 		{
-			_audioSource.clip = _audioClipGetBreathSoft;
+			_audioSourcePlayerSounds.clip = _audioClipGetBreathSoft;
 		}
 
 		else
 		{
-			_audioSource.clip = _audioClipGetBreathHard;
+			_audioSourcePlayerSounds.clip = _audioClipGetBreathHard;
 		}
 
-		_audioSource.Play();
+		_audioSourcePlayerSounds.Play();
 
 		_holdingBreathSeconds = 0;
 		yield return new WaitForSeconds(cooldown);
@@ -589,7 +604,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		_isEndGame = true;
 		_isActionPlaying = true;
-		_audioSource.PlayOneShot(_audioClipMonster);
+		_audioSourcePlayerSounds.PlayOneShot(_audioClipMonster);
 	}
 
 	#endregion

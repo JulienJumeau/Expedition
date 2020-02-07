@@ -23,11 +23,11 @@ public class HudManager : MonoBehaviour
 	[SerializeField] private AudioClip _audioClipPause;
 
 	public static bool _isFading;
+	public static bool _isTheEnd;
 	private TextMeshProUGUI _textComponent;
 	private TextMeshProUGUI _textSheetComponent;
 	private RawImage _sheetToRender;
 	private AudioSource _audioSource;
-	private bool _isTheEnd;
 
 	#endregion
 
@@ -157,15 +157,19 @@ public class HudManager : MonoBehaviour
 
 	private void HudManager_OnHUDDisplay(object sender, PlayerAbilities.HUDDisplayEventArgs e)
 	{
-		_textComponent.enabled = e.isActive;
-		_textComponent.text = e.isActive ? ConvertLayerIndexToInputName(e.layerDetected) : "";
-
-		if (e.isSheet)
+		if (!_isTheEnd)
 		{
-			_hudSheetGO.SetActive(!_hudSheetGO.activeSelf);
-			_textSheetComponent.text = _sheetSOList[e.sheetID]._sheetText.Replace("\\n", "\n");
-			_sheetToRender.texture = _sheetSOList[e.sheetID]._sheetSprite;
+			_textComponent.enabled = e.isActive;
+			_textComponent.text = e.isActive ? ConvertLayerIndexToInputName(e.layerDetected) : "";
+
+			if (e.isSheet)
+			{
+				_hudSheetGO.SetActive(!_hudSheetGO.activeSelf);
+				_textSheetComponent.text = _sheetSOList[e.sheetID]._sheetText.Replace("\\n", "\n");
+				_sheetToRender.texture = _sheetSOList[e.sheetID]._sheetSprite;
+			}
 		}
+
 	}
 
 	private string ConvertLayerIndexToInputName(int layerIndex)

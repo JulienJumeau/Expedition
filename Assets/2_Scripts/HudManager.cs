@@ -48,11 +48,11 @@ public class HudManager : MonoBehaviour
 		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
 		_audioSource = GetComponent<AudioSource>();
 
-		EventSubscription();
 	}
 
 	private void Start()
 	{
+		EventSubscription();
 		StartCoroutine(Fade(_hudFadeOutGO, true, 2));
 	}
 

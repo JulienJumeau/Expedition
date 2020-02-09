@@ -17,7 +17,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] Transform[] _patrolPoints = null;
 	[SerializeField] private bool _isNextDestinationRandom = false, _isPenguinAggro = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
-	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, _secondsToRecoverFullLife = 0;
+	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, timeToRecoverLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
 
@@ -37,7 +37,7 @@ public sealed class Penguin : MonoBehaviour
 	private Animator _animator;
 	private AudioSource _audioSource;
 	private int _nextDestinationIndex;
-	private float _distanceTargetAgent, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed;
+	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed;
 	private bool _isAttacking;
 	private string[] _triggerAnimationNames;
 
@@ -53,24 +53,14 @@ public sealed class Penguin : MonoBehaviour
 		_audioSource = GetComponent<AudioSource>();
 		_targetPlayer = _player.transform;
 		_nextDestinationIndex = 0;
-		_distanceTargetAgent = 0;
+		_distancePlayerFoe = 0;
 		_currentDetectionRadius = _detectionRadius;
 		_secondsWhileWounded = 0;
 		_triggerAnimationNames = new string[4] { "P_IsWalking", "P_IsRunning", "P_IsLookingFor", "P_IsBiting2" };
 		_currentChaseSpeed = _foeChaseSpeed;
 	}
 
-	private void Start()
-	{
-		if (_patrolPoints.Length == 1 && transform.position == _patrolPoints[0].position)
-		{
-			_foeState = FoeState.idle;
-		}
-		else
-		{
-			_foeState = FoeState.Patrol;
-		}
-	}
+	private void Start() => _foeState = _patrolPoints.Length == 1 && this.transform.position == _patrolPoints[0].position ? FoeState.idle : FoeState.Patrol;
 
 	private void Update()
 	{
@@ -93,6 +83,7 @@ public sealed class Penguin : MonoBehaviour
 		//}
 
 		FoePattern();
+		RegenLife(timeToRecoverLife);
 
 		//Sound for chasing (provisoire car à incorporer à SoundManager)
 		if (PlayerAbilities._isDetected)
@@ -111,23 +102,7 @@ public sealed class Penguin : MonoBehaviour
 			}
 		}
 
-		if (_foeState == FoeState.Patrol)
-		{
-			ResetAllTriggerAnimation();
-			_animator.SetBool(_triggerAnimationNames[0], true);
-		}
-
-		if (_foeState == FoeState.Chase)
-		{
-			ResetAllTriggerAnimation();
-			_animator.SetBool(_triggerAnimationNames[1], true);
-		}
-
-		if (_foeState == FoeState.Attack)
-		{
-			_animator.SetBool(_triggerAnimationNames[0], false);
-			_animator.SetBool(_triggerAnimationNames[1], false);
-		}
+		TriggerAnimation();
 	}
 
 	private void OnDrawGizmosSelected()
@@ -142,39 +117,21 @@ public sealed class Penguin : MonoBehaviour
 
 	private void FoePattern() // /!\ A CORRIGER: Quand les pingu reviennent à leur next point de patrouille après avoir chase le player, ils ne reviennent pas exactement à ce point de patrouille mais le dépassent et se retrouvent plus loin que le point (à cause de la vitesse de cours élevée) 
 	{
-		// AFTER ATTACKING 1 TIME
-		if (PostProcessManager._isPostProssessOn)
-		{
-			_secondsWhileWounded += Time.deltaTime;
-		}
-		else
-		{
-			_secondsWhileWounded = 0;
-		}
-
-		// REGEN LIFE
-		if (_secondsWhileWounded >= _secondsToRecoverFullLife)
-		{
-			PostProcessManager._isPostProssessOn = false;
-		}
-
+		_distancePlayerFoe = Vector3.Distance(_targetPlayer.position, this.transform.position);
+		
 		// STATE = PATROL
 		if (_foeState == FoeState.Patrol && !_agent.pathPending && _agent.remainingDistance < 0.5f)
 		{
-			Debug.Log("Go to next patrol point");
 			GoToNextPatrolPoint();
 		}
 
-		// STATE = CHASE
-		_distanceTargetAgent = Vector3.Distance(_targetPlayer.position, this.transform.position);
-
-				// PLAYER AGGRO
-		if (_distanceTargetAgent <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
+		// PLAYER AGGRO
+		if (_distancePlayerFoe <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
 		{
 			_currentDetectionRadius = _detectionRadiusAggro;
 			_foeState = FoeState.Chase;
 			PlayerAbilities._isDetected = true;
-			_currentChaseSpeed = _distanceTargetAgent <= _agent.stoppingDistance * 2 ? 2 : _foeChaseSpeed;
+			_currentChaseSpeed = _foeChaseSpeed;
 			SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
 
 			//_audioSource.clip = _audioClipPenguinAggro;
@@ -182,10 +139,11 @@ public sealed class Penguin : MonoBehaviour
 
 			if (IsFoeNearTarget())
 			{
+				_agent.velocity = Vector3.zero;
 				_foeState = FoeState.Attack;
 			}
 		}
-				// STOP AGGRO PLAYER
+		// STOP AGGRO PLAYER
 		else if (_foeState == FoeState.Chase)
 		{
 			PlayerAbilities._isDetected = false;
@@ -235,39 +193,40 @@ public sealed class Penguin : MonoBehaviour
 		// STATE = IDLE
 		if (_foeState == FoeState.idle)
 		{
-			_agent.SetDestination(transform.position);
-			ResetAllTriggerAnimation();
+			_agent.speed = 0;
 		}
 	}
 
 	private void GoToNextPatrolPoint()
 	{
-		// CASE 0 PATROL POINTS
-		if (_patrolPoints.Length == 0)
+		switch (_patrolPoints.Length)
 		{
-			Debug.Log("Warning empty array points for partol");
-			return;
-		}
+			case 0:
+				Debug.Log("Warning empty array points for partol");
+				return;
+			case 1:
 
-		// CASE 1 PATROL POINT
-		if (_patrolPoints.Length == 1 && (transform.position.z > _patrolPoints[0].position.z - 0.2f && transform.position.z < _patrolPoints[0].position.z + 0.2f) && (transform.position.x > _patrolPoints[0].position.x - 0.2f && transform.position.x < _patrolPoints[0].position.x + 0.2f))
-		{
-			_foeState = FoeState.idle;
-		}
-		else // CASE MORE THAN 1 PATROL POINTS
-		{
-			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
+				if (_agent.remainingDistance < 1)
+				{
+					_foeState = FoeState.idle;
+				}
 
-			if (_isNextDestinationRandom)
-			{
-				_nextDestinationIndex = Random.Range(0, _patrolPoints.Length);
-			}
-			else
-			{
-				_nextDestinationIndex++;
-			}
+				break;
+			default:
+				SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
 
-			_nextDestinationIndex = (_nextDestinationIndex) % _patrolPoints.Length;
+				if (_isNextDestinationRandom)
+				{
+					_nextDestinationIndex = Random.Range(0, _patrolPoints.Length);
+				}
+
+				else
+				{
+					_nextDestinationIndex++;
+				}
+
+				_nextDestinationIndex %= _patrolPoints.Length;
+				break;
 		}
 	}
 
@@ -314,12 +273,54 @@ public sealed class Penguin : MonoBehaviour
 		_isAttacking = false;
 	}
 
+	private void RegenLife(float timeToRecoverLife)
+	{
+		if (PostProcessManager._isPostProssessOn)
+		{
+			_secondsWhileWounded += Time.deltaTime;
+		}
+
+		else
+		{
+			_secondsWhileWounded = 0;
+		}
+
+		if (_secondsWhileWounded >= timeToRecoverLife)
+		{
+			PostProcessManager._isPostProssessOn = false;
+		}
+	}
+
 	private void SetFoeAgentProperties(Vector3 targetPosition, float speed, float stoppingDistance, bool autoBraking)
 	{
 		_agent.SetDestination(targetPosition);
 		_agent.speed = speed;
 		_agent.stoppingDistance = stoppingDistance;
 		_agent.autoBraking = autoBraking;
+	}
+
+	private void TriggerAnimation()
+	{
+		switch (_foeState)
+		{
+			case FoeState.idle:
+				ResetAllTriggerAnimation();
+				break;
+			case FoeState.Patrol:
+				ResetAllTriggerAnimation();
+				_animator.SetBool(_triggerAnimationNames[0], true);
+				break;
+			case FoeState.Chase:
+				ResetAllTriggerAnimation();
+				_animator.SetBool(_triggerAnimationNames[1], true);
+				break;
+			case FoeState.Attack:
+				_animator.SetBool(_triggerAnimationNames[0], false);
+				_animator.SetBool(_triggerAnimationNames[1], false);
+				break;
+			default:
+				break;
+		}
 	}
 
 	private void ResetAllTriggerAnimation()
@@ -330,6 +331,5 @@ public sealed class Penguin : MonoBehaviour
 		}
 	}
 
-	private bool IsFoeNearTarget() => _distanceTargetAgent <= _agent.stoppingDistance;
-
+	private bool IsFoeNearTarget() => _distancePlayerFoe <= _agent.stoppingDistance;
 }

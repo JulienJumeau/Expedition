@@ -315,7 +315,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					if (_hitForward.transform.gameObject.layer == 12 && _hitForward.distance < 1.1f)
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 1, _climbWallAnimationCurve));
-
+						_animator.SetTrigger(_triggerAnimationNames[4]);
 						//_audioSource.clip = _audioClipClimb;
 						//_audioSource.Play();
 					}
@@ -324,7 +324,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					if (_hitForward.transform.gameObject.layer == 17)
 					{
 						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 0.5f, _climbBoxAnimationCurve));
-
+						_animator.SetTrigger(_triggerAnimationNames[4]);
 						//_audioSource.clip = _audioClipClimb;
 						//_audioSource.Play();
 					}

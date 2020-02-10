@@ -36,7 +36,7 @@ public sealed class PostProcessManager : MonoBehaviour
 			PostProcessAttack();
 		}
 
-		else if (!_isPostProssessOn && _isAttacking == true)
+		else if (!_isPostProssessOn && _isAttacking)
 		{
 			_isAttacking = false;
 			PostProcessOff();

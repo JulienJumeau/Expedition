@@ -341,12 +341,12 @@ MonoBehaviour:
   _detectionRadius: 5
   _detectionRadiusAggro: 10
   _detectionRadiusWHoldingBreath: 1
-  _secondsBeforeFirstAttack: 3
-  _secondsBeforeSecondAttack: 6
-  _secondsToRecoverFullLife: 6
+  _secondsBeforeFirstAttack: 0
+  _secondsBeforeSecondAttack: 1
+  timeToRecoverLife: 6
   _allowAttacks: 1
   _allowChasingAudiosource: 0
-  _stoppingDistanceAttack: 2.5
+  _stoppingDistanceAttack: 1.5
   _audioClipDying: {fileID: 0}
   _audioClipTakingDamage: {fileID: 8300000, guid: 775f4092a5519f74da314c524c94f51d,
     type: 3}

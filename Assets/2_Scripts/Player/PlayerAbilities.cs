@@ -76,7 +76,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
-		_triggerAnimationNames = new string[5] { "IsWalk", "IsRun", "IsJumping", "IsClimbing", "IsClimbing" };
+		_triggerAnimationNames = new string[5] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
 		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
@@ -184,7 +184,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 						ResetAllTriggerAnimation();
 					}
 
-					Debug.Log("test");
 					_animator.SetBool(_triggerAnimationNames[0], true);
 
 					//_audioSource.clip = _audioClipWalk;
@@ -347,7 +346,13 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						_currentSpeed = _pullObjectSpeed;
 						_isPulling = true;
+						_animator.SetBool(_triggerAnimationNames[3], true);
 						PullObject();
+					}
+
+					else
+					{
+						_animator.SetBool(_triggerAnimationNames[3], false);
 					}
 				}
 

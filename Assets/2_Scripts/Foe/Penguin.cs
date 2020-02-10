@@ -17,7 +17,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] Transform[] _patrolPoints = null;
 	[SerializeField] private bool _isNextDestinationRandom = false, _isPenguinAggro = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
-	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, timeToRecoverLife = 0;
+	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsInAlertBeforeAggro = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, timeToRecoverLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
 
@@ -37,7 +37,7 @@ public sealed class Penguin : MonoBehaviour
 	private Animator _animator;
 	private AudioSource _audioSource;
 	private int _nextDestinationIndex;
-	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed;
+	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed, _secondsWhileAlert;
 	private bool _isAttacking;
 	private string[] _triggerAnimationNames;
 
@@ -55,6 +55,7 @@ public sealed class Penguin : MonoBehaviour
 		_nextDestinationIndex = 0;
 		_distancePlayerFoe = 0;
 		_currentDetectionRadius = _detectionRadius;
+		_secondsWhileAlert = 0;
 		_secondsWhileWounded = 0;
 		_triggerAnimationNames = new string[4] { "P_IsWalking", "P_IsRunning", "P_IsLookingFor", "P_IsBiting2" };
 		_currentChaseSpeed = _foeChaseSpeed;
@@ -65,22 +66,22 @@ public sealed class Penguin : MonoBehaviour
 	private void Update()
 	{
 		////Dans quel state est-on?
-		//if (_foeState == FoeState.idle)
-		//{
-		//	Debug.Log("Idle");
-		//}
-		//else if (_foeState == FoeState.Attack)
-		//{
-		//	Debug.Log("Attack");
-		//}
-		//else if (_foeState == FoeState.Chase)
-		//{
-		//	Debug.Log("Chase");
-		//}
-		//else if (_foeState == FoeState.Patrol)
-		//{
-		//	Debug.Log("Patrol");
-		//}
+		if (_foeState == FoeState.idle)
+		{
+			Debug.Log("Idle");
+		}
+		else if (_foeState == FoeState.Attack)
+		{
+			Debug.Log("Attack");
+		}
+		else if (_foeState == FoeState.Chase)
+		{
+			Debug.Log("Chase");
+		}
+		else if (_foeState == FoeState.Patrol)
+		{
+			Debug.Log("Patrol");
+		}
 
 		FoePattern();
 		RegenLife(timeToRecoverLife);
@@ -128,19 +129,30 @@ public sealed class Penguin : MonoBehaviour
 		// PLAYER AGGRO
 		if (_distancePlayerFoe <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
 		{
-			_currentDetectionRadius = _detectionRadiusAggro;
-			_foeState = FoeState.Chase;
-			PlayerAbilities._isDetected = true;
-			_currentChaseSpeed = _foeChaseSpeed;
-			SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
+			// PENGUIN ALERT
+			_secondsWhileAlert += Time.deltaTime;
 
-			//_audioSource.clip = _audioClipPenguinAggro;
-			//_audioSource.Play();
+			//Reste sur place et faceTarget (+ need anim alert)
+			SetFoeAgentProperties(transform.position, 0, 0, false);
+			FaceTarget();
 
-			if (IsFoeNearTarget())
+			if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)
 			{
-				_agent.velocity = Vector3.zero;
-				_foeState = FoeState.Attack;
+				// START AGGRO PLAYER
+				_currentDetectionRadius = _detectionRadiusAggro;
+				_foeState = FoeState.Chase;
+				PlayerAbilities._isDetected = true;
+				_currentChaseSpeed = _foeChaseSpeed;
+				SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
+
+				//_audioSource.clip = _audioClipPenguinAggro;
+				//_audioSource.Play();
+
+				if (IsFoeNearTarget())
+				{
+					_agent.velocity = Vector3.zero;
+					_foeState = FoeState.Attack;
+				}
 			}
 		}
 		// STOP AGGRO PLAYER
@@ -273,7 +285,7 @@ public sealed class Penguin : MonoBehaviour
 		_isAttacking = false;
 	}
 
-	private void RegenLife(float timeToRecoverLife)
+		private void RegenLife(float timeToRecoverLife)
 	{
 		if (PostProcessManager._isPostProssessOn)
 		{

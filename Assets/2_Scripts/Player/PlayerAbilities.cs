@@ -76,7 +76,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
-		_triggerAnimationNames = new string[4] { "IsWalk", "IsRun", "IsJumping", "IsClimbing" };
+		_triggerAnimationNames = new string[5] { "IsWalk", "IsRun", "IsJumping", "IsClimbing", "IsClimbing" };
 		_characterInitialHeight = _characterController.height;
 		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
@@ -181,9 +181,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 					if (!_isCrouching)
 					{
 						_currentSpeed = _walkSpeed;
+						ResetAllTriggerAnimation();
 					}
 
-					ResetAllTriggerAnimation();
+					Debug.Log("test");
 					_animator.SetBool(_triggerAnimationNames[0], true);
 
 					//_audioSource.clip = _audioClipWalk;
@@ -204,6 +205,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 					//_audioSource.Play();
 				}
 
+				else
+				{
+					_animator.SetBool(_triggerAnimationNames[1], false);
+				}
+
 				break;
 
 			case InputAction.Crouch:
@@ -214,6 +220,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						_isCrouching = true;
 						_currentSpeed = _crouchSpeed;
+						_animator.SetBool("IsCrouching", true);
 						CrouchAndStand(_characterInitialHeight / 6);
 					}
 
@@ -221,6 +228,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						_isCrouching = false;
 						_currentSpeed = _walkSpeed;
+						_animator.SetBool("IsCrouching", false);
 						CrouchAndStand(_characterInitialHeight);
 					}
 				}

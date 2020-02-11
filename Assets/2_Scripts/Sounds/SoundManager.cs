@@ -53,6 +53,7 @@ public sealed class SoundManager : MonoBehaviour
 	private void SoundManager_OnMusicTriggered(object sender, MusicTrigger.MusicTriggeredEventArgs e)
 	{
 		_musicGo[e.id].OnMusicTriggered -= SoundManager_OnMusicTriggered;
+		_audioSources[0].volume = HudManager._gameVolume;
 		_audioSources[0].clip = e.musicTriggered;
 		_audioSources[0].Play();
 	}

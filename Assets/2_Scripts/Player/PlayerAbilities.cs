@@ -309,7 +309,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Jump:
 
-				if (_hitForward.transform != null && !_isActionPlaying && !_isHiding)
+				if (_hitForward.transform != null && !_isActionPlaying && !_isHiding && !_isCrouching && _characterController.transform.position.y < _hitForward.point.y)
 				{
 					// Climbable walls
 					if (_hitForward.transform.gameObject.layer == 12 && _hitForward.distance < 1.1f)
@@ -321,12 +321,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 					}
 
 					// Climbable Box
-					if (_hitForward.transform.gameObject.layer == 17)
+					if (_hitForward.transform.gameObject.layer == 17 && _hitForward.distance < 1.1f)
 					{
-						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 0.5f, _climbBoxAnimationCurve));
+						StartCoroutine(AnimateMove(this.transform.position, _hitForward.transform.GetChild(0).position, 1, _climbBoxAnimationCurve));
 						_animator.SetTrigger(_triggerAnimationNames[4]);
-						//_audioSource.clip = _audioClipClimb;
-						//_audioSource.Play();
 					}
 
 					// Jumpable

@@ -132,8 +132,10 @@ public sealed class Penguin : MonoBehaviour
 			// PENGUIN ALERT
 			_secondsWhileAlert += Time.deltaTime;
 
-			//Reste sur place et faceTarget (+ need anim alert)
+				//Reste sur place et faceTarget (+ need anim alert)
 			SetFoeAgentProperties(transform.position, 0, 0, false);
+			//ResetAllTriggerAnimation();
+			//_animator.SetBool(_triggerAnimationNames[2], true);
 			FaceTarget();
 
 			if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)

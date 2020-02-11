@@ -341,6 +341,7 @@ MonoBehaviour:
   _detectionRadius: 5
   _detectionRadiusAggro: 10
   _detectionRadiusWHoldingBreath: 1
+  _secondsInAlertBeforeAggro: 2
   _secondsBeforeFirstAttack: 0
   _secondsBeforeSecondAttack: 1
   timeToRecoverLife: 6

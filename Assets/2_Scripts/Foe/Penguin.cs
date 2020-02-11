@@ -7,7 +7,8 @@ public enum FoeState
 	idle,
 	Patrol,
 	Chase,
-	Attack
+	Attack,
+	Alert
 }
 
 public sealed class Penguin : MonoBehaviour
@@ -61,7 +62,7 @@ public sealed class Penguin : MonoBehaviour
 		_currentChaseSpeed = _foeChaseSpeed;
 	}
 
-	private void Start() => _foeState = _patrolPoints.Length == 1 && this.transform.position == _patrolPoints[0].position ? FoeState.idle : FoeState.Patrol;
+	private void Start() => _foeState = _patrolPoints.Length == 1 && transform.position == _patrolPoints[0].position ? FoeState.idle : FoeState.Patrol;
 
 	private void Update()
 	{
@@ -81,6 +82,10 @@ public sealed class Penguin : MonoBehaviour
 		else if (_foeState == FoeState.Patrol)
 		{
 			Debug.Log("Patrol");
+		}
+		else if (_foeState == FoeState.Alert)
+		{
+			Debug.Log("Alert");
 		}
 
 		FoePattern();
@@ -130,31 +135,33 @@ public sealed class Penguin : MonoBehaviour
 		if (_distancePlayerFoe <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
 		{
 			// PENGUIN ALERT
+			_foeState = FoeState.Alert;
 			_secondsWhileAlert += Time.deltaTime;
-
-				//Reste sur place et faceTarget (+ need anim alert)
+			Debug.Log("SA: " + _secondsWhileAlert + " s");
 			SetFoeAgentProperties(transform.position, 0, 0, false);
-			//ResetAllTriggerAnimation();
-			//_animator.SetBool(_triggerAnimationNames[2], true);
-			FaceTarget();
+			//FaceTarget();
 
 			if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)
 			{
-				// START AGGRO PLAYER
-				_currentDetectionRadius = _detectionRadiusAggro;
-				_foeState = FoeState.Chase;
-				PlayerAbilities._isDetected = true;
-				_currentChaseSpeed = _foeChaseSpeed;
-				SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
-
-				//_audioSource.clip = _audioClipPenguinAggro;
-				//_audioSource.Play();
-
-				if (IsFoeNearTarget())
+				if (_distancePlayerFoe <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
 				{
-					_agent.velocity = Vector3.zero;
-					_foeState = FoeState.Attack;
+					// START AGGRO PLAYER
+					_currentDetectionRadius = _detectionRadiusAggro;
+					_foeState = FoeState.Chase;
+					PlayerAbilities._isDetected = true;
+					_currentChaseSpeed = _foeChaseSpeed;
+					SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
+
+					//_audioSource.clip = _audioClipPenguinAggro;
+					//_audioSource.Play();
+
+					if (IsFoeNearTarget())
+					{
+						_agent.velocity = Vector3.zero;
+						_foeState = FoeState.Attack;
+					}
 				}
+
 			}
 		}
 		// STOP AGGRO PLAYER
@@ -172,6 +179,28 @@ public sealed class Penguin : MonoBehaviour
 			if (_agent.remainingDistance < 0.5f)
 			{
 				_foeState = FoeState.Patrol;
+				_secondsWhileAlert = 0;
+			}
+		}
+		else if (_foeState == FoeState.Alert)
+		{
+			_secondsWhileAlert += Time.deltaTime;
+			Debug.Log("SA: " + _secondsWhileAlert + " s");
+			if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)
+			{
+				PlayerAbilities._isDetected = false;
+				_currentDetectionRadius = _detectionRadius;
+				//_animator.SetBool(_triggerAnimationNames[2], false);
+				//_animator.SetBool(_triggerAnimationNames[0], true);
+				SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
+
+				//Stop Sound Alert
+
+				if (_agent.remainingDistance < 0.5f)
+				{
+					_foeState = FoeState.Patrol;
+					_secondsWhileAlert = 0;
+				}
 			}
 		}
 
@@ -279,7 +308,7 @@ public sealed class Penguin : MonoBehaviour
 			if (IsFoeNearTarget())
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
-				_audioSource.PlayOneShot(_audioClipTakingDamage);
+				//_audioSource.PlayOneShot(_audioClipTakingDamage);
 
 				PostProcessManager._isPostProssessOn = true;
 			}
@@ -331,6 +360,10 @@ public sealed class Penguin : MonoBehaviour
 			case FoeState.Attack:
 				_animator.SetBool(_triggerAnimationNames[0], false);
 				_animator.SetBool(_triggerAnimationNames[1], false);
+				break;
+			case FoeState.Alert:
+				ResetAllTriggerAnimation();
+				_animator.SetBool(_triggerAnimationNames[2], true);
 				break;
 			default:
 				break;

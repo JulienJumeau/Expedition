@@ -18,6 +18,8 @@ public class HudManager : MonoBehaviour
 	[SerializeField] private GameObject _menuPauseEndGO;
 	[SerializeField] private GameObject _menuChapterEndGO;
 	[SerializeField] private GameObject _menuChapterGO;
+	[SerializeField] private Slider _sliderVolume;
+	[SerializeField] private Slider _sliderGamma;
 	[SerializeField] private SheetsSO[] _sheetSOList;
 
 	[Header("Sounds")]
@@ -27,6 +29,8 @@ public class HudManager : MonoBehaviour
 
 	public static bool _isFading;
 	public static bool _isTheEnd;
+	public static float _gameVolume = 1;
+	private static float _gameGamma = 1;
 	private TextMeshProUGUI _textComponent;
 	private TextMeshProUGUI _textSheetComponent;
 	private RawImage _sheetToRender;
@@ -47,7 +51,8 @@ public class HudManager : MonoBehaviour
 		_textSheetComponent = _hudSheetGO.GetComponentInChildren<TextMeshProUGUI>();
 		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
 		_audioSource = GetComponent<AudioSource>();
-
+		_sliderVolume.value = _gameVolume;
+		_sliderGamma.value = _gameGamma;
 	}
 
 	private void Start()
@@ -64,6 +69,9 @@ public class HudManager : MonoBehaviour
 			StartCoroutine(Fade(_hudFadeOutGO, false, 0.1f, 5f));
 			StartCoroutine(EndingHud());
 		}
+
+		_gameVolume = _sliderVolume.value;
+		_gameGamma = _sliderGamma.value;
 	}
 
 	#endregion

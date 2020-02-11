@@ -8,6 +8,7 @@ public sealed class SoundManager : MonoBehaviour
 
 	private readonly string[] _audioSourceName = new string[] { "Audio_Music", "Audio_Voice" };
 	private AudioSource[] _audioSources;
+	private AudioSource[] _allAudioSources;
 	private MusicTrigger[] _musicGo;
 	private StopMusicTrigger[] _stopMusicGo;
 
@@ -31,6 +32,18 @@ public sealed class SoundManager : MonoBehaviour
 	private void Start()
 	{
 		EventSubscription();
+		_allAudioSources = FindObjectsOfType<AudioSource>();
+	}
+
+	private void Update()
+	{
+		if (_allAudioSources[_allAudioSources.Length - 1].volume != HudManager._gameVolume)
+		{
+			for (int i = 0; i < _allAudioSources.Length; i++)
+			{
+				_allAudioSources[i].volume = HudManager._gameVolume;
+			}
+		}
 	}
 
 	#endregion
@@ -41,7 +54,6 @@ public sealed class SoundManager : MonoBehaviour
 	{
 		_musicGo[e.id].OnMusicTriggered -= SoundManager_OnMusicTriggered;
 		_audioSources[0].clip = e.musicTriggered;
-		_audioSources[0].volume = 1;
 		_audioSources[0].Play();
 	}
 

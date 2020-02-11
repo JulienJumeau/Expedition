@@ -158,6 +158,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1163041415}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &909350812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1998611697, guid: 90c0c261426dba4439c30772b7c375c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1163041415}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1163041415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -177,6 +189,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 10451325}
+    - target: {fileID: 1492712871, guid: 90c0c261426dba4439c30772b7c375c4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1652460249, guid: 90c0c261426dba4439c30772b7c375c4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -372,6 +388,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1163041415}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1235896805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8885481233149824155, guid: 90c0c261426dba4439c30772b7c375c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1163041415}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1320960611 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 241813033642549161, guid: 90c0c261426dba4439c30772b7c375c4,
@@ -431,6 +459,14 @@ PrefabInstance:
       propertyPath: _menuChapterGO
       value: 
       objectReference: {fileID: 1163041419}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _sliderVolume
+      value: 
+      objectReference: {fileID: 909350812}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _sliderGamma
+      value: 
+      objectReference: {fileID: 1235896805}
     - target: {fileID: 5634259180212196396, guid: cacd2035fe310184385694804aebfe4e,
         type: 3}
       propertyPath: m_LocalPosition.x

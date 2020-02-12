@@ -375,17 +375,19 @@ MonoBehaviour:
   _audioSourcePlayerSounds: {fileID: 338805755440902567}
   _audioSourceLoots: {fileID: 7466912507087098808}
   _audioClipWalk:
-  - {fileID: 8300000, guid: 60b08d9f9f79f924bb7ad706365728a4, type: 3}
-  - {fileID: 8300000, guid: cebf5bf176048fd40b22f889b8bd5d4a, type: 3}
-  - {fileID: 8300000, guid: f5b479484565ce746aec1e8afd0daa9a, type: 3}
-  - {fileID: 8300000, guid: fd5cd9cc240478f48b455a4b0ffbff48, type: 3}
-  - {fileID: 8300000, guid: 45e4704f7b508324dac9a76ea4d09ad9, type: 3}
+  - {fileID: 8300000, guid: 79cecca6e391a0d4fa0244cb1e4d847d, type: 3}
+  - {fileID: 8300000, guid: 1d245394e509d6744aa623beea07d562, type: 3}
+  - {fileID: 8300000, guid: 0d77dbd7d571ad940b664b8097c3c519, type: 3}
+  - {fileID: 8300000, guid: 5e81fec86bf39954895337153acb92bd, type: 3}
+  - {fileID: 8300000, guid: 05e12be28b97ded41a704aaf73e185f4, type: 3}
+  - {fileID: 8300000, guid: f61ab804ecc8c494689bb5682f15a1c3, type: 3}
   _audioClipRun:
-  - {fileID: 8300000, guid: 60b08d9f9f79f924bb7ad706365728a4, type: 3}
-  - {fileID: 8300000, guid: cebf5bf176048fd40b22f889b8bd5d4a, type: 3}
-  - {fileID: 8300000, guid: f5b479484565ce746aec1e8afd0daa9a, type: 3}
-  - {fileID: 8300000, guid: fd5cd9cc240478f48b455a4b0ffbff48, type: 3}
-  - {fileID: 8300000, guid: 45e4704f7b508324dac9a76ea4d09ad9, type: 3}
+  - {fileID: 8300000, guid: 79cecca6e391a0d4fa0244cb1e4d847d, type: 3}
+  - {fileID: 8300000, guid: 1d245394e509d6744aa623beea07d562, type: 3}
+  - {fileID: 8300000, guid: 0d77dbd7d571ad940b664b8097c3c519, type: 3}
+  - {fileID: 8300000, guid: 5e81fec86bf39954895337153acb92bd, type: 3}
+  - {fileID: 8300000, guid: 05e12be28b97ded41a704aaf73e185f4, type: 3}
+  - {fileID: 8300000, guid: f61ab804ecc8c494689bb5682f15a1c3, type: 3}
   _audioClipRunTooLong: {fileID: 0}
   _audioClipClimb: {fileID: 0}
   _audioClipDying: {fileID: 0}

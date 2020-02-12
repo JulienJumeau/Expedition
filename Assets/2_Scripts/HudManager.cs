@@ -29,7 +29,7 @@ public class HudManager : MonoBehaviour
 
 	public static bool _isFading;
 	public static bool _isTheEnd;
-	public static float _gameVolume = 1;
+	public static float _gameVolume = 0.5f;
 	public static float _gameGamma = 0;
 	private TextMeshProUGUI _textComponent;
 	private TextMeshProUGUI _textSheetComponent;

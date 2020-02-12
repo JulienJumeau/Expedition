@@ -549,6 +549,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 		this.transform.position = _hitForward.transform.parent.GetChild(0).transform.position;
 		Quaternion rotation = Quaternion.LookRotation(-_hitForward.transform.right, Vector3.up);
 		this.transform.rotation = rotation;
+		Vector3 rotationParent = this.transform.GetChild(0).rotation.eulerAngles;
+		rotationParent.x -= 30;
+		this.transform.GetChild(0).rotation = Quaternion.Euler(rotationParent);
 		_isActionPlaying = false;
 	}
 
@@ -560,6 +563,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 			_isLanternOnScreen = true;
 		}
 		this.transform.position = _positionBeforeHide;
+		Vector3 rotationParent = this.transform.GetChild(0).rotation.eulerAngles;
+		rotationParent.x += 30;
+		this.transform.GetChild(0).rotation = Quaternion.Euler(rotationParent);
 		_isHiding = false;
 		_characterController.enabled = true;
 	}

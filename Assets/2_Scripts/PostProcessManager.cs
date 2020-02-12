@@ -94,6 +94,4 @@ public sealed class PostProcessManager : MonoBehaviour
 		_vignetteLayer.intensity.value = 0;
 		_chromaticAberrationLayer.intensity.value = 0;
 	}
-
-
 }

@@ -29,7 +29,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AudioSource _audioSourceLoots = null;
 
 	[Header("Sounds")]
-	[SerializeField] private AudioClip _audioClipWalk;
+	[SerializeField] private AudioClip[] _audioClipWalk;
 	[SerializeField] private AudioClip _audioClipRun;
 	[SerializeField] private AudioClip _audioClipRunTooLong;
 	[SerializeField] private AudioClip _audioClipClimb;
@@ -589,6 +589,13 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<InputManager>().OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
 		FindObjectOfType<InputManager>().OnCameraMove += PlayerAbilities_OnCameraInputPressed;
 		FindObjectOfType<InputManager>().OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
+		FindObjectOfType<PlayerAnimationEvents>().OnFootStep += PlayerAbilities_OnFootStep;
+	}
+
+	private void PlayerAbilities_OnFootStep(object sender, EventArgs e)
+	{
+		_audioSourceMovement.clip = _audioClipWalk[UnityEngine.Random.Range(0, _audioClipWalk.Length - 1)];
+		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
 	}
 
 	private void OilLevelDecreasing()

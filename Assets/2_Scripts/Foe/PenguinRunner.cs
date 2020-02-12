@@ -31,7 +31,7 @@ public class PenguinRunner : MonoBehaviour
 	{
 		if (_agent.enabled && _agent.remainingDistance < 0.1f)
 		{
-			FindObjectOfType<InputManager>().OnPause -= Penguin_OnPause;
+			FindObjectOfType<HudManager>().OnPause -= Penguin_OnPause;
 			Destroy(this.transform.parent.gameObject);
 		}
 	}
@@ -40,10 +40,10 @@ public class PenguinRunner : MonoBehaviour
 
 	private void EventSubcription()
 	{
-		FindObjectOfType<InputManager>().OnPause += Penguin_OnPause;
+		FindObjectOfType<HudManager>().OnPause += Penguin_OnPause;
 	}
 
-	private void Penguin_OnPause(object sender, InputManager.PauseEventArgs e)
+	private void Penguin_OnPause(object sender, HudManager.PauseEventArgs e)
 	{
 		if (e.isPaused)
 		{

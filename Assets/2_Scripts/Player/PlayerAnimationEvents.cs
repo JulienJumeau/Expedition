@@ -19,6 +19,11 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     private void FootStepRun() => OnFootStepRun?.Invoke(this, EventArgs.Empty);
 
+
+    public event EventHandler OnFootStepCrouch;
+
+    private void FootStepCrouch() => OnFootStepCrouch?.Invoke(this, EventArgs.Empty);
+
     #endregion
 
 }

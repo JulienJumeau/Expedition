@@ -10,9 +10,14 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     #region Events
 
-    public event EventHandler OnFootStep;
+    public event EventHandler OnFootStepWalk;
 
-    private void FootStep() => OnFootStep?.Invoke(this, EventArgs.Empty);
+    private void FootStepWalk() => OnFootStepWalk?.Invoke(this, EventArgs.Empty);
+
+
+    public event EventHandler OnFootStepRun;
+
+    private void FootStepRun() => OnFootStepRun?.Invoke(this, EventArgs.Empty);
 
     #endregion
 

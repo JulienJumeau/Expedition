@@ -30,7 +30,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	[Header("Sounds")]
 	[SerializeField] private AudioClip[] _audioClipWalk;
-	[SerializeField] private AudioClip _audioClipRun;
+	[SerializeField] private AudioClip[] _audioClipRun;
 	[SerializeField] private AudioClip _audioClipRunTooLong;
 	[SerializeField] private AudioClip _audioClipClimb;
 	[SerializeField] private AudioClip _audioClipDying;
@@ -589,10 +589,18 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<InputManager>().OnDirectionInputPressed += PlayerAbilities_OnDirectionInputPressed;
 		FindObjectOfType<InputManager>().OnCameraMove += PlayerAbilities_OnCameraInputPressed;
 		FindObjectOfType<InputManager>().OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
-		FindObjectOfType<PlayerAnimationEvents>().OnFootStep += PlayerAbilities_OnFootStep;
+		FindObjectOfType<PlayerAnimationEvents>().OnFootStepWalk += PlayerAbilities_OnFootStepWalk;
+		FindObjectOfType<PlayerAnimationEvents>().OnFootStepRun += PlayerAbilities_OnFootStepRun;
 	}
 
-	private void PlayerAbilities_OnFootStep(object sender, EventArgs e)
+
+	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
+	{
+		_audioSourceMovement.clip = _audioClipWalk[UnityEngine.Random.Range(0, _audioClipWalk.Length - 1)];
+		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+	}
+
+	private void PlayerAbilities_OnFootStepRun(object sender, EventArgs e)
 	{
 		_audioSourceMovement.clip = _audioClipWalk[UnityEngine.Random.Range(0, _audioClipWalk.Length - 1)];
 		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);

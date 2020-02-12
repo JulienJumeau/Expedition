@@ -31,6 +31,7 @@ public class PenguinRunner : MonoBehaviour
 	{
 		if (_agent.enabled && _agent.remainingDistance < 0.1f)
 		{
+			FindObjectOfType<InputManager>().OnPause -= Penguin_OnPause;
 			Destroy(this.transform.parent.gameObject);
 		}
 	}

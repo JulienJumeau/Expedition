@@ -370,7 +370,7 @@ MonoBehaviour:
   _fxFireLantern: {fileID: 1261568074}
   _lanternMinIntensity: 1
   _lanternMaxIntensity: 3
-  _secondsOilLevelFullToEmpty: 4
+  _secondsOilLevelFullToEmpty: 180
   _audioSourceMovement: {fileID: 7669660605584978796}
   _audioSourcePlayerSounds: {fileID: 338805755440902567}
   _audioSourceLoots: {fileID: 7466912507087098808}
@@ -380,7 +380,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f5b479484565ce746aec1e8afd0daa9a, type: 3}
   - {fileID: 8300000, guid: fd5cd9cc240478f48b455a4b0ffbff48, type: 3}
   - {fileID: 8300000, guid: 45e4704f7b508324dac9a76ea4d09ad9, type: 3}
-  _audioClipRun: {fileID: 0}
+  _audioClipRun:
+  - {fileID: 8300000, guid: 60b08d9f9f79f924bb7ad706365728a4, type: 3}
+  - {fileID: 8300000, guid: cebf5bf176048fd40b22f889b8bd5d4a, type: 3}
+  - {fileID: 8300000, guid: f5b479484565ce746aec1e8afd0daa9a, type: 3}
+  - {fileID: 8300000, guid: fd5cd9cc240478f48b455a4b0ffbff48, type: 3}
+  - {fileID: 8300000, guid: 45e4704f7b508324dac9a76ea4d09ad9, type: 3}
   _audioClipRunTooLong: {fileID: 0}
   _audioClipClimb: {fileID: 0}
   _audioClipDying: {fileID: 0}

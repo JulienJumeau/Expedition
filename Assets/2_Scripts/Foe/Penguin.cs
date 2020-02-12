@@ -62,7 +62,11 @@ public sealed class Penguin : MonoBehaviour
 		_currentChaseSpeed = _foeChaseSpeed;
 	}
 
-	private void Start() => _foeState = _patrolPoints.Length == 1 && transform.position == _patrolPoints[0].position ? FoeState.idle : FoeState.Patrol;
+	private void Start()
+	{
+		_foeState = _patrolPoints.Length == 1 && transform.position == _patrolPoints[0].position ? FoeState.idle : FoeState.Patrol;
+		EventSubcription();
+	}
 
 	private void Update()
 	{
@@ -88,27 +92,43 @@ public sealed class Penguin : MonoBehaviour
 			Debug.Log("Alert");
 		}
 
-		FoePattern();
-		RegenLife(timeToRecoverLife);
-
-		//Sound for chasing (provisoire car à incorporer à SoundManager)
-		if (PlayerAbilities._isDetected)
+		if (_agent.enabled)
 		{
-			if (_allowChasingAudiosource)
-			{
-				GetComponent<AudioSource>().enabled = true;
-			}
-		}
+			FoePattern();
+			RegenLife(timeToRecoverLife);
 
-		else
-		{
-			if (_allowChasingAudiosource)
+			//Sound for chasing (provisoire car à incorporer à SoundManager)
+			if (PlayerAbilities._isDetected)
 			{
-				GetComponent<AudioSource>().enabled = false;
+				if (_allowChasingAudiosource)
+				{
+					GetComponent<AudioSource>().enabled = true;
+				}
 			}
-		}
 
-		TriggerAnimation();
+			else
+			{
+				if (_allowChasingAudiosource)
+				{
+					GetComponent<AudioSource>().enabled = false;
+				}
+			}
+
+			if (Input.GetButtonDown("JumpClimb"))
+			{
+				if (_animator.speed != 0)
+				{
+					_animator.speed = 0;
+				}
+
+				else
+				{
+					_animator.speed = 1;
+				}
+			}
+
+			TriggerAnimation();
+		}
 	}
 
 	private void OnDrawGizmosSelected()
@@ -124,7 +144,7 @@ public sealed class Penguin : MonoBehaviour
 	private void FoePattern() // /!\ A CORRIGER: Quand les pingu reviennent à leur next point de patrouille après avoir chase le player, ils ne reviennent pas exactement à ce point de patrouille mais le dépassent et se retrouvent plus loin que le point (à cause de la vitesse de cours élevée) 
 	{
 		_distancePlayerFoe = Vector3.Distance(_targetPlayer.position, this.transform.position);
-		
+
 		// STATE = PATROL
 		if (_foeState == FoeState.Patrol && !_agent.pathPending && _agent.remainingDistance < 0.5f)
 		{
@@ -316,7 +336,7 @@ public sealed class Penguin : MonoBehaviour
 		_isAttacking = false;
 	}
 
-		private void RegenLife(float timeToRecoverLife)
+	private void RegenLife(float timeToRecoverLife)
 	{
 		if (PostProcessManager._isPostProssessOn)
 		{
@@ -379,4 +399,24 @@ public sealed class Penguin : MonoBehaviour
 	}
 
 	private bool IsFoeNearTarget() => _distancePlayerFoe <= _agent.stoppingDistance;
+
+	private void EventSubcription()
+	{
+		FindObjectOfType<InputManager>().OnPause += Penguin_OnPause;
+	}
+
+	private void Penguin_OnPause(object sender, InputManager.PauseEventArgs e)
+	{
+		if (e.isPaused)
+		{
+			_animator.speed = 0;
+			_agent.enabled = !e.isPaused;
+		}
+
+		else
+		{
+			_animator.speed = 1;
+			_agent.enabled = !e.isPaused;
+		}
+	}
 }

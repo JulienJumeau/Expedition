@@ -6,6 +6,7 @@ public sealed class PostProcessManager : MonoBehaviour
 {
 	private Vignette _vignetteLayer;
 	private ChromaticAberration _chromaticAberrationLayer;
+	private ColorGrading _colorGrading;
 	private Camera _camera;
 	private PostProcessVolume _processVolume;
 	private float _durationHoldBreath = 0, _durationGetdBreath = 0;
@@ -25,6 +26,8 @@ public sealed class PostProcessManager : MonoBehaviour
 	{
 		_processVolume.profile.TryGetSettings(out _chromaticAberrationLayer);
 		_processVolume.profile.TryGetSettings(out _vignetteLayer);
+		_processVolume.profile.TryGetSettings(out _colorGrading);
+		_colorGrading.gamma.overrideState = true;
 		_isPostProssessOn = _isPostProssessHoldBreath = false;
 	}
 
@@ -52,6 +55,13 @@ public sealed class PostProcessManager : MonoBehaviour
 		{
 			PostProcessHoldBreath();
 		}
+
+		if (_colorGrading.gamma.value.w != HudManager._gameGamma)
+		{
+			_colorGrading.gamma.overrideState = true;
+			_colorGrading.gamma.value.w = HudManager._gameGamma;
+		}
+
 	}
 
 	public void PostProcessAttack()
@@ -84,4 +94,6 @@ public sealed class PostProcessManager : MonoBehaviour
 		_vignetteLayer.intensity.value = 0;
 		_chromaticAberrationLayer.intensity.value = 0;
 	}
+
+
 }

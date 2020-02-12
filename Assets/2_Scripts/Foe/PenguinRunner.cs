@@ -24,15 +24,37 @@ public class PenguinRunner : MonoBehaviour
 	{
 		_animator.SetBool("P_IsRunning", true);
 		_agent.SetDestination(_destinatinationPoints[1].position);
+		EventSubcription();
 	}
 
 	private void Update()
 	{
-		if (_agent.remainingDistance < 0.1f)
+		if (_agent.enabled && _agent.remainingDistance < 0.1f)
 		{
 			Destroy(this.transform.parent.gameObject);
 		}
 	}
 
 	#endregion
+
+	private void EventSubcription()
+	{
+		FindObjectOfType<InputManager>().OnPause += Penguin_OnPause;
+	}
+
+	private void Penguin_OnPause(object sender, InputManager.PauseEventArgs e)
+	{
+		if (e.isPaused)
+		{
+			_animator.speed = 0;
+			_agent.enabled = !e.isPaused;
+		}
+
+		else
+		{
+			_animator.speed = 1;
+			_agent.enabled = !e.isPaused;
+			_agent.SetDestination(_destinatinationPoints[1].position);
+		}
+	}
 }

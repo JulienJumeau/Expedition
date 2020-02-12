@@ -370,11 +370,16 @@ MonoBehaviour:
   _fxFireLantern: {fileID: 1261568074}
   _lanternMinIntensity: 1
   _lanternMaxIntensity: 3
-  _secondsOilLevelFullToEmpty: 180
+  _secondsOilLevelFullToEmpty: 4
   _audioSourceMovement: {fileID: 7669660605584978796}
   _audioSourcePlayerSounds: {fileID: 338805755440902567}
   _audioSourceLoots: {fileID: 7466912507087098808}
-  _audioClipWalk: {fileID: 0}
+  _audioClipWalk:
+  - {fileID: 8300000, guid: 60b08d9f9f79f924bb7ad706365728a4, type: 3}
+  - {fileID: 8300000, guid: cebf5bf176048fd40b22f889b8bd5d4a, type: 3}
+  - {fileID: 8300000, guid: f5b479484565ce746aec1e8afd0daa9a, type: 3}
+  - {fileID: 8300000, guid: fd5cd9cc240478f48b455a4b0ffbff48, type: 3}
+  - {fileID: 8300000, guid: 45e4704f7b508324dac9a76ea4d09ad9, type: 3}
   _audioClipRun: {fileID: 0}
   _audioClipRunTooLong: {fileID: 0}
   _audioClipClimb: {fileID: 0}
@@ -411,6 +416,7 @@ GameObject:
   - component: {fileID: 726106399211285147}
   - component: {fileID: 2037606717853726951}
   - component: {fileID: 7113745659864787267}
+  - component: {fileID: 1213406187500023402}
   m_Layer: 0
   m_Name: FPS_View (Main Camera)
   m_TagString: MainCamera
@@ -677,6 +683,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1213406187500023402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213406187385127705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1503d3b426b1fa04b9c5ee02885f77cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2851746197378630181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,11 +1544,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864794008117877862, guid: b86e05906d91959479d821723154f3c9,
-        type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7864794008117877862, guid: b86e05906d91959479d821723154f3c9,
         type: 3}

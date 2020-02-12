@@ -31,6 +31,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[Header("Sounds")]
 	[SerializeField] private AudioClip[] _audioClipWalk;
 	[SerializeField] private AudioClip[] _audioClipRun;
+	[SerializeField] private AudioClip[] _audioClipCrouch;
 	[SerializeField] private AudioClip _audioClipRunTooLong;
 	[SerializeField] private AudioClip _audioClipClimb;
 	[SerializeField] private AudioClip _audioClipDying;
@@ -198,6 +199,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					_currentSpeed = _sprintSpeed;
 					ResetAllTriggerAnimation();
+					_animator.SetBool(_triggerAnimationNames[0], true);
 					_animator.SetBool(_triggerAnimationNames[1], true);
 
 					//_audioSource.clip = _audioClipRun;
@@ -228,6 +230,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 						_isCrouching = false;
 						_currentSpeed = _walkSpeed;
 						_animator.SetBool("IsCrouching", false);
+						ResetAllTriggerAnimation();
 						CrouchAndStand(_characterInitialHeight);
 					}
 				}
@@ -591,19 +594,34 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<InputManager>().OnActionInputPressed += PlayerAbilities_OnActionButtonPressed;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepWalk += PlayerAbilities_OnFootStepWalk;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepRun += PlayerAbilities_OnFootStepRun;
+		FindObjectOfType<PlayerAnimationEvents>().OnFootStepCrouch += PlayerAbilities_OnFootStepCrouch;
 	}
 
 
 	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
 	{
-		_audioSourceMovement.clip = _audioClipWalk[UnityEngine.Random.Range(0, _audioClipWalk.Length - 1)];
-		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+		if (!_isHoldingBreath)
+		{
+			_audioSourceMovement.clip = _audioClipWalk[UnityEngine.Random.Range(0, _audioClipWalk.Length - 1)];
+			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+		}
 	}
 
 	private void PlayerAbilities_OnFootStepRun(object sender, EventArgs e)
 	{
-		_audioSourceMovement.clip = _audioClipWalk[UnityEngine.Random.Range(0, _audioClipWalk.Length - 1)];
-		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+		if (!_isHoldingBreath)
+		{
+			_audioSourceMovement.clip = _audioClipRun[UnityEngine.Random.Range(0, _audioClipRun.Length - 1)];
+			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+		}
+	}
+	private void PlayerAbilities_OnFootStepCrouch(object sender, EventArgs e)
+	{
+		if (!_isHoldingBreath)
+		{
+			_audioSourceMovement.clip = _audioClipCrouch[UnityEngine.Random.Range(0, _audioClipCrouch.Length - 1)];
+			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+		}
 	}
 
 	private void OilLevelDecreasing()

@@ -388,6 +388,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5e81fec86bf39954895337153acb92bd, type: 3}
   - {fileID: 8300000, guid: 05e12be28b97ded41a704aaf73e185f4, type: 3}
   - {fileID: 8300000, guid: f61ab804ecc8c494689bb5682f15a1c3, type: 3}
+  _audioClipCrouch:
+  - {fileID: 8300000, guid: 79cecca6e391a0d4fa0244cb1e4d847d, type: 3}
+  - {fileID: 8300000, guid: 1d245394e509d6744aa623beea07d562, type: 3}
+  - {fileID: 8300000, guid: 0d77dbd7d571ad940b664b8097c3c519, type: 3}
+  - {fileID: 8300000, guid: 5e81fec86bf39954895337153acb92bd, type: 3}
+  - {fileID: 8300000, guid: 05e12be28b97ded41a704aaf73e185f4, type: 3}
+  - {fileID: 8300000, guid: f61ab804ecc8c494689bb5682f15a1c3, type: 3}
   _audioClipRunTooLong: {fileID: 0}
   _audioClipClimb: {fileID: 0}
   _audioClipDying: {fileID: 0}

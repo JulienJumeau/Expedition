@@ -18,7 +18,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] Transform[] _patrolPoints = null;
 	[SerializeField] private bool _isNextDestinationRandom = false, _isPenguinAggro = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
-	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsInAlertBeforeAggro = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, timeToRecoverLife = 0;
+	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsInAlertBeforeAggro = 0, _secondsInAlertAfterHiding = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, timeToRecoverLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
 
@@ -38,7 +38,7 @@ public sealed class Penguin : MonoBehaviour
 	private Animator _animator;
 	private AudioSource _audioSource;
 	private int _nextDestinationIndex;
-	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed, _secondsWhileAlert;
+	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed, _secondsWhileAlert, _secondsWhileAlertHiding;
 	private bool _isAttacking;
 	private string[] _triggerAnimationNames;
 
@@ -57,6 +57,7 @@ public sealed class Penguin : MonoBehaviour
 		_distancePlayerFoe = 0;
 		_currentDetectionRadius = _detectionRadius;
 		_secondsWhileAlert = 0;
+		_secondsWhileAlertHiding = 0;
 		_secondsWhileWounded = 0;
 		_triggerAnimationNames = new string[4] { "P_IsWalking", "P_IsRunning", "P_IsLookingFor", "P_IsBiting2" };
 		_currentChaseSpeed = _foeChaseSpeed;
@@ -70,12 +71,8 @@ public sealed class Penguin : MonoBehaviour
 
 	private void Update()
 	{
-		////Dans quel state est-on?
-		if (_foeState == FoeState.idle)
-		{
-			Debug.Log("Idle");
-		}
-		else if (_foeState == FoeState.Attack)
+		//Dans quel state est-on?
+		if (_foeState == FoeState.Attack)
 		{
 			Debug.Log("Attack");
 		}
@@ -142,8 +139,8 @@ public sealed class Penguin : MonoBehaviour
 	#endregion
 
 	private void FoePattern() // /!\ A CORRIGER: Quand les pingu reviennent à leur next point de patrouille après avoir chase le player, ils ne reviennent pas exactement à ce point de patrouille mais le dépassent et se retrouvent plus loin que le point (à cause de la vitesse de cours élevée) 
-	{
-		_distancePlayerFoe = Vector3.Distance(_targetPlayer.position, this.transform.position);
+	{							//Probleme avec les transitions d'anim Alert to Chase
+		_distancePlayerFoe = Vector3.Distance(_targetPlayer.position, transform.position);
 
 		// STATE = PATROL
 		if (_foeState == FoeState.Patrol && !_agent.pathPending && _agent.remainingDistance < 0.5f)
@@ -155,12 +152,6 @@ public sealed class Penguin : MonoBehaviour
 		if (_distancePlayerFoe <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
 		{
 			// PENGUIN ALERT
-			_foeState = FoeState.Alert;
-			_secondsWhileAlert += Time.deltaTime;
-			Debug.Log("SA: " + _secondsWhileAlert + " s");
-			SetFoeAgentProperties(transform.position, 0, 0, false);
-			//FaceTarget();
-
 			if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)
 			{
 				if (_distancePlayerFoe <= _currentDetectionRadius && _player._isHiding == false && !_isAttacking && _isPenguinAggro)
@@ -181,7 +172,18 @@ public sealed class Penguin : MonoBehaviour
 						_foeState = FoeState.Attack;
 					}
 				}
-
+			}
+			else if (_foeState == FoeState.Alert)
+			{
+				_secondsWhileAlert += Time.deltaTime;
+				Debug.Log("SA: " + _secondsWhileAlert + " s");
+				SetFoeAgentProperties(transform.position, 0, 0, false);
+			}
+			else if (_foeState != FoeState.Alert)
+			{
+				_foeState = FoeState.Alert;
+				SetFoeAgentProperties(transform.position, 0, 0, false);
+				//FaceTarget();
 			}
 		}
 		// STOP AGGRO PLAYER
@@ -200,18 +202,18 @@ public sealed class Penguin : MonoBehaviour
 			{
 				_foeState = FoeState.Patrol;
 				_secondsWhileAlert = 0;
+				_secondsWhileAlertHiding = 0;
 			}
 		}
 		else if (_foeState == FoeState.Alert)
 		{
-			_secondsWhileAlert += Time.deltaTime;
 			Debug.Log("SA: " + _secondsWhileAlert + " s");
 			if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)
 			{
 				PlayerAbilities._isDetected = false;
 				_currentDetectionRadius = _detectionRadius;
-				//_animator.SetBool(_triggerAnimationNames[2], false);
-				//_animator.SetBool(_triggerAnimationNames[0], true);
+				ResetAllTriggerAnimation();
+				_animator.SetBool(_triggerAnimationNames[0], true);
 				SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
 
 				//Stop Sound Alert
@@ -220,8 +222,10 @@ public sealed class Penguin : MonoBehaviour
 				{
 					_foeState = FoeState.Patrol;
 					_secondsWhileAlert = 0;
+					_secondsWhileAlertHiding = 0;
 				}
 			}
+			else _secondsWhileAlert += Time.deltaTime;
 		}
 
 		// STATE = ATTACK
@@ -240,6 +244,41 @@ public sealed class Penguin : MonoBehaviour
 			{
 				_foeState = FoeState.Chase;
 				_isAttacking = false;
+			}
+		}
+
+		// WHEN HIDING
+		if (_player._isHiding == true && _distancePlayerFoe <= _currentDetectionRadius && _isPenguinAggro && _foeState != FoeState.Patrol)
+		{
+			_secondsWhileAlertHiding += Time.deltaTime;
+			Debug.Log("SAH: " + _secondsWhileAlertHiding + " s");
+			_secondsWhileAlert = 0;
+
+			if (_secondsWhileAlertHiding >= _secondsInAlertAfterHiding)
+			{
+				_currentDetectionRadius = _detectionRadius;
+				ResetAllTriggerAnimation();
+				_animator.SetBool(_triggerAnimationNames[0], true);
+				SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
+
+				//Stop Sound Alert
+
+				if (_agent.remainingDistance < 0.5f)
+				{
+					_foeState = FoeState.Patrol;
+					_secondsWhileAlert = 0;
+					_secondsWhileAlertHiding = 0;
+				}
+			}
+			else if (_foeState == FoeState.Alert)
+			{
+				SetFoeAgentProperties(transform.position, 0, 0, false);
+			}
+			else if (_foeState != FoeState.Alert)// && _foeState != FoeState.Patrol)
+			{
+				_foeState = FoeState.Alert;
+				SetFoeAgentProperties(transform.position, 0, 0, false);
+				//FaceTarget();
 			}
 		}
 
@@ -306,7 +345,6 @@ public sealed class Penguin : MonoBehaviour
 
 		//_audioSource.clip = _audioClipPenguinAttack;
 		//_audioSource.Play();
-		// Play Anim attack penguin here
 
 		if (PostProcessManager._isPostProssessOn)
 		{

@@ -54,6 +54,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
 	private bool _isCrouching, _isLanternOnScreen, _isLanternOnScreenBeforeHiding, _isPulling;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
+	private bool _isRunning;
 	private string[] _triggerAnimationNames;
 	public static float _oilLevel;
 	public static bool _isLanternInInventory;
@@ -182,6 +183,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					if (!_isCrouching)
 					{
 						_currentSpeed = _walkSpeed;
+						_isRunning = false;
 						ResetAllTriggerAnimation();
 					}
 
@@ -201,7 +203,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					ResetAllTriggerAnimation();
 					_animator.SetBool(_triggerAnimationNames[0], true);
 					_animator.SetBool(_triggerAnimationNames[1], true);
-
+					_isRunning = true;
 					//_audioSource.clip = _audioClipRun;
 					//_audioSource.Play();
 				}
@@ -209,6 +211,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				else
 				{
 					_animator.SetBool(_triggerAnimationNames[1], false);
+					_isRunning = false;
 				}
 
 				break;
@@ -361,51 +364,49 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.HoldBreath:
 
-				if (!_isDetected)
+				if (!_isRunning)
 				{
-					if (_holdingBreathSeconds < _holdingBreathSecondsAllowed && !_isHoldingBreathOnCooldown)
+					if (!_isDetected)
 					{
-						if (!_isHoldingBreath)
+						if (_holdingBreathSeconds < _holdingBreathSecondsAllowed && !_isHoldingBreathOnCooldown)
 						{
-							_audioSourcePlayerSounds.PlayOneShot(_audioClipHoldBreath);
+							if (!_isHoldingBreath)
+							{
+								_audioSourcePlayerSounds.PlayOneShot(_audioClipHoldBreath);
+							}
+
+							_isHoldingBreath = true;
+							PostProcessManager._isPostProssessHoldBreath = true;
+
+							_holdingBreathSeconds += Time.deltaTime;
 						}
 
-						_isHoldingBreath = true;
-						PostProcessManager._isPostProssessHoldBreath = true;
-
-						_holdingBreathSeconds += Time.deltaTime;
-					}
-
-					else
-					{
-						if (!_isHoldingBreathOnCooldown)
+						else if(!_isHoldingBreathOnCooldown)
 						{
-							StartCoroutine(HoldingBreathCooldown(_HoldingBreathHardCooldown));
+								StartCoroutine(HoldingBreathCooldown(_HoldingBreathHardCooldown));
 						}
 					}
+				}
+
+				else if (_isHoldingBreath)
+				{
+					StartCoroutine(HoldingBreathCooldown(_HoldingBreathSoftCooldown));
 				}
 
 				break;
 
 			case InputAction.StopHoldingBreath:
 
-				if (!_isDetected)
+				if (!_isRunning && !_isDetected && !_isHoldingBreathOnCooldown)
 				{
-					if (!_isHoldingBreathOnCooldown)
-					{
-						StartCoroutine(HoldingBreathCooldown(_HoldingBreathSoftCooldown));
-					}
+					StartCoroutine(HoldingBreathCooldown(_HoldingBreathSoftCooldown));
 				}
 
 				break;
 
 			default:
 				ResetAllTriggerAnimation();
-
-				//if (_audioSource.clip == _audioClipMoveBox || _audioSource.clip == _audioClipRun || _audioSource.clip == _audioClipWalk)
-				//{
-				//	_audioSource.Stop();
-				//}
+				_isRunning = false;
 				_isPulling = false;
 
 				break;
@@ -603,7 +604,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepCrouch += PlayerAbilities_OnFootStepCrouch;
 	}
 
-
 	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
 	{
 		if (!_isHoldingBreath)
@@ -621,6 +621,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
 		}
 	}
+
 	private void PlayerAbilities_OnFootStepCrouch(object sender, EventArgs e)
 	{
 		if (!_isHoldingBreath)

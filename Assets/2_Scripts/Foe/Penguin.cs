@@ -402,10 +402,10 @@ public sealed class Penguin : MonoBehaviour
 
 	private void EventSubcription()
 	{
-		FindObjectOfType<HudManager>().OnPause += Penguin_OnPause;
+		FindObjectOfType<InputManager>().OnPause += Penguin_OnPause;
 	}
 
-	private void Penguin_OnPause(object sender, HudManager.PauseEventArgs e)
+	private void Penguin_OnPause(object sender, InputManager.PauseEventArgs e)
 	{
 		if (e.isPaused)
 		{

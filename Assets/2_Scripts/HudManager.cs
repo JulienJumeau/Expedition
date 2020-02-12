@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
-using System;
 
 public class HudManager : MonoBehaviour
 {
@@ -111,7 +110,6 @@ public class HudManager : MonoBehaviour
 		_menuChapterGO.SetActive(false);
 		_hudCrosshairGO.SetActive(!e.isPaused);
 		_menuPauseGO.SetActive(e.isPaused);
-		Pause(new PauseEventArgs { isPaused = e.isPaused });
 
 		//_audioSource.clip = _audioClipPause;
 		//_audioSource.Play();
@@ -157,7 +155,7 @@ public class HudManager : MonoBehaviour
 		{
 			case "Resume":
 				InputManager._isPaused = false;
-				Pause(new PauseEventArgs { isPaused = false });
+
 				if (!PlayerAbilities._isReading)
 				{
 					PlayerAbilities._isActionPlaying = false;
@@ -248,17 +246,4 @@ public class HudManager : MonoBehaviour
 
 		return text;
 	}
-
-	#region Events
-
-	public class PauseEventArgs : EventArgs
-	{
-		public bool isPaused;
-	}
-
-	public event EventHandler<PauseEventArgs> OnPause;
-
-	private void Pause(PauseEventArgs e) => OnPause?.Invoke(this, e);
-
-	#endregion
 }

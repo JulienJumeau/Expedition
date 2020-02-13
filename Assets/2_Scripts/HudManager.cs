@@ -251,7 +251,7 @@ public class HudManager : MonoBehaviour
 				text = "Hold Left Click : Pull/Push \n Space : Climb";
 				break;
 			case 21:
-				text = "E: Readable";
+				text = "E: Read";
 				break;
 
 			default:

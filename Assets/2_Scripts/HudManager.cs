@@ -169,6 +169,7 @@ public class HudManager : MonoBehaviour
 		{
 			case "Resume":
 				InputManager._isPaused = false;
+				Cursor.visible = false;
 				Pause(new PauseEventArgs { isPaused = false });
 
 				if (!PlayerAbilities._isReading)

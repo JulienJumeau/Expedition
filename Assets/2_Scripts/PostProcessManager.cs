@@ -12,7 +12,7 @@ public sealed class PostProcessManager : MonoBehaviour
 	private float _durationHoldBreath = 0, _durationGetdBreath = 0;
 
 	[SerializeField] private float _vignetteIntensityMin, _vignetteIntensityMax;
-	public static bool _isPostProssessOn, _isPostProssessHoldBreath;
+	public static bool _isPostProssessOn, _isPostProssessHoldBreath, _isRedPostProssessOn;
 	private bool _isAttacking, _isBreathing;
 
 	private void Awake()
@@ -38,7 +38,6 @@ public sealed class PostProcessManager : MonoBehaviour
 			_isAttacking = true;
 			PostProcessAttack();
 		}
-
 		else if (!_isPostProssessOn && _isAttacking)
 		{
 			_isAttacking = false;
@@ -50,7 +49,6 @@ public sealed class PostProcessManager : MonoBehaviour
 			_isBreathing = true;
 			PostProcessHoldBreath(true);
 		}
-
 		else if (!_isPostProssessHoldBreath && !_isAttacking)
 		{
 			PostProcessHoldBreath();
@@ -60,6 +58,15 @@ public sealed class PostProcessManager : MonoBehaviour
 		{
 			_colorGrading.gamma.overrideState = true;
 			_colorGrading.gamma.value.w = HudManager._gameGamma;
+		}
+
+		if (_isRedPostProssessOn)
+		{
+			PostProcessAttack();
+		}
+		else if (!_isRedPostProssessOn)
+		{
+			PostProcessOff();
 		}
 
 	}

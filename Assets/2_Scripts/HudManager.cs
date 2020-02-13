@@ -11,6 +11,7 @@ public class HudManager : MonoBehaviour
 	[Header("Game Objects")]
 	[SerializeField] private GameObject _hudFadeOutGO;
 	[SerializeField] private GameObject _hudVictoryGO;
+	[SerializeField] private GameObject _hudCreditGO;
 	[SerializeField] private GameObject _hudInputGO;
 	[SerializeField] private GameObject _hudSheetGO;
 	[SerializeField] private GameObject _hudCrosshairGO;
@@ -31,7 +32,9 @@ public class HudManager : MonoBehaviour
 	public static bool _isTheEnd;
 	public static float _gameVolume = 0.5f;
 	public static float _gameGamma = 0;
+	public static bool _isGameOver;
 	private TextMeshProUGUI _textComponent;
+	private TextMeshProUGUI _textComponentEnd;
 	private TextMeshProUGUI _textSheetComponent;
 	private RawImage _sheetToRender;
 	private AudioSource _audioSource;
@@ -45,9 +48,11 @@ public class HudManager : MonoBehaviour
 	private void Awake()
 	{
 		_isTheEnd = false;
+		_isGameOver = false;
 		_isFading = false;
 		_isTriggerHuInputdActive = false;
 		_textComponent = _hudInputGO.GetComponent<TextMeshProUGUI>();
+		_textComponentEnd = _hudVictoryGO.GetComponentInChildren<TextMeshProUGUI>();
 		_textSheetComponent = _hudSheetGO.GetComponentInChildren<TextMeshProUGUI>();
 		_sheetToRender = _hudSheetGO.GetComponentInChildren<RawImage>();
 		_audioSource = GetComponent<AudioSource>();
@@ -67,6 +72,13 @@ public class HudManager : MonoBehaviour
 		{
 			_isTheEnd = true;
 			StartCoroutine(Fade(_hudFadeOutGO, false, 0.1f, 5f));
+			StartCoroutine(EndingHud(25f));
+		}
+
+		if (_isGameOver && !_isTheEnd)
+		{
+			_isTheEnd = true;
+			_textComponentEnd.text = "YOU DIED";
 			StartCoroutine(EndingHud());
 		}
 
@@ -142,12 +154,13 @@ public class HudManager : MonoBehaviour
 		_isFading = false;
 	}
 
-	private IEnumerator EndingHud()
+	private IEnumerator EndingHud(float delay = 0)
 	{
-		yield return new WaitForSeconds(25f);
+		yield return new WaitForSeconds(delay);
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.Confined;
 		_hudVictoryGO.SetActive(true);
+		_hudCreditGO.SetActive(false);
 	}
 
 	public void OnClickButton(string buttonName)

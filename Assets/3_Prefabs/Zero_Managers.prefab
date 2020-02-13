@@ -74,6 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hudFadeOutGO: {fileID: 0}
   _hudVictoryGO: {fileID: 0}
+  _hudCreditGO: {fileID: 0}
   _hudInputGO: {fileID: 0}
   _hudSheetGO: {fileID: 0}
   _hudCrosshairGO: {fileID: 0}

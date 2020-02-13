@@ -412,6 +412,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1163041415}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1696715927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5079336173390450537, guid: 90c0c261426dba4439c30772b7c375c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1163041415}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1835099670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -431,6 +437,10 @@ PrefabInstance:
       propertyPath: _hudVictoryGO
       value: 
       objectReference: {fileID: 373013091}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _hudCreditGO
+      value: 
+      objectReference: {fileID: 1696715927}
     - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
       propertyPath: _hudInputGO
       value: 

@@ -129,19 +129,19 @@ public sealed class PlayerAbilities : MonoBehaviour
 				HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
 			}
 
-			if (_isDetected && !_isDetectedMusicMustBePlayed)
-			{
-				_isDetectedMusicMustBePlayed = true;
-				_audioSourceMusicDetected.clip = _audioClipDetected;
-				StartCoroutine(DetectedMusicSmooth(2, _isDetectedMusicMustBePlayed));
-				_audioSourceMusicDetected.Play();
-			}
+			//if (_isDetected && !_isDetectedMusicMustBePlayed)
+			//{
+			//	_isDetectedMusicMustBePlayed = true;
+			//	_audioSourceMusicDetected.clip = _audioClipDetected;
+			//	StartCoroutine(DetectedMusicSmooth(2, _isDetectedMusicMustBePlayed));
+			//	_audioSourceMusicDetected.Play();
+			//}
 
-			else if (!_isDetected && _isDetectedMusicMustBePlayed)
-			{
-				_isDetectedMusicMustBePlayed = false;
-				StartCoroutine(DetectedMusicSmooth(2, _isDetectedMusicMustBePlayed));
-			}
+			//else if (!_isDetected && _isDetectedMusicMustBePlayed)
+			//{
+			//	_isDetectedMusicMustBePlayed = false;
+			//	StartCoroutine(DetectedMusicSmooth(2, _isDetectedMusicMustBePlayed));
+			//}
 
 			OilLevelDecreasing();
 		}
@@ -695,7 +695,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			yield return null;
 		}
 
-		if (!detected)
+		if (!_isDetected)
 		{
 			_audioSourceMusicDetected.Stop();
 		}

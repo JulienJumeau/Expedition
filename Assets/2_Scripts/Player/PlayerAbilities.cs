@@ -65,7 +65,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private float _characterInitialHeight, _currentSpeed;
 	private Light _lanternLight;
 	private Material _lanternMaterial;
-	private bool _isDectetedMusicMustBePlayed;
+	private bool _isDetectedMusicMustBePlayed;
 	private int _currentReadingSheetIndex;
 
 	[HideInInspector] public float _holdingBreathSeconds;
@@ -92,7 +92,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lanternLight.intensity = 0;
 		_currentReadingSheetIndex = 0;
 		_isEndGame = false;
-		_isDectetedMusicMustBePlayed = false;
+		_isDetectedMusicMustBePlayed = false;
 		_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.4f, _fxFireLantern.transform.localPosition.z);
 	}
 
@@ -129,16 +129,18 @@ public sealed class PlayerAbilities : MonoBehaviour
 				HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
 			}
 
-			if (_isDetected && !_isDectetedMusicMustBePlayed)
+			if (_isDetected && !_isDetectedMusicMustBePlayed)
 			{
-				//_isDectetedMusicMustBePlayed = true;
-				//_audioClipDetected
-				//_audioSourcePlayerSounds.Play(_audioClipDetected);
+				_isDetectedMusicMustBePlayed = true;
+				_audioSourceMusicDetected.clip = _audioClipDetected;
+				StartCoroutine(DetectedMusicSmooth(2, _isDetectedMusicMustBePlayed));
+				_audioSourceMusicDetected.Play();
 			}
 
-			else
+			else if (!_isDetected && _isDetectedMusicMustBePlayed)
 			{
-				_isDectetedMusicMustBePlayed = false;
+				_isDetectedMusicMustBePlayed = false;
+				StartCoroutine(DetectedMusicSmooth(2, _isDetectedMusicMustBePlayed));
 			}
 
 			OilLevelDecreasing();
@@ -396,9 +398,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 							_holdingBreathSeconds += Time.deltaTime;
 						}
 
-						else if(!_isHoldingBreathOnCooldown)
+						else if (!_isHoldingBreathOnCooldown)
 						{
-								StartCoroutine(HoldingBreathCooldown(_HoldingBreathHardCooldown));
+							StartCoroutine(HoldingBreathCooldown(_HoldingBreathHardCooldown));
 						}
 					}
 				}
@@ -677,6 +679,26 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void PlayerAbilities_OnPause(object sender, HudManager.PauseEventArgs e)
 	{
 		_animator.speed = e.isPaused ? 0 : 1;
+	}
+
+	private IEnumerator DetectedMusicSmooth(float duration, bool detected)
+	{
+		float elapsedTime = 0;
+		float musicVolume;
+		Debug.Log(detected + " test");
+
+		while (elapsedTime <= duration)
+		{
+			elapsedTime += Time.deltaTime;
+			musicVolume = detected ? Mathf.Lerp(0, 1, elapsedTime / duration) : Mathf.Lerp(1, 0, elapsedTime / duration);
+			_audioSourceMusicDetected.volume = musicVolume;
+			yield return null;
+		}
+
+		if (!detected)
+		{
+			_audioSourceMusicDetected.Stop();
+		}
 	}
 
 	#endregion

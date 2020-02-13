@@ -20935,6 +20935,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicTriggerArea
       objectReference: {fileID: 0}
+    - target: {fileID: 7814920318392738061, guid: 3cf80fd977e04854eb164d19ff510e39,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7814920318392738098, guid: 3cf80fd977e04854eb164d19ff510e39,
         type: 3}
       propertyPath: m_LocalPosition.x

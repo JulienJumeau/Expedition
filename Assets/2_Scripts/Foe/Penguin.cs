@@ -111,19 +111,6 @@ public sealed class Penguin : MonoBehaviour
 				}
 			}
 
-			if (Input.GetButtonDown("JumpClimb"))
-			{
-				if (_animator.speed != 0)
-				{
-					_animator.speed = 0;
-				}
-
-				else
-				{
-					_animator.speed = 1;
-				}
-			}
-
 			TriggerAnimation();
 		}
 	}

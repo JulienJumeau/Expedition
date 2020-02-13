@@ -121,7 +121,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask) && !_isActionPlaying && !_isPulling)
 			{
-				HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = false });
+				HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = false, isHiding = _isHiding });
 			}
 
 			else
@@ -713,6 +713,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		public bool isSheet;
 		public int layerDetected;
 		public int sheetID;
+		public bool isHiding;
 	}
 
 	public event EventHandler<HUDDisplayEventArgs> OnHUDDisplay;

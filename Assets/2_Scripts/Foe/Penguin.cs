@@ -257,9 +257,20 @@ public sealed class Penguin : MonoBehaviour
 			if (_secondsWhileAlertHiding >= _secondsInAlertAfterHiding)
 			{
 				_currentDetectionRadius = _detectionRadius;
-				ResetAllTriggerAnimation();
-				_animator.SetBool(_triggerAnimationNames[0], true);
-				SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
+
+				if (_secondsInAlertAfterHiding > 0)
+				{
+					ResetAllTriggerAnimation();
+					_animator.SetBool(_triggerAnimationNames[0], true);
+					SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
+				}
+				else
+				{
+					ResetAllTriggerAnimation();
+					_animator.SetBool(_triggerAnimationNames[1], true);
+					SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
+				}
+				
 
 				//Stop Sound Alert
 

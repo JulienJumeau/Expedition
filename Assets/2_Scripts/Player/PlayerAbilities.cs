@@ -27,11 +27,13 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AudioSource _audioSourceMovement = null;
 	[SerializeField] private AudioSource _audioSourcePlayerSounds = null;
 	[SerializeField] private AudioSource _audioSourceLoots = null;
+	[SerializeField] private AudioSource _audioSourceMusicDetected = null;
 
 	[Header("Sounds")]
 	[SerializeField] private AudioClip[] _audioClipWalk;
 	[SerializeField] private AudioClip[] _audioClipRun;
 	[SerializeField] private AudioClip[] _audioClipCrouch;
+	[SerializeField] private AudioClip _audioClipDetected;
 	[SerializeField] private AudioClip _audioClipRunTooLong;
 	[SerializeField] private AudioClip _audioClipClimb;
 	[SerializeField] private AudioClip _audioClipDying;
@@ -63,7 +65,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private float _characterInitialHeight, _currentSpeed;
 	private Light _lanternLight;
 	private Material _lanternMaterial;
-
+	private bool _isDectetedMusicMustBePlayed;
 	private int _currentReadingSheetIndex;
 
 	[HideInInspector] public float _holdingBreathSeconds;
@@ -90,6 +92,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lanternLight.intensity = 0;
 		_currentReadingSheetIndex = 0;
 		_isEndGame = false;
+		_isDectetedMusicMustBePlayed = false;
 		_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.4f, _fxFireLantern.transform.localPosition.z);
 	}
 
@@ -124,6 +127,18 @@ public sealed class PlayerAbilities : MonoBehaviour
 			else
 			{
 				HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
+			}
+
+			if (_isDetected && !_isDectetedMusicMustBePlayed)
+			{
+				//_isDectetedMusicMustBePlayed = true;
+				//_audioClipDetected
+				//_audioSourcePlayerSounds.Play(_audioClipDetected);
+			}
+
+			else
+			{
+				_isDectetedMusicMustBePlayed = false;
 			}
 
 			OilLevelDecreasing();
@@ -605,7 +620,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<HudManager>().OnPause += PlayerAbilities_OnPause;
 	}
 
-
 	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
 	{
 		if (!_isHoldingBreath)
@@ -659,6 +673,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isActionPlaying = true;
 		_audioSourcePlayerSounds.PlayOneShot(_audioClipMonster);
 	}
+
 	private void PlayerAbilities_OnPause(object sender, HudManager.PauseEventArgs e)
 	{
 		_animator.speed = e.isPaused ? 0 : 1;

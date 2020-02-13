@@ -216,7 +216,7 @@ public class HudManager : MonoBehaviour
 		if (!_isTheEnd && !_isTriggerHuInputdActive)
 		{
 			_textComponent.enabled = e.isActive;
-			_textComponent.text = e.isActive ? ConvertLayerIndexToInputName(e.layerDetected) : "";
+			_textComponent.text = e.isActive ? ConvertLayerIndexToInputName(e.layerDetected, e.isHiding) : "";
 
 			if (e.isSheet)
 			{
@@ -227,7 +227,7 @@ public class HudManager : MonoBehaviour
 		}
 	}
 
-	private string ConvertLayerIndexToInputName(int layerIndex)
+	private string ConvertLayerIndexToInputName(int layerIndex, bool isHiding)
 	{
 		string text;
 
@@ -246,7 +246,7 @@ public class HudManager : MonoBehaviour
 				text = "Space : Jump";
 				break;
 			case 16:
-				text = "E : Hide";
+				text = isHiding ? "E : Exit" : "E : Hide";
 				break;
 			case 17:
 				text = "Hold Left Click : Pull/Push \n Space : Climb";

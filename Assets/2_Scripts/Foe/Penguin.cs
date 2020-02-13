@@ -23,11 +23,11 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private float _stoppingDistanceAttack = 4;
 
 	[Header("Sounds")]
+	[SerializeField] public AudioClip[] _audioClipPenguinFootstepsRunnning;
 	[SerializeField] private AudioClip _audioClipDying;
 	[SerializeField] private AudioClip _audioClipTakingDamage;
 	[SerializeField] private AudioClip _audioClipPenguinAlert;
 	[SerializeField] private AudioClip _audioClipPenguinAggro;
-	[SerializeField] private AudioClip _audioClipPenguinFootstepsRunnning;
 	[SerializeField] private AudioClip _audioClipPenguinFootstepsWalking;
 	[SerializeField] private AudioClip _audioClipPenguinAttack;
 
@@ -36,7 +36,7 @@ public sealed class Penguin : MonoBehaviour
 	private PlayerAbilities _player;
 	private Transform _targetPlayer;
 	private Animator _animator;
-	private AudioSource _audioSource;
+	public AudioSource _audioSource;
 	private int _nextDestinationIndex;
 	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed, _secondsWhileAlert, _secondsWhileAlertHiding;
 	private bool _isAttacking;

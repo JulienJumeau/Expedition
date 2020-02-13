@@ -349,15 +349,24 @@ MonoBehaviour:
   _allowAttacks: 1
   _allowChasingAudiosource: 0
   _stoppingDistanceAttack: 1.5
+  _audioClipPenguinFootstepsRunnning:
+  - {fileID: 8300000, guid: ca2343ff856571d45a8726f85009d4bb, type: 3}
+  - {fileID: 8300000, guid: 0dc2690210e03e640b6cf4c2089335ea, type: 3}
+  - {fileID: 8300000, guid: 62b6be94cefd596438a49c0a23813925, type: 3}
+  - {fileID: 8300000, guid: 21d61fb55d21ec742b3f1612d0aeccb6, type: 3}
+  - {fileID: 8300000, guid: 74f52a42cffef6240b7052d29d5989e5, type: 3}
+  - {fileID: 8300000, guid: 7c51c9b39aa514e438a5e7e276ab3df6, type: 3}
+  - {fileID: 8300000, guid: a2137c66808bd714882b4647ba108356, type: 3}
+  - {fileID: 8300000, guid: 1260f07f97816d847ac3b6ab89cf18a6, type: 3}
   _audioClipDying: {fileID: 0}
   _audioClipTakingDamage: {fileID: 8300000, guid: 775f4092a5519f74da314c524c94f51d,
     type: 3}
   _audioClipPenguinAlert: {fileID: 0}
   _audioClipPenguinAggro: {fileID: 0}
-  _audioClipPenguinFootstepsRunnning: {fileID: 0}
   _audioClipPenguinFootstepsWalking: {fileID: 0}
   _audioClipPenguinAttack: {fileID: 0}
   _foeState: 0
+  _audioSource: {fileID: 0}
 --- !u!82 &3764835297144611460
 AudioSource:
   m_ObjectHideFlags: 0
@@ -369,7 +378,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -484,6 +493,19 @@ Transform:
   m_Father: {fileID: 3764835296626126852}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5094733247512602696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6981366557845913887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b299b876aec9da2429afd9352265af2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _penguin: {fileID: 3764835297144611461}
 --- !u!1001 &1424024733661124630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -563,6 +585,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: fcfddb692e2b9114d921fc3625257aeb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da21d40ccfea88b429927548f841cc43, type: 3}
+--- !u!1 &6981366557845913887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: da21d40ccfea88b429927548f841cc43,
+    type: 3}
+  m_PrefabInstance: {fileID: 1424024733661124630}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6249186752144372492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: da21d40ccfea88b429927548f841cc43,

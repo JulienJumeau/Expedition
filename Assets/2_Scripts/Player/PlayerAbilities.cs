@@ -308,6 +308,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 					{
 						_isActionPlaying = !_isActionPlaying;
 						_isReading = !_isReading;
+						_animator.speed = 0;
 						Sheet sheet = _hitForward.transform.parent.GetComponentInChildren<Sheet>();
 						_currentReadingSheetIndex = sheet.sheetID;
 						HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = true, sheetID = sheet.sheetID });
@@ -320,6 +321,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					_isActionPlaying = !_isActionPlaying;
 					_isReading = !_isReading;
+					_animator.speed = 1;
 					HUDDisplay(new HUDDisplayEventArgs { isActive = false, isSheet = true });
 
 					if (_currentReadingSheetIndex == 3)
@@ -665,7 +667,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private IEnumerator WaitBeforeBeginMoves()
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(3f);
 		_isActionPlaying = false;
 	}
 

@@ -602,7 +602,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepWalk += PlayerAbilities_OnFootStepWalk;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepRun += PlayerAbilities_OnFootStepRun;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepCrouch += PlayerAbilities_OnFootStepCrouch;
+		FindObjectOfType<HudManager>().OnPause += PlayerAbilities_OnPause;
 	}
+
 
 	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
 	{
@@ -656,6 +658,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isEndGame = true;
 		_isActionPlaying = true;
 		_audioSourcePlayerSounds.PlayOneShot(_audioClipMonster);
+	}
+	private void PlayerAbilities_OnPause(object sender, HudManager.PauseEventArgs e)
+	{
+		_animator.speed = e.isPaused ? 0 : 1;
 	}
 
 	#endregion

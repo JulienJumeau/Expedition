@@ -119,9 +119,17 @@ public sealed class PlayerAbilities : MonoBehaviour
 				Movement();
 			}
 
-			if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 3f, _layerMask) && !_isActionPlaying && !_isPulling)
+			if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out _hitForward, 2f, _layerMask) && !_isActionPlaying && !_isPulling)
 			{
-				HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = false, isHiding = _isHiding });
+				if ((_hitForward.transform.gameObject.layer == 12 || _hitForward.transform.gameObject.layer == 17) && _hitForward.distance < 1.1f || (_hitForward.transform.gameObject.layer != 12 && _hitForward.transform.gameObject.layer != 17))
+				{
+					HUDDisplay(new HUDDisplayEventArgs { isActive = true, layerDetected = _hitForward.transform.gameObject.layer, isSheet = false, isHiding = _isHiding });
+				}
+
+				else
+				{
+					HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
+				}
 			}
 
 			else
@@ -365,7 +373,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				if (!_isHiding)
 				{
-					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 2.7f)
+					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 1.7f)
 					{
 						_currentSpeed = _pullObjectSpeed;
 						_isPulling = true;

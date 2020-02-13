@@ -103,8 +103,6 @@ public class HudManager : MonoBehaviour
 
 	private void HudManager_OnHUDDisplay1(object sender, DisplayInputTrigger.HUDDisplayInputEventArgs e)
 	{
-		Debug.Log(_textComponent.enabled);
-
 		_isTriggerHuInputdActive = e.isActive;
 		_textComponent.enabled = e.isActive;
 		_textComponent.text = e.textInputToDisplay;

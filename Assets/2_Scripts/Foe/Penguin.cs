@@ -21,8 +21,10 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsInAlertBeforeAggro = 0, _secondsInAlertAfterHiding = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, timeToRecoverLife = 0;
 	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
+	[SerializeField] private float _minTimeRandomNoisePatrol = 0, _maxTimeRandomNoisePatrol = 0;
 
 	[Header("Sounds")]
+	[SerializeField] public AudioClip[] _audioClipPenguinPatrol;
 	[SerializeField] public AudioClip[] _audioClipPenguinFootstepsRunnning;
 	[SerializeField] private AudioClip _audioClipDying;
 	[SerializeField] private AudioClip _audioClipTakingDamage;
@@ -39,7 +41,7 @@ public sealed class Penguin : MonoBehaviour
 	public AudioSource _audioSource;
 	private int _nextDestinationIndex;
 	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed, _secondsWhileAlert, _secondsWhileAlertHiding;
-	private bool _isAttacking, _isAggroSoundPlayed;
+	private bool _isAttacking, _isAggroSoundPlayed, _isPatrolSoundPlaying;
 	private string[] _triggerAnimationNames;
 
 	#endregion
@@ -93,25 +95,16 @@ public sealed class Penguin : MonoBehaviour
 		{
 			FoePattern();
 			RegenLife(timeToRecoverLife);
-
-			//Sound for chasing (provisoire car à incorporer à SoundManager)
-			if (PlayerAbilities._isDetected)
-			{
-				if (_allowChasingAudiosource)
-				{
-					GetComponent<AudioSource>().enabled = true;
-				}
-			}
-
-			else
-			{
-				if (_allowChasingAudiosource)
-				{
-					GetComponent<AudioSource>().enabled = false;
-				}
-			}
-
 			TriggerAnimation();
+		}
+
+		if (_foeState == FoeState.Patrol)
+		{
+			if (!_isPatrolSoundPlaying)
+			{
+				_isPatrolSoundPlaying = true;
+				StartCoroutine(PatrolRandomSound());
+			}
 		}
 	}
 
@@ -183,11 +176,6 @@ public sealed class Penguin : MonoBehaviour
 			_isAggroSoundPlayed = false;
 			_currentDetectionRadius = _detectionRadius;
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
-
-			//if (_audioSource.clip == _audioClipPenguinAggro)
-			//{
-			//	_audioSource.Stop();
-			//}
 
 			if (_agent.remainingDistance < 0.5f)
 			{
@@ -458,5 +446,12 @@ public sealed class Penguin : MonoBehaviour
 			_animator.speed = 1;
 			_agent.enabled = !e.isPaused;
 		}
+	}
+
+	private IEnumerator PatrolRandomSound()
+	{
+		yield return new WaitForSeconds(Random.Range(_minTimeRandomNoisePatrol, _maxTimeRandomNoisePatrol));
+		_audioSource.PlayOneShot(_audioClipPenguinPatrol[Random.Range(0, _audioClipPenguinPatrol.Length)]);
+		_isPatrolSoundPlaying = false;
 	}
 }

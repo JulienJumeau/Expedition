@@ -66,7 +66,7 @@ public class HudManager : MonoBehaviour
 
 		if (PlayerAbilities._isTheBeginning)
 		{
-			StartCoroutine(Fade(_hudFadeOutGO, true, 3f, 7f));
+			StartCoroutine(Fade(_hudFadeOutGO, true, 3f, 9f));
 		}
 
 		else
@@ -81,7 +81,7 @@ public class HudManager : MonoBehaviour
 		{
 			_isTheEnd = true;
 			StartCoroutine(Fade(_hudFadeOutGO, false, 0.1f, 5f));
-			StartCoroutine(EndingHud(25f));
+			StartCoroutine(EndingHud(25f, true));
 		}
 
 		if (_isGameOver && !_isTheEnd)
@@ -137,13 +137,13 @@ public class HudManager : MonoBehaviour
 
 	public static IEnumerator Fade(GameObject hudGoFade, bool fadeOut, float duration, float delayTime = 0)
 	{
+		_isFading = true;
 		float elapsedTime = 0;
 		Image imageToFade = hudGoFade.GetComponent<Image>();
 
 		hudGoFade.SetActive(!hudGoFade.activeSelf);
 
 		yield return new WaitForSeconds(delayTime);
-		_isFading = true;
 
 		while (elapsedTime <= duration)
 		{
@@ -161,13 +161,13 @@ public class HudManager : MonoBehaviour
 		_isFading = false;
 	}
 
-	private IEnumerator EndingHud(float delay = 0)
+	private IEnumerator EndingHud(float delay = 0, bool isCreditVisible = false)
 	{
 		yield return new WaitForSeconds(delay);
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.Confined;
 		_hudVictoryGO.SetActive(true);
-		_hudCreditGO.SetActive(false);
+		_hudCreditGO.SetActive(isCreditVisible);
 	}
 
 	public void OnClickButton(string buttonName)

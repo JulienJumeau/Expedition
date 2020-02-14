@@ -524,6 +524,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e2704ef0ba9c45f44930ffdd03aefa3c, type: 3}
   - {fileID: 8300000, guid: cf362f2cf82d8b9409228edc30da37dd, type: 3}
   - {fileID: 8300000, guid: cc76d18b584d1df42b0f9f0ff00a1986, type: 3}
+  _audioGameBeginning: {fileID: 8300000, guid: ccb3acdc26665a2469ec0bb0c3964cca, type: 3}
   _audioClipDetected: {fileID: 8300000, guid: a20567e002e655440866dbf1d143e4bc, type: 3}
   _audioClipRunTooLong: {fileID: 0}
   _audioClipClimb: {fileID: 0}
@@ -738,7 +739,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213406187385127705}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8e8de39ea9d81a8408f8ac603e647a1a, type: 3}

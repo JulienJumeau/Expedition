@@ -362,7 +362,8 @@ MonoBehaviour:
   _audioClipTakingDamage: {fileID: 8300000, guid: 775f4092a5519f74da314c524c94f51d,
     type: 3}
   _audioClipPenguinAlert: {fileID: 0}
-  _audioClipPenguinAggro: {fileID: 0}
+  _audioClipPenguinAggro: {fileID: 8300000, guid: e260ab5e02300504d9786caf45d65669,
+    type: 3}
   _audioClipPenguinFootstepsWalking: {fileID: 0}
   _audioClipPenguinAttack: {fileID: 0}
   _foeState: 0

@@ -39,7 +39,7 @@ public sealed class Penguin : MonoBehaviour
 	public AudioSource _audioSource;
 	private int _nextDestinationIndex;
 	private float _distancePlayerFoe, _currentDetectionRadius, _secondsWhileWounded, _currentChaseSpeed, _secondsWhileAlert, _secondsWhileAlertHiding;
-	private bool _isAttacking;
+	private bool _isAttacking, _isAggroSoundPlayed;
 	private string[] _triggerAnimationNames;
 
 	#endregion
@@ -150,8 +150,11 @@ public sealed class Penguin : MonoBehaviour
 					_currentChaseSpeed = _foeChaseSpeed;
 					SetFoeAgentProperties(_targetPlayer.position, _currentChaseSpeed, _stoppingDistanceAttack, true);
 
-					//_audioSource.clip = _audioClipPenguinAggro;
-					//_audioSource.Play();
+					if (!_isAggroSoundPlayed)
+					{
+						_isAggroSoundPlayed = true;
+						_audioSource.PlayOneShot(_audioClipPenguinAggro);
+					}
 
 					if (IsFoeNearTarget())
 					{
@@ -177,6 +180,7 @@ public sealed class Penguin : MonoBehaviour
 		else if (_foeState == FoeState.Chase)
 		{
 			PlayerAbilities._isDetected = false;
+			_isAggroSoundPlayed = false;
 			_currentDetectionRadius = _detectionRadius;
 			SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 

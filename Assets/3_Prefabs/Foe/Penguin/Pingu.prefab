@@ -347,7 +347,6 @@ MonoBehaviour:
   _secondsBeforeSecondAttack: 1
   timeToRecoverLife: 6
   _allowAttacks: 1
-  _allowChasingAudiosource: 0
   _stoppingDistanceAttack: 1.5
   _minTimeRandomNoisePatrol: 5
   _maxTimeRandomNoisePatrol: 15
@@ -396,7 +395,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 12
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

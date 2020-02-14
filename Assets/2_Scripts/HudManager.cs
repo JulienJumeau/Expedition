@@ -81,7 +81,7 @@ public class HudManager : MonoBehaviour
 		{
 			_isTheEnd = true;
 			StartCoroutine(Fade(_hudFadeOutGO, false, 0.1f, 5f));
-			StartCoroutine(EndingHud(25f));
+			StartCoroutine(EndingHud(25f, true));
 		}
 
 		if (_isGameOver && !_isTheEnd)
@@ -161,13 +161,13 @@ public class HudManager : MonoBehaviour
 		_isFading = false;
 	}
 
-	private IEnumerator EndingHud(float delay = 0)
+	private IEnumerator EndingHud(float delay = 0, bool isCreditVisible = false)
 	{
 		yield return new WaitForSeconds(delay);
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.Confined;
 		_hudVictoryGO.SetActive(true);
-		_hudCreditGO.SetActive(false);
+		_hudCreditGO.SetActive(isCreditVisible);
 	}
 
 	public void OnClickButton(string buttonName)

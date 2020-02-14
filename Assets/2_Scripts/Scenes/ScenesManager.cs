@@ -79,6 +79,7 @@ public class ScenesManager : MonoBehaviour
 		yield return new WaitForSeconds(2);
 		PlayerAbilities._isActionPlaying = false;
 		PlayerAbilities._isLanternInInventory = isLanternInInventory;
+		PlayerAbilities._isTheBeginning = !isLanternInInventory;
 		PlayerAbilities._oilLevel = isOilFull ? 1 : 0;
 		_chosenCheckPointPosition = _checkPoints[chapterIndex].transform.position;
 		_chosenCheckPointRotation.y = _checkPoints[chapterIndex].transform.eulerAngles.y;

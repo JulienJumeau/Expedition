@@ -10,6 +10,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public static bool _isActionPlaying;
 	public static bool _isDetected;
 	public static bool _isReading;
+	public static bool _isTheBeginning = true;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
 	[Range(1, 15)] [SerializeField] private float _sprintSpeed = 10;
@@ -80,7 +81,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
-		_triggerAnimationNames = new string[5] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing" };
+		_triggerAnimationNames = new string[6] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening" };
 		_characterInitialHeight = _characterController.height;
 		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
@@ -98,7 +99,16 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Start()
 	{
-		StartCoroutine(WaitBeforeBeginMoves());
+		if (_isTheBeginning)
+		{
+			StartCoroutine(WaitBeforeBeginningAnimation(6.5f));
+			StartCoroutine(WaitBeforeBeginMoves(10f));
+		}
+
+		else
+		{
+			StartCoroutine(WaitBeforeBeginMoves(3f));
+		}
 
 		if (_isLanternInInventory)
 		{
@@ -673,10 +683,17 @@ public sealed class PlayerAbilities : MonoBehaviour
 		}
 	}
 
-	private IEnumerator WaitBeforeBeginMoves()
+	private IEnumerator WaitBeforeBeginMoves(float duration)
 	{
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(duration);
+		Debug.Log(duration);
 		_isActionPlaying = false;
+	}
+
+	private IEnumerator WaitBeforeBeginningAnimation(float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		_animator.SetTrigger(_triggerAnimationNames[5]);
 	}
 
 	private void EndGame()

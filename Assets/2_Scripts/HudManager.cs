@@ -63,7 +63,16 @@ public class HudManager : MonoBehaviour
 	private void Start()
 	{
 		EventSubscription();
-		StartCoroutine(Fade(_hudFadeOutGO, true, 2));
+
+		if (PlayerAbilities._isTheBeginning)
+		{
+			StartCoroutine(Fade(_hudFadeOutGO, true, 3f, 7f));
+		}
+
+		else
+		{
+			StartCoroutine(Fade(_hudFadeOutGO, true, 3f, 0f));
+		}
 	}
 
 	private void Update()
@@ -128,13 +137,13 @@ public class HudManager : MonoBehaviour
 
 	public static IEnumerator Fade(GameObject hudGoFade, bool fadeOut, float duration, float delayTime = 0)
 	{
-		_isFading = true;
 		float elapsedTime = 0;
 		Image imageToFade = hudGoFade.GetComponent<Image>();
 
 		hudGoFade.SetActive(!hudGoFade.activeSelf);
 
 		yield return new WaitForSeconds(delayTime);
+		_isFading = true;
 
 		while (elapsedTime <= duration)
 		{

@@ -111,6 +111,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		else
 		{
 			StartCoroutine(WaitBeforeBeginMoves(3f));
+			GameObject.FindGameObjectWithTag("WindSound").GetComponent<AudioSource>().Play();
 		}
 
 		if (_isLanternInInventory)

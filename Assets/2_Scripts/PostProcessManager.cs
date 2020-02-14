@@ -13,13 +13,13 @@ public sealed class PostProcessManager : MonoBehaviour
 
 	[SerializeField] private float _vignetteIntensityMin, _vignetteIntensityMax;
 	public static bool _isPostProssessOn, _isPostProssessHoldBreath, _isRedPostProssessOn;
-	private bool _isAttacking, _isBreathing;
+	private bool _isWounded, _isBreathing;
 
 	private void Awake()
 	{
 		_camera = Camera.main;
 		_processVolume = _camera.GetComponent<PostProcessVolume>();
-		_isAttacking = _isBreathing = false;
+		_isWounded = _isBreathing = false;
 	}
 
 	private void Start()
@@ -35,12 +35,12 @@ public sealed class PostProcessManager : MonoBehaviour
 	{
 		if (_isPostProssessOn)
 		{
-			_isAttacking = true;
+			_isWounded = true;
 			PostProcessAttack();
 		}
-		else if (!_isPostProssessOn && _isAttacking)
+		else if (!_isPostProssessOn && _isWounded)
 		{
-			_isAttacking = false;
+			_isWounded = false;
 			PostProcessOff();
 		}
 
@@ -49,9 +49,9 @@ public sealed class PostProcessManager : MonoBehaviour
 			_isBreathing = true;
 			PostProcessHoldBreath(true);
 		}
-		else if (!_isPostProssessHoldBreath && !_isAttacking)
+		else if (!_isPostProssessHoldBreath && !_isWounded)
 		{
-			PostProcessHoldBreath();
+			PostProcessHoldBreath(false);
 		}
 
 		if (_colorGrading.gamma.value.w != HudManager._gameGamma)
@@ -60,6 +60,7 @@ public sealed class PostProcessManager : MonoBehaviour
 			_colorGrading.gamma.value.w = HudManager._gameGamma;
 		}
 
+		//////////////////////// J'ai rajouté uniquement ça...
 		if (_isRedPostProssessOn)
 		{
 			PostProcessAttack();
@@ -68,7 +69,7 @@ public sealed class PostProcessManager : MonoBehaviour
 		{
 			PostProcessOff();
 		}
-
+		///////////////////////
 	}
 
 	public void PostProcessAttack()

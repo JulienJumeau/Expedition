@@ -19,7 +19,7 @@ public sealed class Penguin : MonoBehaviour
 	[SerializeField] private bool _isNextDestinationRandom = false, _isPenguinAggro = false;
 	[SerializeField] private float _foePatrolSpeed = 0, _foeChaseSpeed = 0;
 	[SerializeField] private float _detectionRadius = 0, _detectionRadiusAggro = 0, _detectionRadiusWHoldingBreath = 0, _secondsInAlertBeforeAggro = 0, _secondsInAlertAfterHiding = 0, _secondsBeforeFirstAttack = 0, _secondsBeforeSecondAttack = 0, timeToRecoverLife = 0;
-	[SerializeField] private bool _allowAttacks = false, _allowChasingAudiosource = false;
+	[SerializeField] private bool _allowAttacks = false;
 	[SerializeField] private float _stoppingDistanceAttack = 4;
 	[SerializeField] private float _minTimeRandomNoisePatrol = 0, _maxTimeRandomNoisePatrol = 0;
 
@@ -337,15 +337,13 @@ public sealed class Penguin : MonoBehaviour
 		//_audioSource.clip = _audioClipPenguinAttack;
 		//_audioSource.Play();
 
-		if (PostProcessManager._isPostProssessOn && !HudManager._isTheEnd)
+		if (PostProcessManager._isRedPostProssessOn && !HudManager._isTheEnd)
 		{
 			yield return new WaitForSeconds(_secondsBeforeSecondAttack);
 			if (IsFoeNearTarget())
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
-
-				//_audioSource.clip = _audioClipDying;
-				//_audioSource.Play();
+				//_audioSource.PlayOneShot(_audioClipDying);
 
 				HudManager._isGameOver = true;
 
@@ -359,7 +357,7 @@ public sealed class Penguin : MonoBehaviour
 				_animator.SetBool(_triggerAnimationNames[3], true);
 				//_audioSource.PlayOneShot(_audioClipTakingDamage);
 
-				PostProcessManager._isPostProssessOn = true;
+				PostProcessManager._isRedPostProssessOn = true;
 			}
 		}
 		_isAttacking = false;
@@ -367,19 +365,15 @@ public sealed class Penguin : MonoBehaviour
 
 	private void RegenLife(float timeToRecoverLife)
 	{
-		if (PostProcessManager._isPostProssessOn)
+		if (PostProcessManager._isRedPostProssessOn)
 		{
 			_secondsWhileWounded += Time.deltaTime;
 		}
-
-		else
-		{
-			_secondsWhileWounded = 0;
-		}
+		else _secondsWhileWounded = 0;
 
 		if (_secondsWhileWounded >= timeToRecoverLife)
 		{
-			PostProcessManager._isPostProssessOn = false;
+			PostProcessManager._isRedPostProssessOn = false;
 		}
 	}
 

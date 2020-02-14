@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PostProcessTrigger : MonoBehaviour
@@ -23,6 +22,7 @@ public class PostProcessTrigger : MonoBehaviour
 	{
 		PostProcessManager._isRedPostProssessOn = true;
 		StartCoroutine(PostprocessCoroutine());
+		_collider.enabled = false;
 	}
 
 	private IEnumerator PostprocessCoroutine()

@@ -349,6 +349,13 @@ MonoBehaviour:
   _allowAttacks: 1
   _allowChasingAudiosource: 0
   _stoppingDistanceAttack: 1.5
+  _minTimeRandomNoisePatrol: 5
+  _maxTimeRandomNoisePatrol: 15
+  _audioClipPenguinPatrol:
+  - {fileID: 8300000, guid: cd136e96f894edf478aaea18a75348a6, type: 3}
+  - {fileID: 8300000, guid: fe2b9aebda954aa4cbbc84ac04d9f2c7, type: 3}
+  - {fileID: 8300000, guid: 145f56547674c404d81be9a308afc910, type: 3}
+  - {fileID: 8300000, guid: 1a6ba51ccec20dc4280ae39dffe6d62e, type: 3}
   _audioClipPenguinFootstepsRunnning:
   - {fileID: 8300000, guid: ca2343ff856571d45a8726f85009d4bb, type: 3}
   - {fileID: 8300000, guid: 0dc2690210e03e640b6cf4c2089335ea, type: 3}

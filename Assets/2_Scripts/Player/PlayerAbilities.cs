@@ -10,6 +10,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public static bool _isActionPlaying;
 	public static bool _isDetected;
 	public static bool _isReading;
+	public static bool _isPlayerInjured;
+	public static bool _mustStandUp;
 	public static bool _isTheBeginning = true;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
@@ -34,6 +36,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AudioClip[] _audioClipWalk;
 	[SerializeField] private AudioClip[] _audioClipRun;
 	[SerializeField] private AudioClip[] _audioClipCrouch;
+	[SerializeField] private AudioClip[] _audioClipLimp;
 	[SerializeField] private AudioClip _audioGameBeginning;
 	[SerializeField] private AudioClip _audioClipDetected;
 	[SerializeField] private AudioClip _audioClipRunTooLong;
@@ -70,6 +73,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Material _lanternMaterial;
 	private bool _isDetectedMusicMustBePlayed;
 	private int _currentReadingSheetIndex;
+	private bool _canOnlyLimp = false;
 
 	[HideInInspector] public float _holdingBreathSeconds;
 
@@ -83,7 +87,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
-		_triggerAnimationNames = new string[6] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening" };
+		_triggerAnimationNames = new string[7] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening", "IsLimping" };
 		_characterInitialHeight = _characterController.height;
 		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
@@ -150,6 +154,21 @@ public sealed class PlayerAbilities : MonoBehaviour
 			else
 			{
 				HUDDisplay(new HUDDisplayEventArgs { isActive = false, layerDetected = 0, isSheet = false });
+			}
+
+			if (_isPlayerInjured && !_canOnlyLimp)
+			{
+				_canOnlyLimp = true;
+				HoldItem(_lanternGO, _photoCameraGO, true);
+			}
+
+			if (_mustStandUp && _isCrouching)
+			{
+				_mustStandUp = false;
+				_isCrouching = false;
+				_animator.SetBool("IsCrouching", false);
+				ResetAllTriggerAnimation();
+				CrouchAndStand(_characterInitialHeight);
 			}
 
 			//if (_isDetected && !_isDetectedMusicMustBePlayed)
@@ -222,22 +241,27 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					if (!_isCrouching)
 					{
-						_currentSpeed = _walkSpeed;
+						_currentSpeed = _isPlayerInjured ? _crouchSpeed : _walkSpeed;
 						_isRunning = false;
 						ResetAllTriggerAnimation();
 					}
 
-					_animator.SetBool(_triggerAnimationNames[0], true);
+					if (!_isPlayerInjured)
+					{
+						_animator.SetBool(_triggerAnimationNames[0], true);
+					}
 
-					//_audioSource.clip = _audioClipWalk;
-					//_audioSource.Play();
+					else
+					{
+						_animator.SetBool(_triggerAnimationNames[6], true);
+					}
 				}
 
 				break;
 
 			case InputAction.Run:
 
-				if (!_isCrouching && !_isHiding)
+				if (!_isCrouching && !_isHiding && !_isPlayerInjured)
 				{
 					_currentSpeed = _sprintSpeed;
 					ResetAllTriggerAnimation();
@@ -258,7 +282,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Crouch:
 
-				if (!_isHiding)
+				if (!_isHiding && !_isPlayerInjured)
 				{
 					if (!_isCrouching)
 					{
@@ -282,7 +306,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.Lantern:
 
-				if (!_isHiding && _isLanternInInventory)
+				if (!_isHiding && _isLanternInInventory && !_isPlayerInjured)
 				{
 					_isLanternOnScreen = !_isLanternOnScreen;
 					HoldItem(_lanternGO, _photoCameraGO);
@@ -293,7 +317,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.PhotoCamera:
 
-				if (!_isHiding)
+				if (!_isHiding && !_isPlayerInjured)
 				{
 					HoldItem(_photoCameraGO, _lanternGO);
 				}
@@ -406,7 +430,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.HoldBreath:
 
-				if (!_isRunning)
+				if (!_isRunning && !_isPlayerInjured)
 				{
 					if (!_isDetected)
 					{
@@ -644,8 +668,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepWalk += PlayerAbilities_OnFootStepWalk;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepRun += PlayerAbilities_OnFootStepRun;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepCrouch += PlayerAbilities_OnFootStepCrouch;
+		FindObjectOfType<PlayerAnimationEvents>().OnFootStepLimp += PlayerAbilities_OnFootStepLimp;
 		FindObjectOfType<HudManager>().OnPause += PlayerAbilities_OnPause;
 	}
+
 
 	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
 	{
@@ -672,6 +698,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 			_audioSourceMovement.clip = _audioClipCrouch[UnityEngine.Random.Range(0, _audioClipCrouch.Length - 1)];
 			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
 		}
+	}
+
+	private void PlayerAbilities_OnFootStepLimp(object sender, EventArgs e)
+	{
+		_audioSourceMovement.clip = _audioClipLimp[UnityEngine.Random.Range(0, _audioClipLimp.Length - 1)];
+		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
 	}
 
 	private void OilLevelDecreasing()

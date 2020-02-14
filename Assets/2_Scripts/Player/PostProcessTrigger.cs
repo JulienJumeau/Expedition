@@ -6,6 +6,7 @@ public class PostProcessTrigger : MonoBehaviour
 	#region Variables declaration
 
 	[SerializeField] private float _postprocessDuration;
+	[SerializeField] private bool _isPlayerInjured;
 	private BoxCollider _collider;
 	
 
@@ -21,8 +22,14 @@ public class PostProcessTrigger : MonoBehaviour
 	private void OnTriggerEnter(Collider _)
 	{
 		PostProcessManager._isRedPostProssessOn = true;
+		PlayerAbilities._mustStandUp = true;
 		StartCoroutine(PostprocessCoroutine());
 		_collider.enabled = false;
+
+		if (_isPlayerInjured)
+		{
+			PlayerAbilities._isPlayerInjured = true;
+		}
 	}
 
 	private IEnumerator PostprocessCoroutine()

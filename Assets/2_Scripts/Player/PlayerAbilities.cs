@@ -34,6 +34,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AudioClip[] _audioClipWalk;
 	[SerializeField] private AudioClip[] _audioClipRun;
 	[SerializeField] private AudioClip[] _audioClipCrouch;
+	[SerializeField] private AudioClip _audioGameBeginning;
 	[SerializeField] private AudioClip _audioClipDetected;
 	[SerializeField] private AudioClip _audioClipRunTooLong;
 	[SerializeField] private AudioClip _audioClipClimb;
@@ -48,6 +49,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AudioClip _audioClipReadSheet;
 	[SerializeField] private AudioClip _audioClipMoveBox;
 	[SerializeField] private AudioClip _audioClipMonster;
+	private AudioSource _beginWindGO;
 
 	public static bool _isEndGame;
 	private Camera _camera;
@@ -101,6 +103,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		if (_isTheBeginning)
 		{
+			_audioSourceMovement.PlayOneShot(_audioGameBeginning);
 			StartCoroutine(WaitBeforeBeginningAnimation(6.5f));
 			StartCoroutine(WaitBeforeBeginMoves(10f));
 		}
@@ -694,6 +697,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 	{
 		yield return new WaitForSeconds(duration);
 		_animator.SetTrigger(_triggerAnimationNames[5]);
+		this.transform.GetComponentInChildren<AudioSource>().enabled = true;
+		GameObject.FindGameObjectWithTag("WindSound").GetComponent<AudioSource>().Play();
 	}
 
 	private void EndGame()

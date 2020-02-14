@@ -66,7 +66,7 @@ public class HudManager : MonoBehaviour
 
 		if (PlayerAbilities._isTheBeginning)
 		{
-			StartCoroutine(Fade(_hudFadeOutGO, true, 3f, 7f));
+			StartCoroutine(Fade(_hudFadeOutGO, true, 3f, 9f));
 		}
 
 		else

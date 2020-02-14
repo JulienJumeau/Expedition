@@ -104,8 +104,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 		if (_isTheBeginning)
 		{
 			_audioSourceMovement.PlayOneShot(_audioGameBeginning);
-			StartCoroutine(WaitBeforeBeginningAnimation(6.5f));
-			StartCoroutine(WaitBeforeBeginMoves(10f));
+			StartCoroutine(WaitBeforeBeginningAnimation(8.5f));
+			StartCoroutine(WaitBeforeBeginMoves(12f));
 		}
 
 		else

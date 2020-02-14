@@ -110,6 +110,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		else
 		{
+			this.transform.GetComponentInChildren<AudioSource>().enabled = true;
 			StartCoroutine(WaitBeforeBeginMoves(3f));
 			GameObject.FindGameObjectWithTag("WindSound").GetComponent<AudioSource>().Play();
 		}

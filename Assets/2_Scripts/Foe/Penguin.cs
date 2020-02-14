@@ -98,14 +98,15 @@ public sealed class Penguin : MonoBehaviour
 			TriggerAnimation();
 		}
 
-		if (_foeState == FoeState.Patrol)
-		{
-			if (!_isPatrolSoundPlaying)
-			{
-				_isPatrolSoundPlaying = true;
-				StartCoroutine(PatrolRandomSound());
-			}
-		}
+		// Work but not sattified
+		//if (_foeState == FoeState.Patrol)
+		//{
+		//	if (!_isPatrolSoundPlaying)
+		//	{
+		//		_isPatrolSoundPlaying = true;
+		//		StartCoroutine(PatrolRandomSound());
+		//	}
+		//}
 	}
 
 	private void OnDrawGizmosSelected()

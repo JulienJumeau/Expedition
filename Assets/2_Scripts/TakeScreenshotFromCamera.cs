@@ -12,7 +12,7 @@ public class TakeScreenshotFromCamera : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad5))
+        if (Input.GetKeyUp(KeyCode.SysReq))
         {
             TakeScreenshot();
         }

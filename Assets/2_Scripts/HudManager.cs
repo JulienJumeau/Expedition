@@ -164,6 +164,7 @@ public class HudManager : MonoBehaviour
 	private IEnumerator EndingHud(float delay = 0, bool isCreditVisible = false)
 	{
 		yield return new WaitForSeconds(delay);
+		PostProcessManager._isPostProssessAttack = PostProcessManager._isPostProssessFall = PostProcessManager._isPostProssessHoldBreath = false;
 		Cursor.visible = true;
 		Cursor.lockState = CursorLockMode.Confined;
 		_hudVictoryGO.SetActive(true);

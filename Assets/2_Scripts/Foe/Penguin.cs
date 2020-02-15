@@ -74,27 +74,27 @@ public sealed class Penguin : MonoBehaviour
 	private void Update()
 	{
 		//Dans quel state est-on?
-		if (_foeState == FoeState.Attack)
-		{
-			Debug.Log("Attack");
-		}
-		else if (_foeState == FoeState.Chase)
-		{
-			Debug.Log("Chase");
-		}
-		else if (_foeState == FoeState.Patrol)
-		{
-			Debug.Log("Patrol");
-		}
-		else if (_foeState == FoeState.Alert)
-		{
-			Debug.Log("Alert");
-		}
+		//if (_foeState == FoeState.Attack)
+		//{
+		//	Debug.Log("Attack");
+		//}
+		//else if (_foeState == FoeState.Chase)
+		//{
+		//	Debug.Log("Chase");
+		//}
+		//else if (_foeState == FoeState.Patrol)
+		//{
+		//	Debug.Log("Patrol");
+		//}
+		//else if (_foeState == FoeState.Alert)
+		//{
+		//	Debug.Log("Alert");
+		//}
 
 		if (_agent.enabled)
 		{
 			FoePattern();
-			RegenLife(timeToRecoverLife);
+			//RegenLife(timeToRecoverLife);
 			TriggerAnimation();
 		}
 
@@ -231,7 +231,7 @@ public sealed class Penguin : MonoBehaviour
 		if (_player._isHiding == true && _distancePlayerFoe <= _currentDetectionRadius && _isPenguinAggro && _foeState != FoeState.Patrol)
 		{
 			_secondsWhileAlertHiding += Time.deltaTime;
-			Debug.Log("SAH: " + _secondsWhileAlertHiding + " s");
+			//Debug.Log("SAH: " + _secondsWhileAlertHiding + " s");
 			_secondsWhileAlert = 0;
 
 			if (_secondsWhileAlertHiding >= _secondsInAlertAfterHiding)
@@ -337,7 +337,7 @@ public sealed class Penguin : MonoBehaviour
 		//_audioSource.clip = _audioClipPenguinAttack;
 		//_audioSource.Play();
 
-		if (PostProcessManager._isRedPostProssessOn && !HudManager._isTheEnd)
+		if (PostProcessManager._isPostProssessAttack && !HudManager._isTheEnd)
 		{
 			yield return new WaitForSeconds(_secondsBeforeSecondAttack);
 			if (IsFoeNearTarget())
@@ -355,9 +355,8 @@ public sealed class Penguin : MonoBehaviour
 			if (IsFoeNearTarget())
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
-				//_audioSource.PlayOneShot(_audioClipTakingDamage);
-
-				PostProcessManager._isRedPostProssessOn = true;
+				Debug.Log("attack lol");
+				PostProcessManager._isPostProssessAttack = true;
 			}
 		}
 		_isAttacking = false;
@@ -365,7 +364,7 @@ public sealed class Penguin : MonoBehaviour
 
 	private void RegenLife(float timeToRecoverLife)
 	{
-		if (PostProcessManager._isRedPostProssessOn)
+		if (PostProcessManager._isPostProssessAttack)
 		{
 			_secondsWhileWounded += Time.deltaTime;
 		}
@@ -373,7 +372,7 @@ public sealed class Penguin : MonoBehaviour
 
 		if (_secondsWhileWounded >= timeToRecoverLife)
 		{
-			PostProcessManager._isRedPostProssessOn = false;
+			PostProcessManager._isPostProssessAttack = false;
 		}
 	}
 

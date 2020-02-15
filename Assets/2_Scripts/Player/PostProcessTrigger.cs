@@ -21,7 +21,7 @@ public class PostProcessTrigger : MonoBehaviour
 
 	private void OnTriggerEnter(Collider _)
 	{
-		PostProcessManager._isRedPostProssessOn = true;
+		PostProcessManager._isPostProssessFall = true;
 		PlayerAbilities._mustStandUp = true;
 		StartCoroutine(PostprocessCoroutine());
 		_collider.enabled = false;
@@ -35,7 +35,7 @@ public class PostProcessTrigger : MonoBehaviour
 	private IEnumerator PostprocessCoroutine()
 	{
 		yield return new WaitForSeconds(_postprocessDuration);
-		PostProcessManager._isRedPostProssessOn = false;
+		PostProcessManager._isPostProssessFall = false;
 	}
 
 	#endregion

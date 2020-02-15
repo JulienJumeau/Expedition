@@ -25,6 +25,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
 	[SerializeField] private GameObject _lanternLightGO = null, _fxFireLantern = null;
 	[SerializeField] public float _lanternMinIntensity = 0, _lanternMaxIntensity = 0, _secondsOilLevelFullToEmpty = 1;
+	[SerializeField] private float timeToRecoverLife = 0;
 
 	[Header("Audio Sources")]
 	[SerializeField] private AudioSource _audioSourceMovement = null;
@@ -74,6 +75,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private bool _isDetectedMusicMustBePlayed;
 	private int _currentReadingSheetIndex;
 	private bool _canOnlyLimp = false;
+	private float _timerHitRegen;
 
 	[HideInInspector] public float _holdingBreathSeconds;
 
@@ -101,6 +103,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_isEndGame = false;
 		_isDetectedMusicMustBePlayed = false;
 		_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.4f, _fxFireLantern.transform.localPosition.z);
+		_timerHitRegen = 0;
 	}
 
 	private void Start()
@@ -186,6 +189,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			//}
 
 			OilLevelDecreasing();
+			RegenLife(timeToRecoverLife);
 		}
 	}
 
@@ -764,6 +768,20 @@ public sealed class PlayerAbilities : MonoBehaviour
 		if (!_isDetected)
 		{
 			_audioSourceMusicDetected.Stop();
+		}
+	}
+
+	private void RegenLife(float timeToRecoverLife)
+	{
+		if (PostProcessManager._isPostProssessAttack)
+		{
+			_timerHitRegen += Time.deltaTime;
+		}
+		else _timerHitRegen = 0;
+
+		if (_timerHitRegen >= timeToRecoverLife)
+		{
+			PostProcessManager._isPostProssessAttack = false;
 		}
 	}
 

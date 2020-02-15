@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
 
@@ -12,14 +14,15 @@ public sealed class PostProcessManager : MonoBehaviour
 	private float _durationHoldBreath = 0, _durationGetdBreath = 0;
 
 	[SerializeField] private float _vignetteIntensityMin, _vignetteIntensityMax;
-	public static bool _isPostProssessOn, _isPostProssessHoldBreath, _isRedPostProssessOn;
-	private bool _isWounded, _isBreathing;
+	public static bool _isPostProssessAttack, _isPostProssessHoldBreath, _isPostProssessFall;
+	private bool _isWounded, _isBreathing, _isFalling;
+	private double originVignette, originChromatic;
 
 	private void Awake()
 	{
 		_camera = Camera.main;
 		_processVolume = _camera.GetComponent<PostProcessVolume>();
-		_isWounded = _isBreathing = false;
+		_isWounded = _isBreathing = _isFalling = false;
 	}
 
 	private void Start()
@@ -28,20 +31,21 @@ public sealed class PostProcessManager : MonoBehaviour
 		_processVolume.profile.TryGetSettings(out _vignetteLayer);
 		_processVolume.profile.TryGetSettings(out _colorGrading);
 		_colorGrading.gamma.overrideState = true;
-		_isPostProssessOn = _isPostProssessHoldBreath = false;
+		_isPostProssessAttack = _isPostProssessHoldBreath = false;
 	}
 
 	private void Update()
 	{
-		if (_isPostProssessOn)
+		if (_isPostProssessAttack)
 		{
 			_isWounded = true;
 			PostProcessAttack();
 		}
-		else if (!_isPostProssessOn && _isWounded)
+
+		else if (!_isPostProssessAttack && _isWounded)
 		{
 			_isWounded = false;
-			PostProcessOff();
+			StartCoroutine(PostProcessOff());
 		}
 
 		if (_isPostProssessHoldBreath)
@@ -49,9 +53,23 @@ public sealed class PostProcessManager : MonoBehaviour
 			_isBreathing = true;
 			PostProcessHoldBreath(true);
 		}
+
 		else if (!_isPostProssessHoldBreath && !_isWounded)
 		{
+			_isBreathing = false;
 			PostProcessHoldBreath(false);
+		}
+
+		if (_isPostProssessFall)
+		{
+			_isFalling = true;
+			PostProcessAttack();
+		}
+
+		else if (!_isPostProssessFall && _isFalling && !_isBreathing && !_isWounded)
+		{
+			_isFalling = false;
+			StartCoroutine(PostProcessOff());
 		}
 
 		if (_colorGrading.gamma.value.w != HudManager._gameGamma)
@@ -59,27 +77,16 @@ public sealed class PostProcessManager : MonoBehaviour
 			_colorGrading.gamma.overrideState = true;
 			_colorGrading.gamma.value.w = HudManager._gameGamma;
 		}
-
-		//////////////////////// J'ai rajouté uniquement ça...
-		if (_isRedPostProssessOn)
-		{
-			PostProcessAttack();
-		}
-		else if (!_isRedPostProssessOn)
-		{
-			PostProcessOff();
-		}
-		///////////////////////
 	}
 
-	public void PostProcessAttack()
+	private void PostProcessAttack()
 	{
 		_vignetteLayer.color.value = Color.red;
 		_vignetteLayer.intensity.value = Mathf.Lerp(_vignetteIntensityMin, _vignetteIntensityMax, (Mathf.Sin(3 * Time.time) + 1) * 0.5f);
 		_chromaticAberrationLayer.intensity.value = (Mathf.Sin(3 * Time.time) + 1) * 0.5f;
 	}
 
-	public void PostProcessHoldBreath(bool isHoldingBreath = false)
+	private void PostProcessHoldBreath(bool isHoldingBreath = false)
 	{
 		if (isHoldingBreath)
 		{
@@ -97,9 +104,24 @@ public sealed class PostProcessManager : MonoBehaviour
 		}
 	}
 
-	public void PostProcessOff()
+	private IEnumerator PostProcessOff()
 	{
+		float elapsedTime = 0, duration = 2;
+		//originVignette = Math.Round(_vignetteLayer.intensity.value, 9);
+		//originChromatic = Math.Round(_chromaticAberrationLayer.intensity.value, 9);
+		//Debug.Log(originVignette);
+		while (elapsedTime <= duration)
+		{
+			elapsedTime += Time.deltaTime;
+			_vignetteLayer.color.value = new Color(_vignetteLayer.color.value.r, _vignetteLayer.color.value.g, _vignetteLayer.color.value.b, Mathf.Lerp(1, 0, elapsedTime / duration));
+			_chromaticAberrationLayer.intensity.value = Mathf.Lerp((float)originChromatic, 0, elapsedTime / duration);
+			//_vignetteLayer.opacity.value = Mathf.Lerp(1, 0, elapsedTime / duration);
+			//_vignetteLayer.intensity.value = Mathf.Lerp((float)originVignette, 0, elapsedTime / duration);
+			yield return null;
+		}
+
 		_vignetteLayer.intensity.value = 0;
 		_chromaticAberrationLayer.intensity.value = 0;
+		_vignetteLayer.opacity.value = 1;
 	}
 }

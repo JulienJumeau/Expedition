@@ -499,6 +499,7 @@ MonoBehaviour:
   _lanternMinIntensity: 1
   _lanternMaxIntensity: 3
   _secondsOilLevelFullToEmpty: 180
+  timeToRecoverLife: 6
   _audioSourceMovement: {fileID: 7669660605584978796}
   _audioSourcePlayerSounds: {fileID: 338805755440902567}
   _audioSourceLoots: {fileID: 7466912507087098808}

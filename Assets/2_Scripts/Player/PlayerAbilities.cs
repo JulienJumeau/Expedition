@@ -66,7 +66,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private bool _isRunning;
 	private string[] _triggerAnimationNames;
 	public static float _oilLevel;
-	public static bool _isLanternInInventory, _isPlayingTakingHitAnimSound, _isPlayingDyingAnimSound;
+	public static bool _isLanternInInventory, _isDying;
 	private float _oilLevelMax;
 	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
@@ -74,7 +74,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Material _lanternMaterial;
 	//private bool _isDetectedMusicMustBePlayed;
 	private int _currentReadingSheetIndex;
-	private bool _canOnlyLimp;
+	private bool _canOnlyLimp, _isPlayingTakingHitAnimSound, _isPlayingDyingAnimSound;
 	private float _timerHitRegen;
 
 	[HideInInspector] public float _holdingBreathSeconds;
@@ -199,11 +199,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 				TakingHit();
 				_isPlayingTakingHitAnimSound = true;
 			}
-			//if(!_isPlayingDyingAnimSound)
-			//{
-			//	Dying();
-			//	_isPlayingDyingAnimSound = true;
-			//}
+			if (_isDying && !_isPlayingDyingAnimSound)
+			{
+				Dying();
+				_isActionPlaying = true;
+				_isPlayingDyingAnimSound = true;
+			}
 		}
 	}
 
@@ -687,9 +688,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepRun += PlayerAbilities_OnFootStepRun;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepCrouch += PlayerAbilities_OnFootStepCrouch;
 		FindObjectOfType<PlayerAnimationEvents>().OnFootStepLimp += PlayerAbilities_OnFootStepLimp;
+		FindObjectOfType<PlayerAnimationEvents>().OnHit += PlayerAbilities_OnHit;
 		FindObjectOfType<HudManager>().OnPause += PlayerAbilities_OnPause;
 	}
 
+	private void PlayerAbilities_OnHit(object sender, EventArgs e)
+	{
+		_audioSourceMovement.clip = _audioClipTakingDamage;
+		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+	}
 
 	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
 	{
@@ -805,17 +812,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void TakingHit()
 	{
-		_audioSourcePlayerSounds.PlayOneShot(_audioClipTakingDamage);
 		ResetAllTriggerAnimation();
-		_animator.SetBool(_triggerAnimationNames[7], true);
-
+		_animator.SetTrigger(_triggerAnimationNames[7]);
 	}
 
 	private void Dying()
 	{
 		_audioSourcePlayerSounds.PlayOneShot(_audioClipDying);
 		ResetAllTriggerAnimation();
-		_animator.SetBool(_triggerAnimationNames[8], true);
+		_animator.SetTrigger(_triggerAnimationNames[8]);
 	}
 
 	#endregion

@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
-    public void Hit()
-    {
-        Debug.Log("Hit");
-    }
 
     #region Events
 
@@ -29,6 +25,11 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     private void FootStepLimp() => OnFootStepLimp?.Invoke(this, EventArgs.Empty);
 
-    #endregion
+
+	public event EventHandler OnHit;
+
+	private void Hit() => OnHit?.Invoke(this, EventArgs.Empty);
+
+	#endregion
 
 }

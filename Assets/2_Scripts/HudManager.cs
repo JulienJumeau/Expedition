@@ -88,7 +88,7 @@ public class HudManager : MonoBehaviour
 		{
 			_isTheEnd = true;
 			_textComponentEnd.text = "YOU DIED";
-			StartCoroutine(EndingHud());
+			StartCoroutine(EndingHud(1.39f));
 		}
 
 		_gameVolume = _sliderVolume.value;

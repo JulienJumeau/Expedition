@@ -336,13 +336,13 @@ public sealed class Penguin : MonoBehaviour
 		//_audioSource.clip = _audioClipPenguinAttack;
 		//_audioSource.Play();
 
-		if (PostProcessManager._isPostProssessAttack && !HudManager._isTheEnd)
+		if (PostProcessManager._isPostProssessAttack && !HudManager._isGameOver)
 		{
 			yield return new WaitForSeconds(_secondsBeforeSecondAttack);
 			if (IsFoeNearTarget())
 			{
-				PlayerAbilities._isPlayingTakingHitAnimSound = false;
 				_animator.SetBool(_triggerAnimationNames[3], true);
+				PlayerAbilities._isDying = true;
 				HudManager._isGameOver = true;
 			}
 		}

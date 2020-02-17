@@ -11,7 +11,7 @@ public class PenguinAnimationEvent : MonoBehaviour
         Debug.Log("Hit");
     }
 
-    public void Test()
+    public void FootStepsPenguin()
     {
         _penguin._audioSource.clip = _penguin._audioClipPenguinFootstepsRunnning[UnityEngine.Random.Range(0, _penguin._audioClipPenguinFootstepsRunnning.Length - 1)];
         _penguin._audioSource.PlayOneShot(_penguin._audioSource.clip);

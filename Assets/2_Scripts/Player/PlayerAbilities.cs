@@ -32,7 +32,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] private AudioSource _audioSourceMovement = null;
 	[SerializeField] private AudioSource _audioSourcePlayerSounds = null;
 	[SerializeField] private AudioSource _audioSourceLoots = null;
-	[SerializeField] private AudioSource _audioSourceMusicDetected = null;
+	[SerializeField] private AudioSource _audioSourceEnvironment = null;
 
 	[Header("Sounds")]
 	[SerializeField] private AudioClip[] _audioClipWalk;
@@ -435,12 +435,16 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 1.7f)
 					{
+						if (!_isPulling)
+						{
+							_audioSourceEnvironment.clip = _audioClipMoveBox;
+							_audioSourceEnvironment.Play();
+						}
 						_currentSpeed = _pullObjectSpeed;
 						_isPulling = true;
 						_animator.SetBool(_triggerAnimationNames[3], true);
 						PullObject();
 					}
-
 					else
 					{
 						_currentSpeed = _walkSpeed;
@@ -502,6 +506,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 				_isRunning = false;
 				_isPulling = false;
+				_audioSourceEnvironment.Stop();
 
 				break;
 		}
@@ -794,13 +799,13 @@ public sealed class PlayerAbilities : MonoBehaviour
 		{
 			elapsedTime += Time.deltaTime;
 			musicVolume = detected ? Mathf.Lerp(0, 1, elapsedTime / duration) : Mathf.Lerp(1, 0, elapsedTime / duration);
-			_audioSourceMusicDetected.volume = musicVolume;
+			_audioSourceEnvironment.volume = musicVolume;
 			yield return null;
 		}
 
 		if (!_isDetected)
 		{
-			_audioSourceMusicDetected.Stop();
+			_audioSourceEnvironment.Stop();
 		}
 	}
 

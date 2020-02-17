@@ -96,7 +96,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lightbulbNbr = 0;
 		_lightbulbNbrMax = 2;
 		_oilLevelMax = 1;
-		_isDetected = _isReading = _isPulling = false;
+		_isDetected = _isReading = _isPulling = _isDying = false;
 		_lanternLight = _lanternLightGO.GetComponent<Light>();
 		_lanternLight.intensity = 0;
 		_currentReadingSheetIndex = 0;

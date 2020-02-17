@@ -31,7 +31,7 @@ public sealed class PostProcessManager : MonoBehaviour
 		_processVolume.profile.TryGetSettings(out _vignetteLayer);
 		_processVolume.profile.TryGetSettings(out _colorGrading);
 		_colorGrading.gamma.overrideState = true;
-		_isPostProssessAttack = _isPostProssessHoldBreath = false;
+		_isPostProssessAttack = _isPostProssessHoldBreath = _isPostProssessFall = false;
 	}
 
 	private void Update()

@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frustumSettings:
-    baseSettings: {fileID: 0}
+    baseSettings: {fileID: 11400000, guid: dcc9a68cc0c07cd4381a4a25f463a7ce, type: 2}
     qualitySettings: {fileID: 0}
 --- !u!1 &2851746197378630181
 GameObject:

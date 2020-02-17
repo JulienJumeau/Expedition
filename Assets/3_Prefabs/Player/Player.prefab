@@ -568,8 +568,9 @@ MonoBehaviour:
   _audioClipDetected: {fileID: 8300000, guid: a20567e002e655440866dbf1d143e4bc, type: 3}
   _audioClipRunTooLong: {fileID: 0}
   _audioClipClimb: {fileID: 0}
-  _audioClipDying: {fileID: 0}
-  _audioClipTakingDamage: {fileID: 0}
+  _audioClipDying: {fileID: 8300000, guid: 371f5f947f978ce4897f5a7dd5dbddbf, type: 3}
+  _audioClipTakingDamage: {fileID: 8300000, guid: b26c4122f7f85914d8828eedcbc375a7,
+    type: 3}
   _audioClipHeartbeat: {fileID: 0}
   _audioClipHoldBreath: {fileID: 8300000, guid: 843fb240435dd604d992df45600ca0a0,
     type: 3}

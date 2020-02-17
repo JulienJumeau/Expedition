@@ -81,6 +81,7 @@ public class ScenesManager : MonoBehaviour
 		PlayerAbilities._isLanternInInventory = isLanternInInventory;
 		PlayerAbilities._isTheBeginning = !isLanternInInventory;
 		PlayerAbilities._oilLevel = isOilFull ? 1 : 0;
+		PlayerAbilities._isPlayerInjured = false;
 		_chosenCheckPointPosition = _checkPoints[chapterIndex].transform.position;
 		_chosenCheckPointRotation.y = _checkPoints[chapterIndex].transform.eulerAngles.y;
 		SceneManager.LoadScene("SceneLoader");

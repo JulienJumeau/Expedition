@@ -89,7 +89,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
-		_triggerAnimationNames = new string[9] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening", "IsLimping", "IsHit" , "IsDead" };
+		_triggerAnimationNames = new string[9] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening", "IsLimping", "IsHit", "IsDead" };
 		_characterInitialHeight = _characterController.height;
 		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
@@ -194,7 +194,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			OilLevelDecreasing();
 			RegenLife(timeToRecoverLife);
 
-			if(PostProcessManager._isPostProssessAttack && !_isPlayingTakingHitAnimSound)
+			if (PostProcessManager._isPostProssessAttack && !_isPlayingTakingHitAnimSound)
 			{
 				TakingHit();
 				_isPlayingTakingHitAnimSound = true;
@@ -232,7 +232,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 		if (_characterController.isGrounded)
 		{
-			_motion.y = 0;
+			_motion.y -= 0.0001f;
 		}
 
 		else
@@ -693,7 +693,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void PlayerAbilities_OnFootStepWalk(object sender, EventArgs e)
 	{
-		if (!_isHoldingBreath)
+		if (!_isHoldingBreath && _characterController.isGrounded)
 		{
 			_audioSourceMovement.clip = _audioClipWalk[UnityEngine.Random.Range(0, _audioClipWalk.Length - 1)];
 			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
@@ -702,7 +702,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void PlayerAbilities_OnFootStepRun(object sender, EventArgs e)
 	{
-		if (!_isHoldingBreath)
+		if (!_isHoldingBreath && _characterController.isGrounded)
 		{
 			_audioSourceMovement.clip = _audioClipRun[UnityEngine.Random.Range(0, _audioClipRun.Length - 1)];
 			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
@@ -711,7 +711,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void PlayerAbilities_OnFootStepCrouch(object sender, EventArgs e)
 	{
-		if (!_isHoldingBreath)
+		if (!_isHoldingBreath && _characterController.isGrounded)
 		{
 			_audioSourceMovement.clip = _audioClipCrouch[UnityEngine.Random.Range(0, _audioClipCrouch.Length - 1)];
 			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
@@ -720,8 +720,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void PlayerAbilities_OnFootStepLimp(object sender, EventArgs e)
 	{
-		_audioSourceMovement.clip = _audioClipLimp[UnityEngine.Random.Range(0, _audioClipLimp.Length - 1)];
-		_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+		if (_characterController.isGrounded)
+		{
+			_audioSourceMovement.clip = _audioClipLimp[UnityEngine.Random.Range(0, _audioClipLimp.Length - 1)];
+			_audioSourceMovement.PlayOneShot(_audioSourceMovement.clip);
+		}
 	}
 
 	private void OilLevelDecreasing()

@@ -8,7 +8,7 @@ public class PenguinAnimationEvent : MonoBehaviour
 
     public void Hit()
     {
-        Debug.Log("Hit");
+        PostProcessManager._isPostProssessAttack = true;
     }
 
     public void FootStepsPenguin()

@@ -352,8 +352,7 @@ public sealed class Penguin : MonoBehaviour
 			if (IsFoeNearTarget())
 			{
 				_animator.SetBool(_triggerAnimationNames[3], true);
-				Debug.Log("attack lol");
-				PostProcessManager._isPostProssessAttack = true;
+				//PostProcessManager._isPostProssessAttack = true;
 			}
 		}
 		_isAttacking = false;

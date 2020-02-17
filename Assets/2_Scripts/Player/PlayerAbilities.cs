@@ -90,7 +90,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
-		_triggerAnimationNames = new string[9] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening", "IsLimping", "IsHit", "IsDead" };
+		_triggerAnimationNames = new string[8] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening", "IsLimping", "IsDead" };
 		_characterInitialHeight = _characterController.height;
 		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
@@ -197,9 +197,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			if (PostProcessManager._isPostProssessAttack && !_isPlayingTakingHitAnimSound)
 			{
-				TakingHit();
 				_isPlayingTakingHitAnimSound = true;
+				TakingHit();
 			}
+
 			if (_isDying && !_isPlayingDyingAnimSound)
 			{
 				Dying();
@@ -493,7 +494,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			default:
-				ResetAllTriggerAnimation();
+				
+				if (!_isPlayingTakingHitAnimSound)
+				{
+					ResetAllTriggerAnimation();
+				}
+
 				_isRunning = false;
 				_isPulling = false;
 
@@ -816,14 +822,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void TakingHit()
 	{
 		ResetAllTriggerAnimation();
-		_animator.SetTrigger(_triggerAnimationNames[7]);
+		Debug.Log(_triggerAnimationNames[7]);
+		_animator.SetTrigger("IsHit");
 	}
 
 	private void Dying()
 	{
 		_audioSourcePlayerSounds.PlayOneShot(_audioClipDying);
 		ResetAllTriggerAnimation();
-		_animator.SetTrigger(_triggerAnimationNames[8]);
+		_animator.SetTrigger(_triggerAnimationNames[7]);
 	}
 
 	#endregion

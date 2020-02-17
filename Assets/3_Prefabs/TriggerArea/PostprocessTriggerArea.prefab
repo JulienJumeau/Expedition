@@ -57,4 +57,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b17a73faa7a164aa54b70ceace01ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _postprocessDuration: 10
+  _postprocessDuration: 8
+  _isPlayerInjured: 0

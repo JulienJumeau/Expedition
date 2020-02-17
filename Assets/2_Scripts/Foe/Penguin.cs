@@ -94,7 +94,6 @@ public sealed class Penguin : MonoBehaviour
 		if (_agent.enabled)
 		{
 			FoePattern();
-			//RegenLife(timeToRecoverLife);
 			TriggerAnimation();
 		}
 
@@ -342,11 +341,9 @@ public sealed class Penguin : MonoBehaviour
 			yield return new WaitForSeconds(_secondsBeforeSecondAttack);
 			if (IsFoeNearTarget())
 			{
+				PlayerAbilities._isPlayingTakingHitAnimSound = false;
 				_animator.SetBool(_triggerAnimationNames[3], true);
-				//_audioSource.PlayOneShot(_audioClipDying);
-
 				HudManager._isGameOver = true;
-
 			}
 		}
 		else if (!HudManager._isTheEnd)
@@ -362,19 +359,6 @@ public sealed class Penguin : MonoBehaviour
 		_isAttacking = false;
 	}
 
-	private void RegenLife(float timeToRecoverLife)
-	{
-		if (PostProcessManager._isPostProssessAttack)
-		{
-			_secondsWhileWounded += Time.deltaTime;
-		}
-		else _secondsWhileWounded = 0;
-
-		if (_secondsWhileWounded >= timeToRecoverLife)
-		{
-			PostProcessManager._isPostProssessAttack = false;
-		}
-	}
 
 	private void SetFoeAgentProperties(Vector3 targetPosition, float speed, float stoppingDistance, bool autoBraking)
 	{

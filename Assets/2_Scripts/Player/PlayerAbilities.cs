@@ -66,15 +66,15 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private bool _isRunning;
 	private string[] _triggerAnimationNames;
 	public static float _oilLevel;
-	public static bool _isLanternInInventory;
+	public static bool _isLanternInInventory, _isPlayingTakingHitAnimSound, _isPlayingDyingAnimSound;
 	private float _oilLevelMax;
 	private int _lightbulbNbr;
 	private float _characterInitialHeight, _currentSpeed;
 	private Light _lanternLight;
 	private Material _lanternMaterial;
-	private bool _isDetectedMusicMustBePlayed;
+	//private bool _isDetectedMusicMustBePlayed;
 	private int _currentReadingSheetIndex;
-	private bool _canOnlyLimp = false;
+	private bool _canOnlyLimp;
 	private float _timerHitRegen;
 
 	[HideInInspector] public float _holdingBreathSeconds;
@@ -89,7 +89,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = _camera.GetComponent<Animator>();
 		_lanternMaterial = _fxFireLantern.GetComponent<Renderer>().material;
-		_triggerAnimationNames = new string[7] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening", "IsLimping" };
+		_triggerAnimationNames = new string[9] { "IsWalk", "IsRun", "IsJumping", "IsDraging", "IsClimbing", "IsOpening", "IsLimping", "IsHit" , "IsDead" };
 		_characterInitialHeight = _characterController.height;
 		_isActionPlaying = true;
 		_currentSpeed = _walkSpeed;
@@ -100,8 +100,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_lanternLight = _lanternLightGO.GetComponent<Light>();
 		_lanternLight.intensity = 0;
 		_currentReadingSheetIndex = 0;
+		_canOnlyLimp = false;
 		_isEndGame = false;
-		_isDetectedMusicMustBePlayed = false;
+		_isPlayingTakingHitAnimSound = false;
+		_isPlayingDyingAnimSound = false;
+		//_isDetectedMusicMustBePlayed = false;
 		_fxFireLantern.transform.localPosition = new Vector3(_fxFireLantern.transform.localPosition.x, -0.4f, _fxFireLantern.transform.localPosition.z);
 		_timerHitRegen = 0;
 	}
@@ -190,6 +193,17 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			OilLevelDecreasing();
 			RegenLife(timeToRecoverLife);
+
+			if(PostProcessManager._isPostProssessAttack && !_isPlayingTakingHitAnimSound)
+			{
+				TakingHit();
+				_isPlayingTakingHitAnimSound = true;
+			}
+			//if(!_isPlayingDyingAnimSound)
+			//{
+			//	Dying();
+			//	_isPlayingDyingAnimSound = true;
+			//}
 		}
 	}
 
@@ -782,7 +796,23 @@ public sealed class PlayerAbilities : MonoBehaviour
 		if (_timerHitRegen >= timeToRecoverLife)
 		{
 			PostProcessManager._isPostProssessAttack = false;
+			_isPlayingTakingHitAnimSound = false;
 		}
+	}
+
+	private void TakingHit()
+	{
+		_audioSourcePlayerSounds.PlayOneShot(_audioClipTakingDamage);
+		ResetAllTriggerAnimation();
+		_animator.SetBool(_triggerAnimationNames[7], true);
+
+	}
+
+	private void Dying()
+	{
+		_audioSourcePlayerSounds.PlayOneShot(_audioClipDying);
+		ResetAllTriggerAnimation();
+		_animator.SetBool(_triggerAnimationNames[8], true);
 	}
 
 	#endregion

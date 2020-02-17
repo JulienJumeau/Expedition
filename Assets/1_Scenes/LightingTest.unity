@@ -27166,6 +27166,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7539082586347030721, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: subpixelMorphologicalAntialiasing.quality
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539082586347030721, guid: 85fad3a67a0340349a5005343f3c6858,
+        type: 3}
+      propertyPath: antialiasingMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7655900838263015129, guid: 85fad3a67a0340349a5005343f3c6858,
         type: 3}
       propertyPath: m_LocalRotation.x

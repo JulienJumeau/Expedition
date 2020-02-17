@@ -822,7 +822,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private void TakingHit()
 	{
 		ResetAllTriggerAnimation();
-		Debug.Log(_triggerAnimationNames[7]);
 		_animator.SetTrigger("IsHit");
 	}
 

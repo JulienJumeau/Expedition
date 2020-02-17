@@ -433,6 +433,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 1.7f)
 					{
+						Debug.Log("Pull");
 						_currentSpeed = _pullObjectSpeed;
 						_isPulling = true;
 						_animator.SetBool(_triggerAnimationNames[3], true);

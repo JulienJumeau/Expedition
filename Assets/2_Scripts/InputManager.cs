@@ -61,7 +61,7 @@ public sealed class InputManager : MonoBehaviour
 
 				else if (Input.GetButton("Pulling"))
 				{
-					_cameraSensitivity = 0;
+					_cameraSensitivity = PlayerAbilities._isPulling ? 0 : _initialCameraSensitivity;
 					ActionInputPressed(new ActionInputPressedEventArgs { actionPressed = InputAction.Pull });
 				}
 

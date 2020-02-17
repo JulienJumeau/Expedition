@@ -13,6 +13,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	public static bool _isPlayerInjured;
 	public static bool _mustStandUp;
 	public static bool _isTheBeginning = true;
+	public static bool _isPulling;
 
 	[Range(1, 10)] [SerializeField] private float _walkSpeed = 5;
 	[Range(1, 15)] [SerializeField] private float _sprintSpeed = 10;
@@ -61,7 +62,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private Animator _animator;
 	private Vector3 _motion, _motionForward, _motionStrafe, _direction, _positionBeforeHide;
 	private RaycastHit _hitForward, _hitBackward, _hitDownFront, _hitDownBack;
-	private bool _isCrouching, _isLanternOnScreen, _isLanternOnScreenBeforeHiding, _isPulling;
+	private bool _isCrouching, _isLanternOnScreen, _isLanternOnScreenBeforeHiding;
 	[HideInInspector] public bool _isHiding, _isHoldingBreath, _isHoldingBreathOnCooldown;
 	private bool _isRunning;
 	private string[] _triggerAnimationNames;
@@ -433,7 +434,6 @@ public sealed class PlayerAbilities : MonoBehaviour
 				{
 					if (_hitForward.transform != null && _hitForward.transform.gameObject.CompareTag("Pullable") && CheckCollisionBeforePull(_characterInitialHeight) && _hitForward.distance < 1.7f)
 					{
-						Debug.Log("Pull");
 						_currentSpeed = _pullObjectSpeed;
 						_isPulling = true;
 						_animator.SetBool(_triggerAnimationNames[3], true);
@@ -442,6 +442,8 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 					else
 					{
+						_currentSpeed = _walkSpeed;
+						_isPulling = false;
 						_animator.SetBool(_triggerAnimationNames[3], false);
 					}
 				}

@@ -175,7 +175,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			if (_mustStandUp)
 			{
 				_mustStandUp = false;
-				
+
 				if (_isCrouching)
 				{
 					_isCrouching = false;
@@ -219,7 +219,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 		else if (!_isTheEndRunning)
 		{
 			_isTheEndRunning = true;
-			StartCoroutine(EndingCameraRepositioning(_timeEndingPosition));
+			StartCoroutine(EndingCameraRepositioning(_timeEndingPosition, 0.2f));
 		}
 	}
 
@@ -853,8 +853,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_animator.SetTrigger(_triggerAnimationNames[7]);
 	}
 
-	private IEnumerator EndingCameraRepositioning(float duration)
+	private IEnumerator EndingCameraRepositioning(float duration, float delay)
 	{
+		yield return new WaitForSeconds(delay);
 		float elapsedTime = 0;
 		Vector3 currentAngleCamera = _cameraOriginGO.transform.eulerAngles;
 		while (elapsedTime <= duration)

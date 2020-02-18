@@ -26,7 +26,9 @@ public sealed class PlayerAbilities : MonoBehaviour
 	[SerializeField] public float _holdingBreathSecondsAllowed = 0, _HoldingBreathSoftCooldown = 0, _HoldingBreathHardCooldown = 0;
 	[SerializeField] private GameObject _lanternLightGO = null, _fxFireLantern = null;
 	[SerializeField] public float _lanternMinIntensity = 0, _lanternMaxIntensity = 0, _secondsOilLevelFullToEmpty = 1;
-	[SerializeField] private float timeToRecoverLife = 0;
+	[SerializeField] private float _timeToRecoverLife = 0;
+	[SerializeField] private GameObject _cameraOriginGO = null;
+	[SerializeField] private float _timeEndingPosition = 0;
 
 	[Header("Audio Sources")]
 	[SerializeField] private AudioSource _audioSourceMovement = null;
@@ -77,6 +79,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 	private int _currentReadingSheetIndex;
 	private bool _canOnlyLimp, _isPlayingTakingHitAnimSound, _isPlayingDyingAnimSound;
 	private float _timerHitRegen;
+	private bool _isTheEndRunning;
 
 	[HideInInspector] public float _holdingBreathSeconds;
 
@@ -193,7 +196,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 			//}
 
 			OilLevelDecreasing();
-			RegenLife(timeToRecoverLife);
+			RegenLife(_timeToRecoverLife);
 
 			if (PostProcessManager._isPostProssessAttack && !_isPlayingTakingHitAnimSound)
 			{
@@ -207,6 +210,12 @@ public sealed class PlayerAbilities : MonoBehaviour
 				_isActionPlaying = true;
 				_isPlayingDyingAnimSound = true;
 			}
+		}
+
+		else if (!_isTheEndRunning)
+		{
+			_isTheEndRunning = true;
+			StartCoroutine(EndingCameraRepositioning(_timeEndingPosition));
 		}
 	}
 
@@ -498,7 +507,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 				break;
 
 			default:
-				
+
 				if (!_isPlayingTakingHitAnimSound)
 				{
 					ResetAllTriggerAnimation();
@@ -835,6 +844,22 @@ public sealed class PlayerAbilities : MonoBehaviour
 		_audioSourcePlayerSounds.PlayOneShot(_audioClipDying);
 		ResetAllTriggerAnimation();
 		_animator.SetTrigger(_triggerAnimationNames[7]);
+	}
+
+	private IEnumerator EndingCameraRepositioning(float duration)
+	{
+		float elapsedTime = 0;
+		Vector3 currentAngleCamera = _cameraOriginGO.transform.eulerAngles;
+		while (elapsedTime <= duration)
+		{
+			elapsedTime += Time.deltaTime;
+			_cameraOriginGO.transform.eulerAngles = new Vector3(Mathf.Lerp(currentAngleCamera.x, 0, elapsedTime / duration), currentAngleCamera.y, currentAngleCamera.z);
+			//_cameraOriginGO.transform.rotation = Quaternion.Lerp(_cameraOriginGO.transform.rotation, new Quaternion(0, _cameraOriginGO.transform.rotation.y, _cameraOriginGO.transform.rotation.z, _cameraOriginGO.transform.rotation.w), elapsedTime / duration * 3);
+			yield return null;
+		}
+
+		ResetAllTriggerAnimation();
+		_animator.SetTrigger("Ending");
 	}
 
 	#endregion

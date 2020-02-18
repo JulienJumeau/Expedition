@@ -1730,6 +1730,10 @@ PrefabInstance:
       propertyPath: _audioClipDetected
       value: 
       objectReference: {fileID: 8300000, guid: a20567e002e655440866dbf1d143e4bc, type: 3}
+    - target: {fileID: 576038430, guid: 85fad3a67a0340349a5005343f3c6858, type: 3}
+      propertyPath: _audioClipMonster
+      value: 
+      objectReference: {fileID: 8300000, guid: 2770bb9362461f0468c2f7fcde15ba14, type: 3}
     - target: {fileID: 1213406187133769049, guid: 85fad3a67a0340349a5005343f3c6858,
         type: 3}
       propertyPath: m_Name

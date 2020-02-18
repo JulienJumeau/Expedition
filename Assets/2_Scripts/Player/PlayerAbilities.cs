@@ -351,10 +351,10 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.PhotoCamera:
 
-				if (!_isHiding && !_isPlayerInjured)
-				{
-					HoldItem(_photoCameraGO, _lanternGO);
-				}
+				//if (!_isHiding && !_isPlayerInjured)
+				//{
+				//	HoldItem(_photoCameraGO, _lanternGO);
+				//}
 
 				break;
 
@@ -470,7 +470,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 			case InputAction.HoldBreath:
 
-				if (!_isRunning && !_isPlayerInjured)
+				if (!_isRunning && !_isPlayerInjured && !PostProcessManager._isPostProssessAttack && !PostProcessManager._isPostProssessFall)
 				{
 					if (!_isDetected)
 					{
@@ -685,25 +685,28 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private IEnumerator HoldingBreathCooldown(float cooldown)
 	{
-		_isHoldingBreathOnCooldown = true;
-		_isHoldingBreath = false;
-		PostProcessManager._isPostProssessHoldBreath = false;
-
-		if (cooldown == _HoldingBreathSoftCooldown)
+		if (!PostProcessManager._isPostProssessAttack && !PostProcessManager._isPostProssessFall)
 		{
-			_audioSourcePlayerSounds.clip = _audioClipGetBreathSoft;
+			_isHoldingBreathOnCooldown = true;
+			_isHoldingBreath = false;
+			PostProcessManager._isPostProssessHoldBreath = false;
+
+			if (cooldown == _HoldingBreathSoftCooldown)
+			{
+				_audioSourcePlayerSounds.clip = _audioClipGetBreathSoft;
+			}
+
+			else
+			{
+				_audioSourcePlayerSounds.clip = _audioClipGetBreathHard;
+			}
+
+			_audioSourcePlayerSounds.Play();
+
+			_holdingBreathSeconds = 0;
+			yield return new WaitForSeconds(cooldown);
+			_isHoldingBreathOnCooldown = false;
 		}
-
-		else
-		{
-			_audioSourcePlayerSounds.clip = _audioClipGetBreathHard;
-		}
-
-		_audioSourcePlayerSounds.Play();
-
-		_holdingBreathSeconds = 0;
-		yield return new WaitForSeconds(cooldown);
-		_isHoldingBreathOnCooldown = false;
 	}
 
 	private void EventSubscription()

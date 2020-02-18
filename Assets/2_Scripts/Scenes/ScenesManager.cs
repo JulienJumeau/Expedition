@@ -37,11 +37,6 @@ public class ScenesManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Keypad0))
-		{
-			SceneManager.LoadScene("SceneLoader");
-		}
-
 		if (_isGameOver)
 		{
 			_isGameOver = false;
@@ -52,6 +47,16 @@ public class ScenesManager : MonoBehaviour
 	public void GameOverScene()
 	{
 		SceneManager.LoadScene("GameOver");
+	}
+
+	public void IntroScene()
+	{
+		SceneManager.LoadScene("Intro");
+	}
+	public void Quit()
+	{
+		//Application.Quit();
+		UnityEditor.EditorApplication.isPlaying = false;
 	}
 
 	public void OnClickButton(int chapterIndex)

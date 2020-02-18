@@ -172,13 +172,17 @@ public sealed class PlayerAbilities : MonoBehaviour
 				HoldItem(_lanternGO, _photoCameraGO, true);
 			}
 
-			if (_mustStandUp && _isCrouching)
+			if (_mustStandUp)
 			{
 				_mustStandUp = false;
-				_isCrouching = false;
-				_animator.SetBool("IsCrouching", false);
-				ResetAllTriggerAnimation();
-				CrouchAndStand(_characterInitialHeight);
+				
+				if (_isCrouching)
+				{
+					_isCrouching = false;
+					_animator.SetBool("IsCrouching", false);
+					ResetAllTriggerAnimation();
+					CrouchAndStand(_characterInitialHeight);
+				}
 			}
 
 			//if (_isDetected && !_isDetectedMusicMustBePlayed)

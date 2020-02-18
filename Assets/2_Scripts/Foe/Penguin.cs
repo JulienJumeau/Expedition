@@ -186,25 +186,50 @@ public sealed class Penguin : MonoBehaviour
 		}
 		else if (_foeState == FoeState.Alert)
 		{
-			Debug.Log("SA: " + _secondsWhileAlert + " s");
-			if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)
+			if (_secondsInAlertBeforeAggro != 0)
 			{
-				PlayerAbilities._isDetected = false;
-				_currentDetectionRadius = _detectionRadius;
-				ResetAllTriggerAnimation();
-				_animator.SetBool(_triggerAnimationNames[0], true);
-				SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
-
-				//Stop Sound Alert
-
-				if (_agent.remainingDistance < 0.5f)
+				Debug.Log("SA: " + _secondsWhileAlert + " s");
+				if (_secondsWhileAlert >= _secondsInAlertBeforeAggro)
 				{
-					_foeState = FoeState.Patrol;
-					_secondsWhileAlert = 0;
-					_secondsWhileAlertHiding = 0;
+					PlayerAbilities._isDetected = false;
+					_currentDetectionRadius = _detectionRadius;
+					ResetAllTriggerAnimation();
+					_animator.SetBool(_triggerAnimationNames[0], true);
+					SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
+
+					//Stop Sound Alert
+
+					if (_agent.remainingDistance < 0.5f)
+					{
+						_foeState = FoeState.Patrol;
+						_secondsWhileAlert = 0;
+						_secondsWhileAlertHiding = 0;
+					}
 				}
+				else _secondsWhileAlert += Time.deltaTime;
 			}
-			else _secondsWhileAlert += Time.deltaTime;
+			else
+			{
+				Debug.Log("SA: " + _secondsWhileAlert + " s");
+				if (_secondsWhileAlert >= _secondsInAlertAfterHiding)
+				{
+					PlayerAbilities._isDetected = false;
+					_currentDetectionRadius = _detectionRadius;
+					ResetAllTriggerAnimation();
+					_animator.SetBool(_triggerAnimationNames[0], true);
+					SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foePatrolSpeed, 0, false);
+
+					//Stop Sound Alert
+
+					if (_agent.remainingDistance < 0.5f)
+					{
+						_foeState = FoeState.Patrol;
+						_secondsWhileAlert = 0;
+						_secondsWhileAlertHiding = 0;
+					}
+				}
+				else _secondsWhileAlert += Time.deltaTime;
+			}
 		}
 
 		// STATE = ATTACK
@@ -230,7 +255,7 @@ public sealed class Penguin : MonoBehaviour
 		if (_player._isHiding == true && _distancePlayerFoe <= _currentDetectionRadius && _isPenguinAggro && _foeState != FoeState.Patrol)
 		{
 			_secondsWhileAlertHiding += Time.deltaTime;
-			//Debug.Log("SAH: " + _secondsWhileAlertHiding + " s");
+			Debug.Log("SAH: " + _secondsWhileAlertHiding + " s");
 			_secondsWhileAlert = 0;
 
 			if (_secondsWhileAlertHiding >= _secondsInAlertAfterHiding)
@@ -250,8 +275,6 @@ public sealed class Penguin : MonoBehaviour
 					SetFoeAgentProperties(_patrolPoints[_nextDestinationIndex].position, _foeChaseSpeed, 0, false);
 				}
 				
-
-				//Stop Sound Alert
 
 				if (_agent.remainingDistance < 0.5f)
 				{

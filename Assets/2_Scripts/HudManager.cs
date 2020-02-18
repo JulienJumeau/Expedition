@@ -80,8 +80,8 @@ public class HudManager : MonoBehaviour
 		if (PlayerAbilities._isEndGame && !_isTheEnd)
 		{
 			_isTheEnd = true;
-			StartCoroutine(Fade(_hudFadeOutGO, false, 0.1f, 5f));
-			StartCoroutine(EndingHud(25f, true));
+			StartCoroutine(Fade(_hudFadeOutGO, false, 0.1f, 11f));
+			StartCoroutine(EndingHud(11f, true));
 		}
 
 		if (_isGameOver && !_isTheEnd)

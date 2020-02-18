@@ -92,7 +92,7 @@ public sealed class PostProcessManager : MonoBehaviour
 		{
 			_vignetteLayer.color.value = Color.black;
 			_durationGetdBreath = 0;
-			_vignetteLayer.intensity.value = Mathf.Lerp(0, 0.5f, _durationHoldBreath);
+			_vignetteLayer.intensity.value = Mathf.Lerp(0.1f, 0.5f, _durationHoldBreath);
 			_durationHoldBreath += Time.deltaTime / 10;
 		}
 

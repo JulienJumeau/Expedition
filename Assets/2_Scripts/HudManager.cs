@@ -82,7 +82,7 @@ public class HudManager : MonoBehaviour
 		{
 			_isTheEnd = true;
 			StartCoroutine(Fade(_hudFadeOutGO, false, 2f, 13f));
-			StartCoroutine(EndingHud(16f, true));
+			StartCoroutine(EndingHud(19f, true));
 		}
 
 		if (_isGameOver && !_isTheEnd)

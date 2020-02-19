@@ -11,6 +11,8 @@ public class IntroManager : MonoBehaviour
 	[SerializeField] private VideoPlayer _videoPlayer;
 	[SerializeField] private RawImage _rawImage;
 	[SerializeField] private GameObject _hudSkipIntroGO;
+	[SerializeField] private GameObject _hudFadeGO;
+	[SerializeField] private bool _isMainMenuVideo;
 
 	#endregion
 
@@ -18,19 +20,33 @@ public class IntroManager : MonoBehaviour
 
 	private void Awake()
 	{
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
+		if (!_isMainMenuVideo)
+		{
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+		}
 	}
 
 	private void Start()
 	{
-		StartCoroutine(LoadGameAfterIntro());
+		if (!_isMainMenuVideo)
+		{
+			StartCoroutine(Fade(_hudFadeGO, true, 3f, 2f));
+			StartCoroutine(LoadGameAfterIntro());
+		}
+
+		else
+		{
+			StartCoroutine(Fade(_hudFadeGO, true, 3f, 2f));
+			_videoPlayer.isLooping = true;
+		}
+
 		StartCoroutine(PlayVideo());
 	}
 
 	private void Update()
 	{
-		if (Input.GetButtonDown("JumpClimb"))
+		if (Input.GetButtonDown("JumpClimb") && !_isMainMenuVideo)
 		{
 			if (!_hudSkipIntroGO.activeSelf)
 			{
@@ -59,6 +75,14 @@ public class IntroManager : MonoBehaviour
 		_videoPlayer.Play();
 	}
 
+	public void OnClick() => StartCoroutine(VideoStop());
+
+	private IEnumerator VideoStop()
+	{
+		StartCoroutine(HudManager.Fade(_hudFadeGO, false, 2f));
+		yield return new WaitForSeconds(2);
+	}
+
 	private IEnumerator LoadGameAfterIntro()
 	{
 		yield return new WaitForSeconds((float)_videoPlayer.clip.length - 2);
@@ -68,18 +92,43 @@ public class IntroManager : MonoBehaviour
 
 	private IEnumerator SkipIntro(float duration)
 	{
+		yield return StartCoroutine(FadeVideoTexture(duration));
+		SceneManager.LoadScene("SceneLoader");
+	}
+
+	private IEnumerator FadeVideoTexture(float durattion)
+	{
 		float elapsedTime = 0;
 
-		while (elapsedTime <= duration)
+		while (elapsedTime <= 2)
 		{
 			elapsedTime += Time.deltaTime;
-			float alphaColor = Mathf.Lerp(1, 0, elapsedTime / duration);
+			float alphaColor = Mathf.Lerp(1, 0, elapsedTime / 2);
 			float musicVolume = alphaColor;
 			_rawImage.color = new Color(_rawImage.color.r, _rawImage.color.g, _rawImage.color.b, alphaColor);
 			_videoPlayer.SetDirectAudioVolume(0, musicVolume);
 			yield return null;
 		}
+	}
 
-		SceneManager.LoadScene("SceneLoader");
+	private static IEnumerator Fade(GameObject hudGoFade, bool fadeOut, float duration, float delayTime = 0)
+	{
+		float elapsedTime = 0;
+		Image imageToFade = hudGoFade.GetComponent<Image>();
+
+		yield return new WaitForSeconds(delayTime);
+
+		while (elapsedTime <= duration)
+		{
+			elapsedTime += Time.deltaTime;
+			float alphaColor = fadeOut ? Mathf.Lerp(1, 0, elapsedTime / duration) : Mathf.Lerp(0, 1, elapsedTime / duration);
+			imageToFade.color = new Color(0, 0, 0, alphaColor);
+			yield return null;
+		}
+
+		if (fadeOut)
+		{
+			hudGoFade.SetActive(!hudGoFade.activeSelf);
+		}
 	}
 }

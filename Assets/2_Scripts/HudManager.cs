@@ -172,8 +172,9 @@ public class HudManager : MonoBehaviour
 		_hudCreditGO.SetActive(isCreditVisible);
 	}
 
-	public static IEnumerator DelayAndQuit()
+	private IEnumerator DelayAndQuit()
 	{
+		StartCoroutine(HudManager.Fade(_hudFadeOutGO, false, 2));
 		yield return new WaitForSeconds(3f);
 		SceneManager.LoadScene("MainMenu");
 	}
@@ -208,10 +209,7 @@ public class HudManager : MonoBehaviour
 				_menuChapterGO.SetActive(!_menuChapterGO.activeSelf);
 				break;
 			case "Quit":
-				//Application.Quit();
-				//StartCoroutine(Fade(_hudFadeOutGO, true, 3f));
-				//StartCoroutine(DelayAndQuit());
-				SceneManager.LoadScene("MainMenu");
+				StartCoroutine(DelayAndQuit());
 				break;
 			case "Back":
 				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -201,7 +202,8 @@ public class HudManager : MonoBehaviour
 				_menuChapterGO.SetActive(!_menuChapterGO.activeSelf);
 				break;
 			case "Quit":
-				Application.Quit();
+				//Application.Quit();
+				SceneManager.LoadScene("MainMenu");
 				break;
 			case "Back":
 				_menuPauseGO.SetActive(!_menuPauseGO.activeSelf);

@@ -172,6 +172,12 @@ public class HudManager : MonoBehaviour
 		_hudCreditGO.SetActive(isCreditVisible);
 	}
 
+	public static IEnumerator DelayAndQuit()
+	{
+		yield return new WaitForSeconds(3f);
+		SceneManager.LoadScene("MainMenu");
+	}
+
 	public void OnClickButton(string buttonName)
 	{
 		switch (buttonName)
@@ -203,6 +209,8 @@ public class HudManager : MonoBehaviour
 				break;
 			case "Quit":
 				//Application.Quit();
+				//StartCoroutine(Fade(_hudFadeOutGO, true, 3f));
+				//StartCoroutine(DelayAndQuit());
 				SceneManager.LoadScene("MainMenu");
 				break;
 			case "Back":
@@ -259,7 +267,7 @@ public class HudManager : MonoBehaviour
 				text = isHiding ? "E : Exit" : "E : Hide";
 				break;
 			case 17:
-				text = "Hold Left Click : Pull/Push \n Space : Climb";
+				text = "Hold Left-click : Push or pull \n Space : Climb";
 				break;
 			case 21:
 				text = "E: Read";

@@ -51,8 +51,15 @@ public class ScenesManager : MonoBehaviour
 
 	public void IntroScene()
 	{
+		_chosenCheckPointPosition = Vector3.zero;
+		PlayerAbilities._isActionPlaying = false;
+		PlayerAbilities._isLanternInInventory = false;
+		PlayerAbilities._isTheBeginning = true;
+		PlayerAbilities._oilLevel = 0;
+		PlayerAbilities._isPlayerInjured = false;
 		SceneManager.LoadScene("Intro");
 	}
+
 	public void Quit()
 	{
 		Application.Quit();

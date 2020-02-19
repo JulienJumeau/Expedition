@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ScenesManager : MonoBehaviour
 {
 	[SerializeField] private GameObject _hudFadeOutGO;
-	public static bool _isGameOver;
 	private static Vector3 _chosenCheckPointPosition;
 	private static Vector3 _chosenCheckPointRotation;
 	private GameObject[] _checkPoints;
@@ -35,31 +34,6 @@ public class ScenesManager : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-		if (_isGameOver)
-		{
-			_isGameOver = false;
-			GameOverScene();
-		}
-	}
-
-	public void GameOverScene()
-	{
-		SceneManager.LoadScene("GameOver");
-	}
-
-	public void IntroScene()
-	{
-		_chosenCheckPointPosition = Vector3.zero;
-		PlayerAbilities._isActionPlaying = false;
-		PlayerAbilities._isLanternInInventory = false;
-		PlayerAbilities._isTheBeginning = true;
-		PlayerAbilities._oilLevel = 0;
-		PlayerAbilities._isPlayerInjured = false;
-		SceneManager.LoadScene("Intro");
-	}
-
 	public void Quit()
 	{
 		Application.Quit();
@@ -73,6 +47,9 @@ public class ScenesManager : MonoBehaviour
 
 		switch (chapterIndex)
 		{
+			case 0:
+				StartCoroutine(LoadChapter(false, false, chapterIndex, true));
+				break;
 			case 1:
 				StartCoroutine(LoadChapter(false, false, chapterIndex - 1));
 				break;
@@ -85,8 +62,13 @@ public class ScenesManager : MonoBehaviour
 		}
 	}
 
-	private IEnumerator LoadChapter(bool isLanternInInventory, bool isOilFull, int chapterIndex)
+	private IEnumerator LoadChapter(bool isLanternInInventory, bool isOilFull, int chapterIndex, bool isMainMenu = false)
 	{
+		if (isMainMenu)
+		{
+			StartCoroutine(SoundManager.FadeoutMusic(FindObjectOfType<AudioSource>(), 2));
+		}
+
 		StartCoroutine(HudManager.Fade(_hudFadeOutGO, false, 2));
 		yield return new WaitForSeconds(2);
 		PlayerAbilities._isActionPlaying = false;
@@ -94,8 +76,18 @@ public class ScenesManager : MonoBehaviour
 		PlayerAbilities._isTheBeginning = !isLanternInInventory;
 		PlayerAbilities._oilLevel = isOilFull ? 1 : 0;
 		PlayerAbilities._isPlayerInjured = false;
-		_chosenCheckPointPosition = _checkPoints[chapterIndex].transform.position;
-		_chosenCheckPointRotation.y = _checkPoints[chapterIndex].transform.eulerAngles.y;
-		SceneManager.LoadScene("SceneLoader");
+
+		if (isMainMenu)
+		{
+			_chosenCheckPointPosition = Vector3.zero;
+			SceneManager.LoadScene("Intro");
+		}
+
+		else
+		{
+			_chosenCheckPointPosition = _checkPoints[chapterIndex].transform.position;
+			_chosenCheckPointRotation.y = _checkPoints[chapterIndex].transform.eulerAngles.y;
+			SceneManager.LoadScene("SceneLoader");
+		}
 	}
 }

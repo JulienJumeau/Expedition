@@ -60,7 +60,7 @@ public sealed class SoundManager : MonoBehaviour
 
 	private void SoundManager_OnStopMusicTriggered(object sender, System.EventArgs e) => StartCoroutine(FadeoutMusic(_audioSources[0], 2));
 
-	private IEnumerator FadeoutMusic(AudioSource audioSource, float fadeTime)
+	public static IEnumerator FadeoutMusic(AudioSource audioSource, float fadeTime)
 	{
 		float startVolume = audioSource.volume;
 

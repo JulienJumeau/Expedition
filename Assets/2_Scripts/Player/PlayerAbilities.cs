@@ -792,6 +792,11 @@ public sealed class PlayerAbilities : MonoBehaviour
 		this.transform.GetComponentInChildren<AudioSource>().enabled = true;
 		GameObject.FindGameObjectWithTag("WindSound").GetComponent<AudioSource>().Play();
 	}
+	private IEnumerator PlayDeathSound()
+	{
+		yield return new WaitForSeconds(0.5f);
+		_audioSourcePlayerSounds.PlayOneShot(_audioClipDying);
+	}
 
 	private void EndGame()
 	{
@@ -848,7 +853,7 @@ public sealed class PlayerAbilities : MonoBehaviour
 
 	private void Dying()
 	{
-		_audioSourcePlayerSounds.PlayOneShot(_audioClipDying);
+		StartCoroutine(PlayDeathSound());
 		ResetAllTriggerAnimation();
 		_animator.SetTrigger(_triggerAnimationNames[7]);
 	}

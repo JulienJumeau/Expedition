@@ -13,6 +13,7 @@ public class HudManager : MonoBehaviour
 	[SerializeField] private GameObject _hudFadeOutGO;
 	[SerializeField] private GameObject _hudVictoryGO;
 	[SerializeField] private GameObject _hudCreditGO;
+	[SerializeField] private GameObject _hudSpecialThanksGO;
 	[SerializeField] private GameObject _hudInputGO;
 	[SerializeField] private GameObject _hudSheetGO;
 	[SerializeField] private GameObject _hudCrosshairGO;
@@ -170,6 +171,7 @@ public class HudManager : MonoBehaviour
 		Cursor.lockState = CursorLockMode.Confined;
 		_hudVictoryGO.SetActive(true);
 		_hudCreditGO.SetActive(isCreditVisible);
+		_hudSpecialThanksGO.SetActive(isCreditVisible);
 	}
 
 	private IEnumerator DelayAndQuit()

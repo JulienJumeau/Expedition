@@ -3151,6 +3151,10 @@ PrefabInstance:
       propertyPath: _sliderGamma
       value: 
       objectReference: {fileID: 1235896805}
+    - target: {fileID: 1981510761, guid: cacd2035fe310184385694804aebfe4e, type: 3}
+      propertyPath: _hudSpecialThanksGO
+      value: 
+      objectReference: {fileID: 2064604729662053076}
     - target: {fileID: 5634259180212196396, guid: cacd2035fe310184385694804aebfe4e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3421,5 +3425,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_SpecialThanks
       objectReference: {fileID: 0}
+    - target: {fileID: 2064604729984088121, guid: 28c567e49491c6e43ac3ed16679f7491,
+        type: 3}
+      propertyPath: m_text
+      value: For their support, specials thanks to our teachers and a big thanks to
+        Kevin Vanwijmelbeke for the penguin.
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28c567e49491c6e43ac3ed16679f7491, type: 3}
+--- !u!1 &2064604729662053076 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2064604729741688099, guid: 28c567e49491c6e43ac3ed16679f7491,
+    type: 3}
+  m_PrefabInstance: {fileID: 2064604729662053075}
+  m_PrefabAsset: {fileID: 0}

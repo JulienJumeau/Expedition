@@ -66921,7 +66921,7 @@ PrefabInstance:
     - target: {fileID: 3764835297144611461, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
       propertyPath: _secondsInAlertAfterHiding
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3764835297144611466, guid: 2a5b6e45bf6554847a0548405f9e3ccb,
         type: 3}
